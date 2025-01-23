@@ -14,6 +14,7 @@
 
 # 画像
 ![expected-ink-consumption.png](img/expected-ink-consumption.png)
+![expeceted-length-distribution.png](img/expeceted-length-distribution.png)
 
 ## 要求
 ### 用途
