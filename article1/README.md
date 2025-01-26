@@ -112,7 +112,16 @@ options:
                         印刷機のデータファイル
 ```
 
+### 実行例
+
+``` shell
+python sim_hidden_param.py --iterations 100 --printing_machines PM1
+```
+
 # 画像
+
+![モデルの実現性スタディ-モンテカルロ法による未知パラメータ推定.png](img/モデルの実現性スタディ-モンテカルロ法による未知パラメータ推定.png)
+![モデルの実現性スタディ-収支計算PM1.png](img/モデルの実現性スタディ-収支計算PM1.png)
 ![expected-ink-consumption.png](img/expected-ink-consumption.png)
 ![expected-jobs-per-paper.png](img/expected-jobs-per-paper.png)
 ![expeceted-length-distribution.png](img/expeceted-length-distribution.png)
