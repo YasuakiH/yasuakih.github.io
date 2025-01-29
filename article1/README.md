@@ -43,7 +43,7 @@
 ## 未知パラメータの推定方法
 
 ### 未知パラメータ
-顧客の使い方を特徴付ける情報を、外部から観察できない意味で「未知パラメータ」と呼ぶ。業務視点では印刷業者が受注した文書の種類 (例: 書籍、カタログ) もあれば、印刷機に入力する印刷ジョブもある。前者は情報量に富む反面、秘匿性が高く、エリアカバレッジのような数値指標で代表する。後者の印刷ジョブには、物理的な用紙サイズ・印刷ページ数・両面片面の別、原稿を特徴づけるインク塗布量、また印刷機が生産財を出力する点では顧客固有の品質基準などが含まれる。
+顧客の使い方を特徴付ける情報を、外部から観察できない意味で「未知パラメータ」と呼ぶ。未知パラメータには、印刷業者が受注した文書の種類 (例: 書籍、カタログ、ポスター) もあれば、印刷機に入力する印刷ジョブもある。前者は情報量に富む反面、秘匿性が高いため、エリアカバレッジのような数値指標で代表する。後者の印刷ジョブには、物理的な用紙サイズ・印刷ページ数・両面片面の別、原稿を特徴づけるインク塗布量がある。また印刷機が生産財を出力する点では顧客固有の品質基準などが含まれる。
 
 ### Step1. 印刷ジョブのモデリング
 
@@ -88,18 +88,23 @@
 
 * ![モデルの実現性スタディ-モンテカルロ法による未知パラメータ推定.png](img/モデルの実現性スタディ-モンテカルロ法による未知パラメータ推定.png)
 
-### Step3. 結果出力
-
+### Step3. 結果の出力と評価
 
 #### 印刷物種類ごとの、ページ数、および部数
 
-## 制約
+#### 制約
+
+* ![expected-ink-consumption.png](img/expected-ink-consumption.png)
+* ![expected-jobs-per-paper.png](img/expected-jobs-per-paper.png)
+* ![expeceted-length-distribution.png](img/expeceted-length-distribution.png)
 
 ## 方法
 
 ## 結果
 
 ### 良好な結果
+
+* ![summary_fig.png](img/summary_fig.png)
 
 ### 不良な結果
 
@@ -153,8 +158,4 @@ python sim_hidden_param.py --iterations 100 --printing_machines PM1
 
 ## 画像
 
-![expected-ink-consumption.png](img/expected-ink-consumption.png)
-![expected-jobs-per-paper.png](img/expected-jobs-per-paper.png)
-![expeceted-length-distribution.png](img/expeceted-length-distribution.png)
-![summary_fig.png](img/summary_fig.png)
 
