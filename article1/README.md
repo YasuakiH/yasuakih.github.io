@@ -65,6 +65,11 @@
 
 
 #### インク消費量の計算式
+
+
+![モデルの実現性スタディ-収支計算PM1.png](img/モデルの実現性スタディ-収支計算PM1.png)
+
+
 #### 制約条件 (インク量、用紙枚数、用紙枚数の交差エントロピー、印刷ジョブ長の交差エントロピー)
 #### 印刷機セグメント部類 (トータルエリアカバレッジと印刷ジョブ長の仮定)
 #### 用紙サイズ比率(3-4種類、合計して100%)
@@ -83,6 +88,8 @@
 高速化
 マルチプロセシング
 
+![モデルの実現性スタディ-モンテカルロ法による未知パラメータ推定.png](img/モデルの実現性スタディ-モンテカルロ法による未知パラメータ推定.png)
+
 ### Step3. 結果出力
 
 
@@ -93,7 +100,10 @@
 ## 方法
 
 ## 結果
-よしあし、わかったこと
+
+### 良好な結果
+
+### 不良な結果
 
 ## 考察
 
@@ -145,8 +155,6 @@ python sim_hidden_param.py --iterations 100 --printing_machines PM1
 
 ## 画像
 
-![モデルの実現性スタディ-モンテカルロ法による未知パラメータ推定.png](img/モデルの実現性スタディ-モンテカルロ法による未知パラメータ推定.png)
-![モデルの実現性スタディ-収支計算PM1.png](img/モデルの実現性スタディ-収支計算PM1.png)
 ![expected-ink-consumption.png](img/expected-ink-consumption.png)
 ![expected-jobs-per-paper.png](img/expected-jobs-per-paper.png)
 ![expeceted-length-distribution.png](img/expeceted-length-distribution.png)
