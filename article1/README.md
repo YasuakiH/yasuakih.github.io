@@ -55,32 +55,12 @@
 ##### 印刷機セグメント (TACや印刷ジョブ長の分布の仮説)
 印刷機セグメントは、印刷機の運用形態を二次元マップ上の位置で代表させる概念である。それぞれの軸は、トータルエリアカバレッジの軸と、印刷ジョブ長の軸である。シミュレーションでは、印刷機セグメントを無作為に選択し、これによってトータルエリアカバレッジと、印刷ジョブ長とを決定する。
 
-* ![モデリング-印刷機セグメントの二次元マップ.png](img/モデリング-印刷機セグメントの二次元マップ.png)
-
 * | ![モデリング-印刷機セグメントの二次元マップ.png](img/モデリング-印刷機セグメントの二次元マップ.png) |
   | :--: |
   | *印刷機セグメントの二次元マップ* |
 
-| ![モデリング-印刷機セグメントの二次元マップ.png](img/モデリング-印刷機セグメントの二次元マップ.png) |
-| :--: |
-| *印刷機セグメントの二次元マップ* |
-
-* <picture>
-  <source srcset="img/モデリング-印刷機セグメントの二次元マップ.png" media="(orientation: portrait)" />
-  <img src="img/モデリング-印刷機セグメントの二次元マップ.png" alt="" />
-  </picture>
-
-* <figure>
-  <img src="img/モデリング-印刷機セグメントの二次元マップ.png" alt="Elephant at sunset" />
-  <figcaption>*モデリング-印刷機セグメントの二次元マップ*</figcaption>
-  </figure>
-
 * ![モデリング-印刷機セグメントの二次元マップ.png](https://yasuakih.github.io/article1/img/%E3%83%A2%E3%83%87%E3%83%AA%E3%83%B3%E3%82%B0-%E5%8D%B0%E5%88%B7%E6%A9%9F%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%88%E3%81%AE%E4%BA%8C%E6%AC%A1%E5%85%83%E3%83%9E%E3%83%83%E3%83%97.png)
-*<small><br/>image caption</small>*
-
-![name of the image](https://cdn.nimbusthemes.com/2017/09/09233338/Free-Nature-Backgrounds-Sunset-by-Pixabay.jpg)
-*<small>image caption</small>*
-
+*<small><br/>印刷機セグメントの二次元マップ</small>*
 
 ##### トータルエリアカバレッジ (L/M/H)
 
