@@ -61,6 +61,9 @@
 | :--:
 | *印刷機セグメントの二次元マップ*
 
+![name of the image](https://cdn.nimbusthemes.com/2017/09/09233338/Free-Nature-Backgrounds-Sunset-by-Pixabay.jpg)
+*<small>image caption</small>*
+
 
 ##### トータルエリアカバレッジ (L/M/H)
 
