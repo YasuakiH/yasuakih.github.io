@@ -68,7 +68,7 @@
 
 <figure>
   <img src="img/モデリング-印刷機セグメントの二次元マップ.png" alt="Elephant at sunset" />
-  <figcaption>An elephant at sunset</figcaption>
+  <figcaption>*モデリング-印刷機セグメントの二次元マップ*</figcaption>
 </figure>
 
 
