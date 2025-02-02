@@ -144,7 +144,7 @@
 ## 付録
 ### ソースコード
 
-* ![sim_hidden_param.py](sim_hidden_param.py)
+* [sim_hidden_param.py](sim_hidden_param.py)
 
 ### コマンドライン
 ``` shell
