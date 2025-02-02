@@ -142,6 +142,10 @@
 ## 結論
 ## 参考資料
 ## 付録
+### ソースコード
+
+* ![sim_hidden_param.py](img/sim_hidden_param.py)
+
 ### コマンドライン
 ``` shell
 usage: sim_hidden_param.py [-h] [--iterations ITERATIONS] [--printing_machines [PRINTING_MACHINES ...]] [--pickle PICKLE] [--cpu_count CPU_COUNT] [--seed SEED] [--import_file IMPORT_FILE]
