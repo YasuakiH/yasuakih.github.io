@@ -5,4 +5,4 @@
 
 ソースコード
 
-* ![sim_component_failure.py](img/sim_component_failure.py)
+* ![sim_component_failure.py](sim_component_failure.py)
