@@ -1,3 +1,4 @@
+<!-- Written in 2025 by yasuakih -->
 # 【制作中】モンテカルロ法によるデジタル印刷機の顧客未知パラメータ推定
 
 この記事は、デジタル印刷機を用いてオンデマンド印刷を営む印刷業者が製造している印刷物の特徴を、コンピュータ・シミュレーションによって推定するものである。
@@ -170,3 +171,5 @@ options:
 python sim_hidden_param.py --iterations 100 --printing_machines PM1
 ```
 
+----
+このページに掲載した作品 (テキスト、プログラムコードなど) はパブリック・ドメインに提供しています。詳細は [CC0 1.0 全世界 コモンズ証](https://creativecommons.org/publicdomain/zero/1.0/deed.ja) をご覧ください。
