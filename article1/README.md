@@ -170,6 +170,3 @@ options:
 python sim_hidden_param.py --iterations 100 --printing_machines PM1
 ```
 
-## 画像
-
-
