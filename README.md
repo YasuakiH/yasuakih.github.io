@@ -1,6 +1,3 @@
----
----
-
 <!-- Written in 2025 by yasuakih -->
 # Pythonによる業務シミュレーション
 
