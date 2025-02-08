@@ -1,3 +1,7 @@
+---
+permalink: README.html
+---
+
 <!-- Written in 2025 by yasuakih -->
 # 【制作中】モンテカルロ法によるデジタル印刷機の顧客未知パラメータ推定
 
