@@ -1,5 +1,5 @@
 ---
-permalink: README.html
+permalink: index.html
 ---
 
 <!-- Written in 2025 by yasuakih -->
