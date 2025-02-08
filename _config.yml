@@ -1,3 +1,4 @@
+url: "https://yasuakih.github.io/"
 plugins:
   - jekyll-readme-index
   - jekyll-sitemap
