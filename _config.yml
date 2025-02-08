@@ -2,4 +2,4 @@ url: "https://yasuakih.github.io"
 plugins:
   - jekyll-readme-index
   - jekyll-sitemap
-  - jekyll-last-modified-at
+# - jekyll-last-modified-at
