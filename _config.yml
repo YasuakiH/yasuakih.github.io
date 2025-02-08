@@ -1,4 +1,3 @@
 plugins:
   - jekyll-sitemap
-  - jekyll-last-modified-at
   - jekyll-readme-index
