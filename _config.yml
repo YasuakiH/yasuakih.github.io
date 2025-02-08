@@ -1,9 +1,9 @@
-defaults:
-  - 
-    scope:
-      path: "README.md"
-    values:
-      permalink: "index.html"
+# defaults:
+#   - 
+#     scope:
+#       path: "README.md"
+#     values:
+#       permalink: "index.html"
 
 plugins:
   - jekyll-readme-index
