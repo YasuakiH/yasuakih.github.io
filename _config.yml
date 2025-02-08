@@ -1,4 +1,10 @@
-url: "https://yasuakih.github.io"
+defaults:
+  - 
+    scope:
+      path: "README.md"
+    values:
+      permalink: "README.html"
+
 plugins:
   - jekyll-readme-index
   - jekyll-sitemap
