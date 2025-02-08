@@ -1,5 +1,4 @@
 ---
-permalink: index.html
 ---
 
 <!-- Written in 2025 by yasuakih -->
