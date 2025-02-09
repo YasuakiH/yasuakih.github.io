@@ -1,11 +1,3 @@
-# defaults:
-#   - 
-#     scope:
-#       path: "README.md"
-#     values:
-#       permalink: "index.html"
-
 plugins:
   - jekyll-readme-index
   - jekyll-sitemap
-# - jekyll-last-modified-at
