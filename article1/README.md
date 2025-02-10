@@ -91,7 +91,7 @@
 ## シミュレーションの設計
 
 ### 全体の構造
-設計はトップダウンである。プログラミング言語はPythonを用いた。モンテカルロ法は単純なので、Python言語の基本的な機能で大半を記述した。数値・統計計算に reliability、random、statistics、math、処理時間を短縮する並列処理に multiprocessing、グラフィックスに matplotlib、seaborn、データ構造化に pandasを使用した。
+設計はトップダウンである。プログラミング言語はPythonを用いた。モンテカルロ法のロジックの大半はPython言語の機能で記述した。数値・統計計算に reliability、random、statistics、math、並列処理に multiprocessing、グラフィックスに matplotlib、seaborn、データ構造化に numpy、pandas を主に使用した。
 
 次は全体の構造である (丸括弧内はソースコード上の関数名)。この構造には二つの主要なループがある。「内側ループ」は未知パラメータに基づく印刷ジョブを繰り返して、総インク消費量が目標値に達するまで印刷ジョブを生成する。「外側ループ」は、モンテカルロ法として妥当な解を探索する。
 
