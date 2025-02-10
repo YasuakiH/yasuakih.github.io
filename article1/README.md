@@ -101,11 +101,11 @@
 
 - 印刷シミュレーション (printing_simulation)
   - シミュレーションを指定した回数だけ繰り返す。一回のシミュレーションは総インク消費量が目標値に達するまで行う。
-    - 印刷機固有のオンデマンド印刷物の特徴をランダムに作成 (**class Customer**)
+    - 印刷機固有のオンデマンド印刷物の特徴を作成 (**class Customer**)
     - 印刷ジョブ実行のシミュレーション (**simulate_job_printing**)
     - 仮説の妥当性判定 (validate_results)
 
-- 印刷機固有のオンデマンド印刷物の特徴をランダムに作成 (**class Customer**)
+- 印刷機固有のオンデマンド印刷物の特徴 (**class Customer**)
   - オンデマンド印刷の特徴を作成 (generate_customer_printed_distribution)
     - オンデマンド印刷機の印刷機セグメントを仮定
     - 印刷用紙のサイズ別割合を仮定 (split_job_by_paper_sizes)
@@ -116,10 +116,14 @@
     - ジョブのインク消費量の計算 (ink_consumption_per_job)
     - 総インク消費量の計算
 
-- オンデマンド印刷物 (class PrintedMatter)
-  - 印刷物の特徴に基づき、印刷用紙のサイズを無作為に決める
+- 印刷ジョブ (class PrintedMatter)
+  - オンデマンド印刷物の特徴に基づき、用紙サイズ、エリアカバレッジ、ページ長、両面比を無作為に決める
 
-
+- 仮説の妥当性判定 (validate_results)
+  - 評価1: 用紙サイズ別の印刷枚数
+  - 評価2: ページ数合計
+  - 評価3: ページ数分布
+  - OK-NG 判定 (ok_or_ng_decision)
 
 ### 未知パラメータ仮定
 #### 印刷機セグメント
