@@ -133,7 +133,7 @@
 印刷機セグメントは、印刷機の使われ方を二次元マップ上の位置で表すものである。Y軸, X軸はそれぞれ、トータルエリアカバレッジと印刷ジョブ長である。シミュレーションを簡単にするために、印刷機セグメントの両軸ともに 3段階 (Lo, Hi, Mid) の離散的なものとした。モンテカルロ・シミュレーションでは9つに分けた印刷機セグメントから1つのアドレス (Q1-Q9) を無作為に選択した。これによってトータルエリアカバレッジ、および印刷ジョブ長も決まる。マップ上の位置で2つのパラメータの大きさを直感的に把握できる。
 
 <figure>
-  <img src="img/モデリング-印刷機セグメントの二次元マップ.png" style="display: block; margin: auto;" />
+  <img src="img/モデリング-印刷機セグメントの二次元マップ.png"/>
   <figcaption>印刷機の使われ方を説明する印刷機セグメントの二次元マップ。桃色で示す位置は、トータルエリアカバレッジ=Mid、印刷ジョブ長=Loに対応する。</figcaption>
 </figure>
 
@@ -141,7 +141,7 @@
 トータルエリアカバレッジは正規分布を仮定した。用紙サイズ別に3段階 (Hi, Mid, Lo) の平均と分散を固定し、それぞれの値はシミュレーションの結果を見て調節した。Lo(L) はテキスト主体 (教科書など)、Mid(M) は一般印刷物、High(H) は画像主体 (カタログなど) を想定した。シミュレーションではエリアカバレッジの範囲を 0 < エリアカバレッジ <= 0.8 とした。
 
 <figure>
-  <img src="img/モデリング-トータルエリアカバレッジ.png" style="display: block; margin: auto;" />
+  <img src="img/モデリング-トータルエリアカバレッジ.png"/>
   <figcaption>用紙サイズごとのトータルエリアカバレッジの分布。印刷機セグメントの位置によって分布は異なる。横軸(X)はトータルエリアカバレッジ、縦軸(Y)は頻度。</figcaption>
 </figure>
 <!--
@@ -161,7 +161,7 @@
 印刷ジョブ長も同様に正規分布を仮定し、用紙サイズ別に、印刷量の規模に応じて 3段階 (Hi, Mid, Lo) の平均と分散を仮定し、シミュレーションの結果を見て値を調節した。シミュレーションでは印刷ジョブ長の範囲を 0 < エリアカバレッジ <= 2000 とした。
 
 <figure>
-  <img src="img/モデリング-印刷ジョブ長.png" style="display: block; margin: auto;" />
+  <img src="img/モデリング-印刷ジョブ長.png"/>
   <figcaption>用紙サイズごとの印刷ジョブ長の分布。印刷機セグメントの位置によって分布は異なる。横軸(X)は印刷ジョブ長、縦軸(Y)はジョブ数。</figcaption>
 </figure>
 <!--
@@ -184,11 +184,6 @@
 ### 資源量算出
 <figure>
   <img src="img/モデルの実現性スタディ-収支計算PM1.png" width="80%" />
-  <figcaption>モデルの実現性スタディ 収支計算</figcaption>
-</figure>
-
-<figure>
-  <img src="img/モデルの実現性スタディ-収支計算PM1.png" style="display: block; margin: auto;" align="right"/>
   <figcaption>モデルの実現性スタディ 収支計算</figcaption>
 </figure>
 
@@ -234,17 +229,17 @@
 #### 制約
 
 <figure>
-  <img src="img/expected-ink-consumption.png" style="display: block; margin: auto;" />
+  <img src="img/expected-ink-consumption.png"/>
   <figcaption></figcaption>
 </figure>
 
 <figure>
-  <img src="img/expected-jobs-per-paper.png" style="display: block; margin: auto;" />
+  <img src="img/expected-jobs-per-paper.png"/>
   <figcaption></figcaption>
 </figure>
 
 <figure>
-  <img src="img/expeceted-length-distribution.png" style="display: block; margin: auto;" />
+  <img src="img/expeceted-length-distribution.png"/>
   <figcaption></figcaption>
 </figure>
 
@@ -256,7 +251,7 @@
 ### 良好な結果
 
 <figure>
-  <img src="img/summary_fig.png" style="display: block; margin: auto;" />
+  <img src="img/summary_fig.png"/>
   <figcaption></figcaption>
 </figure>
 
