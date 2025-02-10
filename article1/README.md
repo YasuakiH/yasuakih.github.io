@@ -90,8 +90,7 @@
 
 ## シミュレーションの設計
 
-### 全体の構成
-
+### 全体の構造
 - シミュレーション (main)
   - モンテカルロ法を実行し、結果を収集 (**generate_monte_carlo_simulation**)
   - シミュレーション結果の表示 (show_results)
@@ -101,12 +100,12 @@
   - シミュレーション結果の保存
 
 - 印刷シミュレーション (printing_simulation)
-  - シミュレーションを指定した回数だけ繰り返し
-    - 顧客のオンデマンド印刷物の特徴をランダムに設定 (**class Customer**)
+  - シミュレーションを指定した回数だけ繰り返す。一回のシミュレーションは総インク消費量が目標値に達するまで行う。
+    - 印刷機固有のオンデマンド印刷物の特徴をランダムに作成 (**class Customer**)
     - 印刷ジョブ実行のシミュレーション (**simulate_job_printing**)
     - 仮説の妥当性判定 (validate_results)
 
-- 顧客のオンデマンド印刷物の特徴をランダムに設定 (**class Customer**)
+- 印刷機固有のオンデマンド印刷物の特徴をランダムに作成 (**class Customer**)
   - オンデマンド印刷の特徴を作成 (generate_customer_printed_distribution)
     - オンデマンド印刷機の印刷機セグメントを仮定
     - 印刷用紙のサイズ別割合を仮定 (split_job_by_paper_sizes)
