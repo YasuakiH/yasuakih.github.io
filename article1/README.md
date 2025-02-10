@@ -92,14 +92,16 @@
 
 ### 全体の構成
 
-- a
-  - aa
-    - aa
-      - aaa
- - aa
-   - aaa
-     - aaa
-       - aa
+- シミュレーション (main)
+  - モンテカルロ法を実行し、結果を収集 (generate_monte_carlo_simulation)
+  - シミュレーション結果の表示 (show_results)
+
+- モンテカルロ法 (generate_monte_carlo_simulation)
+   - 印刷シミュレーション (printing_simulation)
+   - シミュレーション結果の保存
+
+- 印刷シミュレーション (printing_simulation)
+   - たーげっとNSA付きの選定
 
 ### 未知パラメータ仮定
 #### 印刷機セグメント
