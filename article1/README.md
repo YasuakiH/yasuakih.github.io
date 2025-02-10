@@ -95,13 +95,39 @@
 
 ```
 シミュレーション (main)
-  ├ モンテカルロ法を実行し、結果を収集 (**generate_monte_carlo_simulation**)
+  ├ モンテカルロ法を実行し、結果を収集 (generate_monte_carlo_simulation)
   └ シミュレーション結果の表示 (show_results)
 
 モンテカルロ法 (generate_monte_carlo_simulation)
   ├ シミュレーション対象の印刷機パラメータを取得
-  ├ 印刷シミュレーション (**printing_simulation**)
+  ├ 印刷シミュレーション (printing_simulation)
   └ シミュレーション結果の保存
+
+印刷シミュレーション (printing_simulation)
+  └ シミュレーションを指定した回数だけ繰り返す。一回のシミュレーションは総インク消費量が目標値に達するまで行う。
+    ├ 印刷機固有のオンデマンド印刷物の特徴を作成 (class Customer)
+    ├ 印刷ジョブ実行のシミュレーション (simulate_job_printing)
+    └ 仮説の妥当性判定 (validate_results)
+
+印刷機固有のオンデマンド印刷物の特徴 (class Customer)
+  └ オンデマンド印刷の特徴を作成 (generate_customer_printed_distribution)
+    ├ オンデマンド印刷機の印刷機セグメントを仮定
+    └ 印刷用紙のサイズ別割合を仮定 (split_job_by_paper_sizes)
+
+印刷ジョブ実行のシミュレーション (simulate_job_printing)
+  └ 総インク消費量が目標値に達するまでループ
+    ├ 印刷ジョブをランダムに生成 (class PrintedMatter)
+    ├ ジョブのインク消費量の計算 (ink_consumption_per_job)
+    └ 総インク消費量の計算
+
+印刷ジョブ (class PrintedMatter)
+  └ オンデマンド印刷物の特徴に基づき、用紙サイズ、エリアカバレッジ、ページ長、両面比を無作為に決める
+
+仮説の妥当性判定 (validate_results)
+  ├ 評価1: 用紙サイズ別の印刷枚数
+  ├ 評価2: ページ数合計
+  ├ 評価3: ページ数分布
+  └ OK-NG 判定 (ok_or_ng_decision)
 
 ```
 
