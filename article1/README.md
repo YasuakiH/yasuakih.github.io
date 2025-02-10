@@ -213,7 +213,7 @@
 <figure>
   <img src="img/設計-印刷ジョブ生成-トータルエリアカバレッジサンプリング.png"/>
   <br/>
-  <figcaption>図6. トータルエリアカバレッジサンプリング</figcaption>
+  <figcaption>図6. トータルエリアカバレッジの母集団からサンプリングした結果</figcaption>
 </figure>
 </div>
 
@@ -223,7 +223,7 @@
 <figure>
   <img src="img/設計-印刷ジョブ生成-印刷ジョブ長サンプリング.png"/>
   <br/>
-  <figcaption>図7. 印刷ジョブ長サンプリング</figcaption>
+  <figcaption>図7. 印刷ジョブ長の母集団からサンプリングした結果</figcaption>
 </figure>
 </div>
 
