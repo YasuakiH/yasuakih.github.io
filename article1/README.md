@@ -116,7 +116,7 @@
                   └ 印刷用紙のサイズ別割合を仮定 (split_job_by_paper_sizes)
 
               <b>印刷ジョブ実行のシミュレーション</b> (simulate_job_printing)
-                └ 総インク消費量が目標値に達するまでループ ← <b>内側ループ</b>
+                └ 総インク消費量が目標値に達するまでループ　　　　　　　　　　　　　　　← <b>内側ループ</b>
                   ├ <b>印刷ジョブ</b>をランダムに生成 (class PrintedMatter)
                   ├ ジョブのインク消費量の計算 (ink_consumption_per_job)
                   └ 総インク消費量の計算
