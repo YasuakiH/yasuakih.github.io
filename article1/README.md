@@ -116,7 +116,7 @@
             ├ <b>印刷ジョブ実行のシミュレーション</b> (simulate_job_printing)
             └ <b>仮説の妥当性判定</b> (validate_results)
 
-              <b>顧客の印刷機に固有のオンデマンド印刷物の特徴</b> (class Customer)　　　　　← <b>未知パラメータ仮定</b>
+              <b>顧客の印刷機に固有のオンデマンド印刷物の特徴</b> (class Customer)　　　　　← <b><a href="#未知パラメータ仮定">未知パラメータ仮定</a></b>
                 └ オンデマンド印刷の特徴を作成 (generate_customer_printed_distribution)
                   ├ オンデマンド印刷機の印刷機セグメントを仮定
                   └ 印刷用紙のサイズ別割合を仮定 (split_job_by_paper_sizes)
@@ -130,7 +130,7 @@
                     <b>印刷ジョブ</b> (class PrintedMatter)　　　　　　　　　　　　　　　　　← <b><a href="#印刷ジョブ生成">印刷ジョブ生成</a></b>
                      └ オンデマンド印刷物の特徴に基づき、用紙サイズ、エリアカバレッジ、ページ長、両面比を無作為に決める
 
-              <b>仮説の妥当性判定</b> (validate_results)　　　　　　　　　　　　　　　　　　　← <b>妥当性評価</b>
+              <b>仮説の妥当性判定</b> (validate_results)　　　　　　　　　　　　　　　　　　　← <b><a href="#妥当性評価">妥当性評価</a></b>
                 ├ 評価1: 用紙サイズ別の印刷枚数
                 ├ 評価2: ページ数合計
                 ├ 評価3: ページ数分布
