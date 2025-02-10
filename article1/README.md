@@ -106,7 +106,7 @@
 
         <b>印刷シミュレーション</b> (printing_simulation)
           └ シミュレーションを指定した回数だけ繰り返す。　　　　　　　　　　　　　　　　　← <b>外側ループ</b>
-            ├ <b>顧客の印刷機に固有のオンデマンド印刷物の特徴</b>を作成 (class Customer)
+            ├ <b>顧客の印刷機に固有のオンデマンド印刷物の特徴</b>を作成 (class Customer)  ← <b>未知パラメータの仮説</b>
             ├ <b>印刷ジョブ実行のシミュレーション</b> (simulate_job_printing)
             └ <b>仮説の妥当性判定</b> (validate_results)
 
