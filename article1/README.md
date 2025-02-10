@@ -93,24 +93,25 @@
 ### 全体の構成
 
 - シミュレーション (main)
-  - モンテカルロ法を実行し、結果を収集 (generate_monte_carlo_simulation)
+  - モンテカルロ法を実行し、結果を収集 (*8generate_monte_carlo_simulation**)
   - シミュレーション結果の表示 (show_results)
 
 - モンテカルロ法 (generate_monte_carlo_simulation)
-  - 印刷シミュレーション (printing_simulation)
+  - 印刷シミュレーション (**printing_simulation**)
   - シミュレーション結果の保存
 
 - 印刷シミュレーション (printing_simulation)
   - ターゲット印刷機の特定
   - シミュレーションを指定した回数だけ繰り返し
 	- 顧客のオンデマンド印刷物の特徴をランダムに設定 (class Customer)
-	- 印刷ジョブ実行のシミュレーション (simulate_job_printing)
+	- 印刷ジョブ実行のシミュレーション (**simulate_job_printing**)
     - 仮説の妥当性判定 (validate_results)
   - h1_ce と h2_ce の最小値をそれぞれ表示 (debug_show_min_h1_and_h2)
 
-- 印刷ジョブ実行のシミュレーション (simulate_job_printing)
+- 印刷ジョブ実行のシミュレーション (**simulate_job_printing**)
   - 印刷ジョブをランダムに生成
   - 総インク消費量が目標値に達するまでループ
+	- a
 
 ### 未知パラメータ仮定
 #### 印刷機セグメント
