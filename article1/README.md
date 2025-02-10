@@ -182,6 +182,13 @@
 
 ### 印刷ジョブ生成
 ### 資源量算出
+
+<figure>
+  <img src="img/" style="display: block; margin: auto;" />
+  <figcaption></figcaption>
+</figure>
+
+
 #### インク
 #### 用紙
 ### 結果評価
@@ -192,6 +199,12 @@
 #### 印刷物種類ごとの、ページ数、および部数
 
 #### インク消費量の計算式
+
+<figure>
+  <img src="img/" style="display: block; margin: auto;" />
+  <figcaption></figcaption>
+</figure>
+
 * | ![モデルの実現性スタディ-収支計算PM1.png](img/モデルの実現性スタディ-収支計算PM1.png) |
   | :--: |
   | *モデルの実現性スタディ-収支計算PM1* |
@@ -227,9 +240,21 @@
 
 #### 制約
 
-* ![expected-ink-consumption.png](img/expected-ink-consumption.png)
-* ![expected-jobs-per-paper.png](img/expected-jobs-per-paper.png)
-* ![expeceted-length-distribution.png](img/expeceted-length-distribution.png)
+<figure>
+  <img src="img/expected-ink-consumption.png" style="display: block; margin: auto;" />
+  <figcaption></figcaption>
+</figure>
+
+<figure>
+  <img src="img/expected-jobs-per-paper.png" style="display: block; margin: auto;" />
+  <figcaption></figcaption>
+</figure>
+
+<figure>
+  <img src="img/expeceted-length-distribution.png" style="display: block; margin: auto;" />
+  <figcaption></figcaption>
+</figure>
+
 
 ## 方法
 
@@ -237,7 +262,10 @@
 
 ### 良好な結果
 
-* ![summary_fig.png](img/summary_fig.png)
+<figure>
+  <img src="img/summary_fig.png" style="display: block; margin: auto;" />
+  <figcaption></figcaption>
+</figure>
 
 ### 不良な結果
 
