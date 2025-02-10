@@ -144,6 +144,7 @@
 <div align="center">
   <figure>
     <img src="img/モデリング-印刷機セグメントの二次元マップ.png"/>
+    <br/>
     <figcaption>図2. 印刷機の使われ方を説明する印刷機セグメントの二次元マップ。桃色で示す位置は、トータルエリアカバレッジ=Mid、印刷ジョブ長=Loに対応する。</figcaption>
   </figure>
 </div>
@@ -153,6 +154,7 @@
 
 <figure>
   <img src="img/モデリング-トータルエリアカバレッジ.png"/>
+  <br/>
   <figcaption>図3. 用紙サイズごとのトータルエリアカバレッジの分布。印刷機セグメントの位置によって分布は異なる。横軸(X)はトータルエリアカバレッジ、縦軸(Y)は頻度。</figcaption>
 </figure>
 <!--
@@ -173,6 +175,7 @@
 
 <figure>
   <img src="img/モデリング-印刷ジョブ長.png"/>
+  <br/>
   <figcaption>図4. 用紙サイズごとの印刷ジョブ長の分布。印刷機セグメントの位置によって分布は異なる。横軸(X)は印刷ジョブ長、縦軸(Y)はジョブ数。</figcaption>
 </figure>
 <!--
@@ -209,6 +212,7 @@
 <div align="right">
 <figure>
   <img src="img/設計-印刷ジョブ生成-トータルエリアカバレッジサンプリング.png"/>
+  <br/>
   <figcaption>図6. トータルエリアカバレッジサンプリング</figcaption>
 </figure>
 </div>
@@ -218,6 +222,7 @@
 <div align="right">
 <figure>
   <img src="img/設計-印刷ジョブ生成-印刷ジョブ長サンプリング.png"/>
+  <br/>
   <figcaption>図7. 印刷ジョブ長サンプリング</figcaption>
 </figure>
 </div>
