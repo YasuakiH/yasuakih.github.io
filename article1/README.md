@@ -299,14 +299,18 @@
   <figcaption></figcaption>
 </figure>
 
-## 結果
-### 良好な結果
+## 実験結果
+### 資源消費量の推定
 <figure>
   <img src="img/summary_fig.png"/>
   <figcaption></figcaption>
 </figure>
 
-### 不良な結果
+### 印刷機セグメントの推定
+<figure>
+  <img src="img/実験結果-印刷機セグメント.png" />
+  <figcaption>図. 実験結果-印刷機セグメント.png</figcaption>
+</figure>
 
 ## 考察
 
@@ -358,13 +362,6 @@ options:
 ``` shell
 python sim_hidden_param.py --iterations 100 --printing_machines PM1
 ```
-
-
-<figure>
-  <img src="img/モデルの実現性スタディ-収支計算PM1.png" width="80%" />
-  <figcaption>図. モデルの実現性スタディ 収支計算</figcaption>
-</figure>
-
 
 ----
 このページに掲載した作品 (テキスト、プログラムコードなど) はパブリック・ドメインに提供しています。詳細は [CC0 1.0 全世界 コモンズ証](https://creativecommons.org/publicdomain/zero/1.0/deed.ja) をご覧ください。
