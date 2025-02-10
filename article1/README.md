@@ -130,11 +130,13 @@
                 └ OK-NG 判定 (ok_or_ng_decision)
 ```
 
+<pre><code>
               仮説の妥当性判定 (validate_results)
-                ├ 評価1: **用紙サイズ別の印刷枚数**
-                ├ 評価2: ページ数合計
+                ├ 評価1: <b>用紙サイズ別の印刷枚数</b>
+                ├ 評価2: **ページ数合計**
                 ├ 評価3: ページ数分布
                 └ OK-NG 判定 (ok_or_ng_decision)
+</code></pre>
 
 
 
