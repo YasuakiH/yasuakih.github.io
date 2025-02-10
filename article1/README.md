@@ -156,7 +156,7 @@
 
 <figure>
   <img src="img/モデリング-トータルエリアカバレッジ.png" style="display: block; margin: auto;" />
-  <figcaption>*3種類のトータルエリアカバレッジの分布。横軸(X)はトータルエリアカバレッジ、縦軸(Y)は頻度を表す。*</figcaption>
+  <figcaption>3種類のトータルエリアカバレッジの分布。横軸(X)はトータルエリアカバレッジ、縦軸(Y)は頻度を表す。000000000000000000000 9999999999   999999999999 9999999f 999999999999999 9 9 999999999999999999a9999999a99999999999999a999999a999   9 9 </figcaption>
 </figure>
 
 <img src="img/モデリング-トータルエリアカバレッジ.png" style="display: block; margin: auto;" />
