@@ -232,15 +232,9 @@
 生成した印刷ジョブから、前述の「<a href="#資源量の算出">資源量の算出</a>」に示した式を用いて、そのジョブで消費したインク量を算出した。シミュレーション全体を通じてインク量を累積して総インク消費量を算出し、事前に定めた総インク消費量を超えた時点でシミュレーションを終了した。
 
 ### 妥当性評価
-#### インク量 (累積)
+シミュレーションの終了後、仮定した印刷機セグメントの妥当性評価を行った。
 
-
-    # 評価1: 用紙サイズ別の印刷枚数 [枚]
-    # 評価2: ページ数合計
-    # 評価3: ページ数分布
-
-#### インク量 (累積)
-
+#### 評価0: インク量 (累積)
 <div align="center">
 <figure>
   <img src="img/妥当性評価-資源消費量-インク.png"/>
@@ -249,7 +243,8 @@
 </figure>
 </div>
 
-#### 用紙分布 (交差エントロピー)
+#### 評価1: 用紙サイズ別の印刷枚数 [枚] 
+用紙分布 交差エントロピー
 
 <div align="center">
 <figure>
@@ -258,8 +253,11 @@
   <figcaption>図. 妥当性評価-資源消費量-印刷用紙.png</figcaption>
 </figure>
 </div>
-#### ページ長分布 (交差エントロピー)
 
+#### 評価2: ページ数合計
+
+#### 評価3: ページ数分布
+ページ長分布 (交差エントロピー)
 <div align="center">
 <figure>
   <img src="img/妥当性評価-印刷ページ長分布.png"/>
@@ -267,7 +265,6 @@
   <figcaption>図. 妥当性評価-印刷ページ長分布.png</figcaption>
 </figure>
 </div>
-
 
 
 
@@ -280,25 +277,6 @@
 #### 制約条件 (インク量、用紙枚数、用紙枚数の交差エントロピー、印刷ジョブ長の交差エントロピー)
 #### 印刷機セグメント部類 (トータルエリアカバレッジと印刷ジョブ長の仮定)
 #### 用紙サイズ比率(3-4種類、合計して100%)
-
-
-
-#### 制約
-
-<figure>
-  <img src="img/expected-ink-consumption.png"/>
-  <figcaption></figcaption>
-</figure>
-
-<figure>
-  <img src="img/expected-jobs-per-paper.png"/>
-  <figcaption></figcaption>
-</figure>
-
-<figure>
-  <img src="img/expeceted-length-distribution.png"/>
-  <figcaption></figcaption>
-</figure>
 
 ## 実験結果
 ### 資源消費量の推定
