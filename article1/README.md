@@ -93,6 +93,18 @@
 ### 全体の構造
 設計はトップダウンである。プログラミング言語はPythonを用いた。シミュレーションは直列に実行する単純なものであり、シミュレーション用のフレームワークも使用しない。処理時間を短縮するため multiprocessing モジュールを用いた並列処理を加えたが、結果に違いはない。次は全体の構造である (丸括弧内はソースコード上の関数名)。
 
+``` python
+シミュレーション (main)
+  ├ モンテカルロ法を実行し、結果を収集 (**generate_monte_carlo_simulation**)
+  └ シミュレーション結果の表示 (show_results)
+
+モンテカルロ法 (generate_monte_carlo_simulation)
+  ├ シミュレーション対象の印刷機パラメータを取得
+  ├ 印刷シミュレーション (**printing_simulation**)
+  └ シミュレーション結果の保存
+
+```
+
 - シミュレーション (main)
   - モンテカルロ法を実行し、結果を収集 (**generate_monte_carlo_simulation**)
   - シミュレーション結果の表示 (show_results)
