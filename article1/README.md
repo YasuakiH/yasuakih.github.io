@@ -157,7 +157,7 @@
 <p align="center">
   <img src="img/モデリング-トータルエリアカバレッジ.png" style="display: block; margin: auto;" />
 </p>
-
+*3種類のトータルエリアカバレッジの分布。横軸(X)はトータルエリアカバレッジ、縦軸(Y)は頻度を表す。*
 
 
 
