@@ -100,7 +100,7 @@
   └ シミュレーション結果の表示 (show_results)
 
     <b>モンテカルロ法</b> (generate_monte_carlo_simulation)
-      ├ シミュレーション対象の印刷機パラメータを取得
+      ├ シミュレーション対象の印刷機を列挙
       ├ <b>印刷シミュレーション</b> (printing_simulation)
       └ シミュレーション結果の保存
 
