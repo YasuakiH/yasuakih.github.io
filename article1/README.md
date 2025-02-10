@@ -108,7 +108,9 @@
     - 仮説の妥当性判定 (validate_results)
 
 - 顧客のオンデマンド印刷物の特徴をランダムに設定 (class Customer)
-  - 顧客のオンデマンド印刷の特徴を作成 (generate_customer_printed_distribution)
+  - オンデマンド印刷の特徴を作成 (generate_customer_printed_distribution)
+    - オンデマンド印刷機の印刷機セグメントを仮定
+        (2) 印刷用紙の割合 (split_job_by_paper_sizes)
 
 - 印刷ジョブ実行のシミュレーション (simulate_job_printing)
   - 印刷ジョブをランダムに生成
