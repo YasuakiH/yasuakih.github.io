@@ -136,6 +136,18 @@
   <img src="img/モデリング-印刷機セグメントの二次元マップ.png"/>
 </div>
 
+<div align="center">
+  <img src="img/モデリング-印刷機セグメントの二次元マップ.png"/>
+  <figcaption>印刷機の使われ方を説明する印刷機セグメントの二次元マップ。桃色で示す位置は、トータルエリアカバレッジ=Mid、印刷ジョブ長=Loに対応する。</figcaption>
+</div>
+
+<div align="center">
+  <figure>
+    <img src="img/モデリング-印刷機セグメントの二次元マップ.png"/>
+    <figcaption>印刷機の使われ方を説明する印刷機セグメントの二次元マップ。桃色で示す位置は、トータルエリアカバレッジ=Mid、印刷ジョブ長=Loに対応する。</figcaption>
+  </figure>
+</div>
+
 <figure>
   <img src="img/モデリング-印刷機セグメントの二次元マップ.png"/>
   <figcaption>印刷機の使われ方を説明する印刷機セグメントの二次元マップ。桃色で示す位置は、トータルエリアカバレッジ=Mid、印刷ジョブ長=Loに対応する。</figcaption>
