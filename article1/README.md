@@ -95,7 +95,7 @@
 
 <pre><code>
 シミュレーション (main)
-  ├ <b>モンテカルロ法</b> を実行し、結果を収集 (generate_monte_carlo_simulation)
+  ├ <b>モンテカルロ法</b>を実行し、結果を収集 (generate_monte_carlo_simulation)
   └ シミュレーション結果の表示 (show_results)
 
     <b>モンテカルロ法</b> (generate_monte_carlo_simulation)
