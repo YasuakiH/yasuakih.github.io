@@ -93,12 +93,12 @@
 ### 全体の構造
 設計はトップダウンである。プログラミング言語はPythonを用いた。シミュレーションは直列に実行する単純なものであり、シミュレーション用のフレームワークも使用しない。処理時間を短縮するため multiprocessing モジュールを用いた並列処理を加えたが、結果に違いはない。次は全体の構造である (丸括弧内はソースコード上の関数名)。
 
-```
+<pre><code>
 シミュレーション (main)
-  ├ モンテカルロ法を実行し、結果を収集 (generate_monte_carlo_simulation)
+  ├ **モンテカルロ法** を実行し、結果を収集 (generate_monte_carlo_simulation)
   └ シミュレーション結果の表示 (show_results)
 
-    モンテカルロ法 (generate_monte_carlo_simulation)
+    **モンテカルロ法** (generate_monte_carlo_simulation)
       ├ シミュレーション対象の印刷機パラメータを取得
       ├ 印刷シミュレーション (printing_simulation)
       └ シミュレーション結果の保存
@@ -123,14 +123,7 @@
                     印刷ジョブ (class PrintedMatter)
                      └ オンデマンド印刷物の特徴に基づき、用紙サイズ、エリアカバレッジ、ページ長、両面比を無作為に決める
 
-              仮説の妥当性判定 (validate_results)
-                ├ 評価1: 用紙サイズ別の印刷枚数
-                ├ 評価2: ページ数合計
-                ├ 評価3: ページ数分布
-                └ OK-NG 判定 (ok_or_ng_decision)
-```
 
-<pre><code>
               仮説の妥当性判定 (validate_results)
                 ├ 評価1: <b>用紙サイズ別の印刷枚数</b>
                 ├ 評価2: **ページ数合計**
