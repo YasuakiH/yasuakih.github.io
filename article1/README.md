@@ -201,8 +201,13 @@
 #### インク消費量の計算式
 
 <figure>
-  <img src="img/" style="display: block; margin: auto;" />
-  <figcaption></figcaption>
+  <img src="img/モデルの実現性スタディ-収支計算PM1.png" style="display: block; margin: auto;" width="80%"/>
+  <figcaption>モデルの実現性スタディ 収支計算</figcaption>
+</figure>
+
+<figure>
+  <img src="img/モデルの実現性スタディ-収支計算PM1.png" style="display: block; margin: auto;"/>
+  <figcaption>モデルの実現性スタディ 収支計算</figcaption>
 </figure>
 
 * | ![モデルの実現性スタディ-収支計算PM1.png](img/モデルの実現性スタディ-収支計算PM1.png) |
