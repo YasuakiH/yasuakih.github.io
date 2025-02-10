@@ -107,7 +107,7 @@
           └ シミュレーションを指定した回数だけ繰り返す。一回のシミュレーションは総インク消費量が目標値に達するまで行う。
             ├ <b>印刷機固有のオンデマンド印刷物の特徴</b>を作成 (class Customer)
             ├ <b>印刷ジョブ実行のシミュレーション</b> (simulate_job_printing)
-            └ <b>仮説の妥当性判定<b> (validate_results)
+            └ <b>仮説の妥当性判定</b> (validate_results)
 
               <b>印刷機固有のオンデマンド印刷物の特徴</b> (class Customer)
                 └ オンデマンド印刷の特徴を作成 (generate_customer_printed_distribution)
