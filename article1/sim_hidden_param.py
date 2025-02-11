@@ -1,7 +1,7 @@
 # !python
 
 # sim_hidden_param.py - サマライズされた印刷機の稼働情報から、元の印刷ジョブを推定する
-# Written in 2024 by yasuakih
+# Written in 2025 by yasuakih
 
 '''
 usage: sim_hidden_param.py [-h] [--iterations ITERATIONS] [--printing_machines [PRINTING_MACHINES ...]] [--pickle PICKLE] [--cpu_count CPU_COUNT]
