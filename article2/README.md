@@ -15,7 +15,7 @@
   <figure>
     <img src="../img/印刷機の保守モデル.png"/>
 	<br/>
-    <figcaption>図. 印刷機の保守モデル (<a href="../img/印刷機の保守モデル.png" target="_blank"拡大</a>)</figcaption>
+    <figcaption>図. 印刷機の保守モデル (<a href="../img/印刷機の保守モデル.png" target="_blank">拡大</a>)</figcaption>
   </figure>
 </div>
 
