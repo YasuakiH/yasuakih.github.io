@@ -9,7 +9,7 @@
 - 部品ライフ推定 【本記事の範囲】
 - <font color="gray">機械の信頼度成長</font>
 
-## 印刷機の保守サービスのモデル作成
+## 印刷機の保守サービスモデル
 
 <div align="center">
   <figure>
@@ -18,6 +18,17 @@
     <figcaption>図. 印刷機の保守モデル</figcaption>
   </figure>
 </div>
+
+## シミュレーションの設計
+
+### 全体の構造
+
+<div align="center">
+図2. 全体の構造
+</div>
+
+<pre><code><b>シミュレーション</b> (main)
+</code></pre>
 
 ## 実験結果
 次のコマンドラインを用いてシミュレーションを実施した。
