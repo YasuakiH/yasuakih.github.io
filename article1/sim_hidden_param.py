@@ -21,7 +21,7 @@ TclError: invalid command name ".!navigationtoolbar2tk.!button2"
 import sys
 import random
 import numpy as np
-import simpy
+# import simpy
 import reliability
 import matplotlib
 import matplotlib.pyplot as plt
@@ -408,16 +408,16 @@ class Customer():
     }
 
     def generate_customer_printed_distribution(self):
-        '''顧客のオンデマンド印刷の特徴を作成。これを元に印刷ジョブが作成される。'''
+        '''顧客のオンデマンド印刷の特徴をランダムに作成。これを元に印刷ジョブが作成される。'''
 
-        # (1) オンデマンド印刷機の種類
+        # (1) オンデマンド印刷機の印刷機セグメントを仮定
         self.customer_type     = random.sample(self.CUTOMER_TYPE, 1)[0]    # 仮説を無作為に1つ選択。[0]は返り値のlist型からstr型にするため。
-        self.area_coverage_lvl = self.CUTOMER_DICT[self.customer_type]['area_coverage_lvl']   # トータルエリアカバレッジ [L, M, H] の3段階
-        self.page_length_lvl   = self.CUTOMER_DICT[self.customer_type]['page_length_lvl']     # 印刷ページ長 [L, M, H] の3段階
+        self.area_coverage_lvl = self.CUTOMER_DICT[self.customer_type]['area_coverage_lvl']  # トータルエリアカバレッジ [L, M, H] の3段階
+        self.page_length_lvl   = self.CUTOMER_DICT[self.customer_type]['page_length_lvl']    # 印刷ページ長 [L, M, H] の3段階
 
         # logger_debug(f'  class Customer(): self.customer_type={self.customer_type} self.area_coverage_lvl={self.area_coverage_lvl} self.page_length_lvl={self.page_length_lvl}')
 
-        # (2) 印刷用紙の割合
+        # (2) 印刷用紙のサイズ別割合を仮定
         def split_job_by_paper_sizes():
             printed_matter = PrintedMatter(None, None)  # このインスタンスは、インスタンス変数の参照用として用いる
             total_printed_matters = len(printed_matter.PRINTED_MATTERS.keys())  # 利用可能な印刷用紙の種類の数
@@ -434,7 +434,7 @@ class Customer():
             self.customer_printed_matters_list = random.sample(list(printed_matter.PRINTED_MATTERS.keys()), customer_printed_matters)  # その種類をランダムに列挙
             # logger_debug(f'self.customer_printed_matters_list = {self.customer_printed_matters_list}')
 
-            # 顧客のオンデマンド印刷物の特徴 (これを元に印刷ジョブが作成される)
+            # 顧客の印刷機に固有のオンデマンド印刷物の特徴を作成。これを元に印刷ジョブが作成される。
             seg = {}
             if customer_printed_matters == 1:
                 # seg = {}
@@ -490,11 +490,10 @@ class Customer():
             result_s += item + ' ' + f'{v:>2}' + ' '
         result_s = '[' + result_s.rstrip(' ').replace('長尺','長').replace('葉書','葉') + ']'
         return f'[TYP={self.customer_type} AC={self.area_coverage_lvl} PL={self.page_length_lvl}]  {result_s}'
-
 # end-of class Customer()
 
 
-# オンデマンド印刷物
+# オンデマンド印刷物の印刷ジョブ
 # --------------------------------
 class PrintedMatter():
     '''オンデマンド印刷における典型的な、TAC値、用紙サイズ、ページ数、両面比率を仮定した。'''
@@ -631,6 +630,8 @@ plt.show()
         }
 
         if customer is None:
+            # __init__() 関数内のローカル変数を外部から参照できるようにしたい。
+            # 仮引数 customer が None の場合、ローカル変数をインスタンス変数として参照可能にして処理を終える。
             self.area_coverage_list = area_coverage_list
             self.page_length_list = page_length_list
             self.duplex_rate_list = duplex_rate_list
@@ -638,13 +639,14 @@ plt.show()
         else:
             self.local_debug_print(f'    class PrintedMatter(): customer.customer_type={customer.customer_type} customer.area_coverage_lvl={customer.area_coverage_lvl} customer.page_length_lvl={customer.page_length_lvl}')
 
-            # 1. 印刷物種類
-            # 顧客のオンデマンド印刷物の特徴をランダムに決める (これを元に印刷ジョブが作成される)
+            # 1. 印刷物の特徴
+            #    (呼び出し元から与えられた) 顧客の印刷機に固有のオンデマンド印刷物の特徴を得る。
             customer_printed_matters = customer.matters
             self.local_debug_print(f'    class PrintedMatter(): customer_printed_matters = {customer_printed_matters}')
             assert isinstance(customer_printed_matters, dict), f'type(customer_printed_matters) = {type(customer_printed_matters)}'
 
-            # 用紙サイズ。これにより後続のエリアカバレッジ、用紙サイズ、印刷ページ長、両面比の重みが決まる。
+            #    その特徴に基づき、印刷用紙のサイズを無作為に決める。
+            #    用紙サイズが決まると後続のエリアカバレッジ、用紙サイズ、印刷ページ長、両面比の統計的な分布も決まる。
             matter = random.choices(
                 list(customer_printed_matters.keys()),
                 weights = list(customer_printed_matters.values())
@@ -800,7 +802,7 @@ class PrintingMachine():
                 '長尺' :  10000,
             },
 
-            # ページ数分布 [ページ] : [ジョブ] (両面時は2ページ/枚、片面時は1ページ/枚)
+            # ページ長分布 [ページ] : [ジョブ] (両面時は2ページ/枚、片面時は1ページ/枚)
             'PAGE_LENGTH_DISTRIBUTION_LOCAL': {
                 '1-10'      : 3000,  # 数字は架空
                 '11-20'     : 500,
@@ -941,6 +943,7 @@ def simulate_job_printing(customer, printing_machine):
     total_ink = 0
     printingjob_results = PrintingJobResults()
 
+    # 未知パラメータに基づく印刷ジョブを繰り返して、総インク消費量が目標値に達するまで印刷ジョブを生成する
     while True:
         # 印刷ジョブをランダムに生成
         printing_job = PrintedMatter(customer, printing_machine)
@@ -964,7 +967,7 @@ def simulate_job_printing(customer, printing_machine):
 # end-of def simulate_job_printing
 
 # --------------------------------
-# 2. 仮説の妥当性判定
+# 2. 仮説の妥当性評価
 # --------------------------------
 
 def validate_results(customer, printing_machine, total_ink, printingjob_results, mp_savedir_path):
@@ -1003,14 +1006,14 @@ def validate_results(customer, printing_machine, total_ink, printingjob_results,
     h1_ce = cross_entropy(p1, q1)  # , Paper().PAPERS)
     local_debug_print(f'    h1_ce = {h1_ce:.2f} bit')
 
-    # 評価2: ページ数合計
+    # 評価2: 用紙枚数総計
     # --------------------------------
     # logger_debug(f'sum(p1)={sum(p1)}')
     # logger_debug(f'sum(q1)={sum(q1)}')
     sumq1_sump1_ratio = sum(q1) / sum(p1)
     # logger_debug(f'sumq1_sump1_ratio={sumq1_sump1_ratio:.2f}')
 
-    # 評価3: ページ数分布
+    # 評価3: ページ長分布
     # --------------------------------
     number_of_jobs_by_page_length = {}
     for page_length in printing_machine.PAGE_LENGTH_RANGE_LIST:
@@ -1323,8 +1326,6 @@ def validate_results(customer, printing_machine, total_ink, printingjob_results,
 
             plt.title(f'  推定したインク消費量\n\n  ・推定={expected_total_ink_consumption_in_k:,} kg\n  ・期待={predicted_total_ink_consumption_in_k:,} kg\n', loc='left', y=+1.1, pad=-14)   # タイトルを上げる: yを増やす、タイトルは下がる: yを減らす
 
-
-
             # plt.subplots_adjust(left=-0.05, right=1.05)
 
         # end-of def plot_for_total_ink
@@ -1437,6 +1438,7 @@ def validate_results(customer, printing_machine, total_ink, printingjob_results,
     # end-of ok_or_ng_decision
 
     ok_or_ng = ok_or_ng_decision(h1_ce, h2_ce, sumq1_sump1_ratio)
+
     if ok_or_ng == 'OK':
         # 比較用グラフ保存
         save_to_chart(showfig=False, savefig=True)
@@ -1475,15 +1477,15 @@ def printing_simulation(mp_args):
     # ターゲット印刷機
     printing_machine = PrintingMachine(name)
 
-    # シミュレーションを指定した回数だけ繰り返す。一回のシミュレーションは総インク消費量が目標値に達するまで行う。
+    # シミュレーションを指定した回数だけ繰り返す。モンテカルロ法として妥当な解を探索する。
     for i in range(iterations):
-        # 顧客のオンデマンド印刷物の特徴をランダムに設定。これを元に印刷ジョブが作成される。
+        # 顧客の印刷機に固有のオンデマンド印刷物の特徴を作成。これを元に印刷ジョブが作成される。
         customer = Customer()
 
         # 1. 印刷ジョブ実行のシミュレーション
         (total_ink, printingjob_results) = simulate_job_printing(customer, printing_machine)
 
-        # 2. 仮説の妥当性判定
+        # 2. 仮説の妥当性評価
         (   ok_or_ng, result_cross_entropy, sim_iterations, sumq1_sump1_ratio
         ) = validate_results(customer, printing_machine, total_ink, printingjob_results, mp_savedir_path)
 
@@ -1564,7 +1566,7 @@ def printing_simulation(mp_args):
 def generate_monte_carlo_simulation(iterations):
     '''モンテカルロ法による印刷シミュレーション'''
 
-    # シミュレーション対象の印刷機を決める。リスト names にシミュレーションで使用する印刷機の名前を格納。
+    # シミュレーション対象の印刷機を列挙する。リスト names にシミュレーションで使用する印刷機の名前を格納。
     names = PrintingMachine.NAMES   # ['No1', 'No2', ..]
     logger.debug(f'name = {names}')
     if 1 <= len(args.printing_machines):
