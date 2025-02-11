@@ -19,7 +19,16 @@
   </figure>
 </div>
 
-## 結果
+## 実験結果
+次のコマンドラインを用いてシミュレーションを実施した。
+
+``` shell
+python TBD
+```
+
+### 停止時間
+
+### 交換部品数
 
 <div align="center">
   <figure>
@@ -28,6 +37,8 @@
     <figcaption>図. 停止時間の比較、および交換部品数の比較</figcaption>
   </figure>
 </div>
+
+## 結論
 
 ## 付録
 ### ソースコード
