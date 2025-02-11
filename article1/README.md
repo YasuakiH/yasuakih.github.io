@@ -120,7 +120,7 @@
             ├ <b>印刷ジョブ実行のシミュレーション</b> (simulate_job_printing)
             └ <b>仮説の妥当性評価</b> (validate_results)
 
-              <b>顧客の印刷機に固有のオンデマンド印刷物の特徴</b>を作成 (class Customer)　　　　　← <b><a href="#未知パラメータ仮定">未知パラメータ仮定</a></b>
+              <b>顧客の印刷機に固有のオンデマンド印刷物の特徴</b>を作成 (class Customer)　← <b><a href="#未知パラメータ仮定">未知パラメータ仮定</a></b>
                 └ オンデマンド印刷の特徴を作成 (generate_customer_printed_distribution)
                   ├ オンデマンド印刷機の印刷機セグメントを仮定
                   └ 印刷用紙のサイズ別割合を仮定 (split_job_by_paper_sizes)
