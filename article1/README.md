@@ -105,6 +105,10 @@
   ├ <b>モンテカルロ法</b>を実行 (generate_monte_carlo_simulation)
   └ <b><a href="#シミュレーション結果の表示">シミュレーション結果の表示</a></b> (show_results)
 
+<div align="center">
+図. 全体の構造
+</div>
+
     <b>モンテカルロ法</b> (generate_monte_carlo_simulation)
       ├ シミュレーション対象の印刷機を列挙
       ├ <b>印刷シミュレーション</b> (printing_simulation)
