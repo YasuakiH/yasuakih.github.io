@@ -9,7 +9,7 @@
 - 2 部品ライフ推定 【本記事の範囲】
 - <font color="gray">3 機械の信頼度成長</font>
 
-## 印刷機の保守サービスモデル
+## 印刷機の保守モデル
 
 <div align="center">
   <figure>
@@ -45,7 +45,7 @@ python TBD
   <figure>
     <img src="img/sim_component_failure-成績.png"/>
 	<br/>
-    <figcaption>図. 停止時間の比較、および交換部品数の比較</figcaption>
+    <figcaption>図. 定期交換部品の計画的な交換時期が、印刷機の停止時間と交換部品数に及ぼす影響</figcaption>
   </figure>
 </div>
 
