@@ -114,7 +114,7 @@
           └ シミュレーションを指定した回数だけ繰り返す。　　　　　　　　　　　　　　　　　← <b>外側ループ</b>
             ├ <b>顧客の印刷機に固有のオンデマンド印刷物の特徴</b>を作成 (class Customer)
             ├ <b>印刷ジョブ実行のシミュレーション</b> (simulate_job_printing)
-            └ <b>仮説の妥当性判定</b> (validate_results)
+            └ <b>仮説の妥当性評価</b> (validate_results)
 
               <b>顧客の印刷機に固有のオンデマンド印刷物の特徴</b> (class Customer)　　　　　← <b><a href="#未知パラメータ仮定">未知パラメータ仮定</a></b>
                 └ オンデマンド印刷の特徴を作成 (generate_customer_printed_distribution)
@@ -127,10 +127,10 @@
                   ├ ジョブの<b><a href="#インク消費量の計算">インク消費量の計算</a></b> (ink_consumption_per_job)
                   └ 総インク消費量の計算
 
-                    <b>印刷ジョブ</b> (class PrintedMatter)　　　　　　　　　　　　　　　　　← <b><a href="#印刷ジョブ生成">印刷ジョブ生成</a></b>
+                    <b><a href="#印刷ジョブ生成">印刷ジョブ生成</a></b> (class PrintedMatter)
                      └ オンデマンド印刷物の特徴に基づき、用紙サイズ、エリアカバレッジ、ページ長、両面比を無作為に決める
 
-              <b>仮説の妥当性判定</b> (validate_results)　　　　　　　　　　　　　　　　　　　← <b><a href="#妥当性評価">妥当性評価</a></b>
+              <b><a href="#仮説の妥当性評価">仮説の妥当性評価</a></b></b> (validate_results)
                 ├ 評価0: 総インク量
                 ├ 評価1: 用紙サイズ別の印刷枚数
                 ├ 評価2: 用紙枚数総計
