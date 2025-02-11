@@ -279,7 +279,7 @@ python sim_hidden_param.py --iterations 300 --printing_machines PM1
 <figure>
   <img src="img/実験結果-印刷機セグメント.png" />
   <br/>
-  <figcaption>図13. 実験結果-印刷機セグメント.png</figcaption>
+  <figcaption>図13. シミュレーション結果をマップした印刷機セグメント</figcaption>
 </figure>
 </div>
 
