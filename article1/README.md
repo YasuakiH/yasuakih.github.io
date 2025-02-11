@@ -270,6 +270,25 @@
 </figure>
 </div>
 
+#### OK-NG 判定
+OK-NG 判定は閾値をもうけて行った。
+
+| 項目                       | 閾値                               |
+| 評価1: 用紙サイズ別の印刷枚数 | h1_ce <= 1.0                      | 
+| 評価2: 用紙枚数総計          | 0.70 <= sumq1_sump1_ratio <= 1.30 |
+| 評価3: ページ数分布          | h2_ce <= 3.3                      |
+
+
+
+``` python
+        sumq1_sump1_ratio_llim = 0.70
+        sumq1_sump1_ratio_ulim = 1.30
+        if (h1_ce <= h1_ce_lim) and (h2_ce <= h2_ce_lim) and (sumq1_sump1_ratio_llim <= sumq1_sump1_ratio <= sumq1_sump1_ratio_ulim):
+            return 'OK'
+        else:
+            return 'NG'
+```
+
 ### 結果出力
 #### 印刷物種類ごとの、ページ数、および部数
 
