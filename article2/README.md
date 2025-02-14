@@ -11,6 +11,21 @@
 
 ## 印刷機の保守モデル
 
+### 応力-強度モデル
+[応力-強度モデル](https://en.wikipedia.org/wiki/Stress%E2%80%93strength_analysis) (Stress–strength analysis)
+
+<div align="center">
+  <figure>
+    <img src="img/Contrainte_resistance_2d_proche.svg"/>
+	<br/>
+    <figcaption>図. 応力-強度モデル
+	by [Cdang](https://commons.wikimedia.org/wiki/File:Contrainte_resistance_2d_proche.svg) ([CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.ja))
+</figcaption>
+  </figure>
+</div>
+
+### 印刷機の保守モデル
+
 <div align="center">
   <figure>
     <img src="../img/印刷機の保守モデル.png"/>
@@ -27,7 +42,75 @@
 図2. 全体の構造
 </div>
 
-<pre><code><b>シミュレーション</b> (main)
+<pre><code>
+<b>シミュレーション</b> (main)
+  ├ シミュレーション環境作成
+  ├ <b>シミュレーション実行</b> (printingmachine_simulator_process)
+  └ 結果表示行
+
+印刷ジョブ (class PrintJob)
+  └ 印刷ジョブを生成 (generate_customer_print_job)
+
+部品交換 (class ReplacementPart)
+  ├ 部品固有ライフを生成(ワイブル分布) (get_internal_part_life)
+  ├ init()
+  ├   計画部品ライフを取得
+  ├   部品固有ライフを生成 (get_internal_part_life)
+  ├ 交換部品の摩耗 (累積印刷ページに「ページ長」を加算) (run_printing_job)
+  └ 固有ライフ [ページ] <= 累積印刷ページ [ページ] となったら故障する (failure)
+
+保守作業 (class MaintenanceWork)
+  ├ init()
+  ├   保守作業 保守エンジニア(リソース)を確保
+  ├ 印刷機の予防保守の待機および実施 (preventive_maintenance_setup_process)
+  ├   予防保守のスケジュール (一定時間の待機)
+  ├   計画部品ライフを超えたら部品を交換
+  ├     部品を交換するためエンジニアを呼ぶ
+  ├     印刷機ユニットを得る
+  ├     予防保守の実施 (preventive_maintenance_process)
+  └   次回の予防保守をスケジュール (preventive_maintenance_setup_process) 再帰になっている
+
+印刷機インスタンス (class PrintingMachine)
+  ├ init()
+  ├   印刷ユニット確保(リソース)
+  └   保守エンジニア確保(リソース)
+    :
+  ├ 印刷ジョブの出力(含む部品ライフ進行) (printing_job_process)
+  ├   印刷時間待ち(印刷ジョブ長/印刷速度)
+  └   交換部品の摩耗 (run_printing_job)
+    :
+  ├ 障害修理 (corrective_maintenance_process)
+  ├   インストールされた交換部品を記録
+  ├   部品交換 (class ReplacementPart)
+  ├   作業時間を加算
+  └   停止時間(ダウンタイム)を記録
+      :
+  ├ 予防保守の実施 (preventive_maintenance_process)
+  ├   インストールされた交換部品を記録
+  ├   部品交換 (class ReplacementPart)
+  ├   作業時間を記録(ランダムな時間)
+  └   停止時間(ダウンタイム)を記録
+
+印刷ジョブ print_job を印刷する一連のプロセス (printjob_process)
+  ├ 印刷機ユニットを得る
+  ├ 故障確率を算出
+  ├   故障時、故障を修理するためエンジニアを呼ぶ
+  ├   障害修理
+  ├ 印刷ジョブを出力 (oprinting_job_process)
+  ├ print_job 毎の印刷所要時間を記録
+  └ print_job 毎の終了時刻と成否を記録
+
+印刷シミュレーション (printingmachine_simulator_process)
+  ├ 印刷機インスタンス作成 (class PrintingMachine)
+  ├   予防保守の実施(部品の初回インストール) (preventive_maintenance_process)
+  ├ 印刷機の保守計画を作成 (class MaintenanceWork)
+  ├   次回の予防保守の計画日をシミュレータに登録 (preventive_maintenance_setup_process)
+  ├ シミュレーション開始時点で存在する印刷ジョブ生成 (printjob_process)
+  └ シミュレーション期間中に受注する印刷ジョブ生成 (仮定: 所要時間30分) (printjob_process) 次回の予防保守の計画日をシミュレータに登録
+
+
+
+
 </code></pre>
 
 ## 実験結果
