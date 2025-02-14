@@ -58,9 +58,9 @@
       ├ シミュレーション開始時点で存在する<b>印刷ジョブ作成</b> (class PrintJob)(printing_printjob_process)-->
       └ シミュレーション期間中に受注する<b>印刷ジョブ作成</b> (仮定: 所要時間30分) (class PrintJob)(printing_printjob_process)
 
-        印刷機ユニット (class PrintingMachine)
+        印刷機ユニット (class PrintingMachine)<!--
           └ 環境にリソース追加 (印刷機ユニット、保守エンジニア) (init)
-            :
+            :-->
           ├ <b>印刷実行プロセス(含む部品ライフ進行(摩耗))</b> (printout_process)
           ├   印刷時間待機 (時間: 印刷ジョブ長/印刷速度)
           └   部品ライフ進行(摩耗) (run_printing_job)
@@ -92,8 +92,8 @@
               ├ <b>部品ライフ進行(摩耗)</b> (累積印刷ページに「ページ長」を加算) (run_printing_job)
               └ 部品固有ライフ [ページ] ≦ 累積印刷ページ [ページ] となったら故障する (failure)
 
-        保守作業 (class MaintenanceWork)
-          ├ 環境にリソース追加(保守エンジニア) (init)
+        保守作業 (class MaintenanceWork)<!--
+          ├ 環境にリソース追加(保守エンジニア) (init)-->
           ├ 予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process)
           ├   次回予防保守まで待機 (期間: 10日間)
           ├   現在部品ライフが計画部品ライフを超えているかいないか判断
