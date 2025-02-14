@@ -50,7 +50,7 @@
   └ 結果表示
    
     印刷シミュレーションプロセス (printingmachine_simulator_process)
-      ├ <b>印刷機インスタンス作成</b> (class PrintingMachine)
+      ├ <b>印刷機ユニット作成</b> (class PrintingMachine)
       ├ 印刷機ユニットを確保
       ├   <b>予防保守プロセス</b> - 部品の初回インストール (preventive_maintenance_process)
       ├ 印刷機の保守計画を作成 (10日ごとに予防保守を実施する) (class MaintenanceWork)
@@ -58,7 +58,7 @@
       ├ シミュレーション開始時点で存在する印刷ジョブ生成 (class PrintJob)(printing_printjob_process)
       └ シミュレーション期間中に受注する印刷ジョブ生成 (仮定: 所要時間30分) (class PrintJob)(printing_printjob_process)
 
-        印刷機インスタンス (class PrintingMachine)
+        印刷機ユニット (class PrintingMachine)
           └ リソース確保 (印刷ユニット、保守エンジニア確保) (init)
             :
           ├ <b>印刷実行プロセス(含む部品ライフ進行(摩耗))</b> (printout_process)
@@ -66,16 +66,14 @@
           └   部品ライフ進行 (run_printing_job)
             :
           ├ <b>障害修理プロセス</b> (corrective_maintenance_process)
-          ├   インストールされた交換部品を記録
+          <!-- ├   インストールされた交換部品を記録 -->
           ├   <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
-          ├   作業時間待機 (時間: ランダム)
-          └   停止時間(ダウンタイム)の記録
+          └   作業時間待機 (時間: ランダム)
             :
           ├ <b>予防保守プロセス</b> (preventive_maintenance_process)
-          ├   インストールされた交換部品を記録
-          ├   交換部品を作成 (class ReplacementPart)
-          ├   作業時間待機 (時間: ランダム)
-          └   停止時間(ダウンタイム)の記録
+          <!-- ├   インストールされた交換部品を記録 -->
+          ├   <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
+          └   作業時間待機 (時間: ランダム)
 
         印刷ジョブ (class PrintJob)
           └ 印刷ジョブを生成 (generate_customer_print_job)
@@ -86,8 +84,7 @@
           ├   故障時、修理するエンジニアを確保
           ├   障害修理プロセス
           ├ 印刷実行プロセス(含む部品ライフ進行(摩耗)) (printout_process)
-          ├ print_job 毎の印刷所要時間を記録
-          └ print_job 毎の終了時刻と成否を記録
+          └ print_job 毎の結果を記録 (印刷所要時間, 終了時刻と成否を記録
 
             <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
               ├ 部品固有ライフを生成(ワイブル分布) (get_internal_part_life)
