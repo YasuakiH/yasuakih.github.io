@@ -82,7 +82,7 @@
           ├ 印刷機ユニットを確保
           ├ 故障確率を算出
           ├   故障時、修理するエンジニアを確保
-          ├   障害修理プロセス
+          ├   <b>障害修理プロセス</b>
           ├ 印刷実行プロセス(含む部品ライフ進行(摩耗)) (printout_process)
           └ print_job 毎の結果を記録 (印刷所要時間, 終了時刻と成否を記録
 
@@ -92,18 +92,16 @@
               ├ <b>部品ライフ進行(摩耗)</b> (累積印刷ページに「ページ長」を加算) (run_printing_job)
               └ 部品固有ライフ [ページ] ≦ 累積印刷ページ [ページ] となったら故障する (failure)
 
-保守作業 (class MaintenanceWork)
-  ├ 環境にリソース追加(保守エンジニア) (init)
-  ├ 予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process)
-  ├   次回予防保守まで待機
-  ├   部品ライフが計画部品ライフを超えているかいないか判断
-  ├   計画部品ライフを超えたら部品を交換
-  ├     部品を交換するためエンジニアを確保
-  ├     印刷機ユニットを確保
-  ├     予防保守プロセス (preventive_maintenance_process)
-  └   次回の予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process) 再帰になっている
-
-
+        保守作業 (class MaintenanceWork)
+          ├ 環境にリソース追加(保守エンジニア) (init)
+          ├ 予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process)
+          ├   次回予防保守まで待機
+          ├   部品ライフが計画部品ライフを超えているかいないか判断
+          ├   計画部品ライフを超えたら部品を交換
+          ├     部品を交換するためエンジニアを確保
+          ├     印刷機ユニットを確保
+          ├     予防保守プロセス (preventive_maintenance_process)
+          └   次回の予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process) 再帰になっている
 </code></pre>
 
 ## 実験結果
