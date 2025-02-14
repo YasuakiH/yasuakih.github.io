@@ -50,7 +50,7 @@
   └ 結果表示
    
     <b>印刷シミュレーションプロセス</b> (printingmachine_simulator_process)
-      ├ <b>印刷機ユニット作成</b> (class PrintingMachine)<!--
+      ├ 印刷機ユニット作成 (class PrintingMachine)<!--
       ├ 印刷機ユニットを確保-->
       ├   <b>予防保守プロセス</b> - 部品の初回インストール (preventive_maintenance_process)
       ├ 印刷機の保守計画を作成 (10日ごとに予防保守を実施する) (class MaintenanceWork)
