@@ -63,7 +63,7 @@
             :
           ├ <b>印刷実行プロセス(含む部品ライフ進行(摩耗))</b> (printout_process)
           ├   印刷時間待機 (時間: 印刷ジョブ長/印刷速度)
-          └   部品ライフ進行 (run_printing_job)
+          └   部品ライフ進行(摩耗) (run_printing_job)
             :
           ├ <b>障害修理プロセス</b> (corrective_maintenance_process)<!--
           ├   インストールされた交換部品を記録 -->
@@ -89,8 +89,8 @@
             <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
               ├ 部品固有ライフを生成(ワイブル分布) (get_internal_part_life)
               ├ 計画部品ライフ、および部品固有ライフを生成 (init)
-              ├ 部品ライフ進行 (累積印刷ページに「ページ長」を加算) (run_printing_job)
-              └ 固有ライフ [ページ] <= 累積印刷ページ [ページ] となったら故障する (failure)
+              ├ <b>部品ライフ進行(摩耗)</b> (累積印刷ページに「ページ長」を加算) (run_printing_job)
+              └ 固有ライフ [ページ] ≦ 累積印刷ページ [ページ] となったら故障する (failure)
 
 保守作業 (class MaintenanceWork)
   ├ 環境にリソース追加(保守エンジニア) (init)
