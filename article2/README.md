@@ -50,9 +50,9 @@
   └ 結果表示
 
     印刷シミュレーションプロセス (printingmachine_simulator_process)
-      ├ 印刷機インスタンス作成 (class PrintingMachine)
+      ├ <b>印刷機インスタンス作成</b> (class PrintingMachine)
       ├ 印刷機ユニットを確保
-      ├   部品の初回インストール - 予防保守プロセス (preventive_maintenance_process)
+      ├   <b>予防保守プロセス</b> - 部品の初回インストール (preventive_maintenance_process)
       ├ 印刷機の保守計画を作成 (10日ごとに予防保守を実施する) (class MaintenanceWork)
       ├   予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process)
       ├ シミュレーション開始時点で存在する印刷ジョブ生成 (printing_printjob_process)
@@ -61,17 +61,17 @@
         印刷機インスタンス (class PrintingMachine)
           └ リソース確保 (印刷ユニット、保守エンジニア確保) (init)
             :
-          ├ 印刷ジョブの出力 (printing_job_process)
+          ├ <b>印刷ジョブの出力</b> (printing_job_process)
           ├   印刷時間待機 (時間: 印刷ジョブ長/印刷速度)
           └   部品ライフ進行 (run_printing_job)
             :
-          ├ 障害修理プロセス (corrective_maintenance_process)
+          ├ <b>障害修理プロセス</b> (corrective_maintenance_process)
           ├   インストールされた交換部品を記録
           ├   部品交換 (class ReplacementPart)
           ├   作業時間待機 (時間: ランダム)
           └   停止時間(ダウンタイム)の記録
               :
-          ├ 予防保守プロセス (preventive_maintenance_process)
+          ├ <b>予防保守プロセス</b> (preventive_maintenance_process)
           ├   インストールされた交換部品を記録
           ├   部品交換 (class ReplacementPart)
           ├   作業時間待機 (時間: ランダム)
