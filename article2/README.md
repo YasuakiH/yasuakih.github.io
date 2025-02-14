@@ -67,12 +67,12 @@
             :
           ├ <b>障害修理プロセス</b> (corrective_maintenance_process)<!--
           ├   インストールされた交換部品を記録 -->
-          ├   <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
+          ├   <b>交換部品の生成、ライフ進行と故障</b> (class ReplacementPart)
           └   作業時間待機 (時間: 60-90分)
             :
           ├ <b>予防保守プロセス</b> (preventive_maintenance_process)<!--
           ├   インストールされた交換部品を記録 -->
-          ├   <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
+          ├   <b>交換部品の生成、ライフ進行と故障</b> (class ReplacementPart)
           └   作業時間待機 (時間: 30分)
 
         <b>印刷ジョブ</b> (class PrintJob)
@@ -86,9 +86,10 @@
           ├ 印刷実行プロセス(含む部品ライフ進行(摩耗)) (printout_process)
           └ print_job 毎の結果を記録 (印刷所要時間, 終了時刻と成否を記録
 
-            <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
-              ├ 部品固有ライフを生成(ワイブル分布) (get_internal_part_life)
-              ├ 計画部品ライフ、および部品固有ライフを生成 (init)
+            <b>交換部品の生成、ライフ進行と故障</b> (class ReplacementPart)
+              ├ 交換部品の生成
+              ├   計画部品ライフを取得 (1000 kページ)
+              ├   <b>部品固有ライフを生成(ワイブル分布からサンプリング)</b> (get_internal_part_life)
               ├ <b>部品ライフ進行(摩耗)</b> (累積印刷ページに「ページ長」を加算) (run_printing_job)
               └ 部品固有ライフ [ページ] ≦ 累積印刷ページ [ページ] となったら故障する (failure)
 
@@ -100,8 +101,8 @@
           ├   計画部品ライフを超えたら部品を交換
           ├     部品を交換するためエンジニアを確保
           ├     印刷機ユニットを確保
-          ├     予防保守プロセス (preventive_maintenance_process)
-          └   次回の予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process) 再帰になっている
+          ├     <b>予防保守プロセス</b> (preventive_maintenance_process)
+          └   <b>次回の予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process) 再帰になっている
 </code></pre>
 
 ## 実験結果
