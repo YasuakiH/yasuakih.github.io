@@ -56,7 +56,7 @@
       ├ 印刷機の保守計画を作成 (実施間隔: 10日) (class MaintenanceWork)
       ├   予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process)<!--
       ├ シミュレーション開始時点で存在する<b>印刷ジョブ作成</b> (class PrintJob)(printing_printjob_process)-->
-      └ シミュレーション期間中に受注する<b>印刷ジョブ作成</b> (仮定: 所要時間30分) (class PrintJob)(printing_printjob_process)
+      └ シミュレーション期間中に受注する<b>印刷ジョブ作成</b> (実施間隔: 30分) (class PrintJob)(printing_printjob_process)
 
         印刷機ユニット (class PrintingMachine)<!--
           └ 環境にリソース追加 (印刷機ユニット、保守エンジニア) (init)
