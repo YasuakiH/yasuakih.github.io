@@ -45,8 +45,8 @@
 <pre><code>
 <b>シミュレーション</b> (main)
   ├ シミュレーション環境作成
-  ├ <b>印刷シミュレーションプロセス</b>(平行動作) (printingmachine_simulator_process)
-  ├ シミュレーションを1年間行う
+  ├ <b>印刷シミュレーションプロセス</b> (printingmachine_simulator_process)<!--
+  ├ シミュレーションを1年間行う-->
   └ 結果表示
    
     印刷シミュレーションプロセス (printingmachine_simulator_process)
