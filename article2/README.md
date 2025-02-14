@@ -68,12 +68,12 @@
           ├ <b>障害修理プロセス</b> (corrective_maintenance_process)<!--
           ├   インストールされた交換部品を記録 -->
           ├   <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
-          └   作業時間待機 (時間: ランダム)
+          └   作業時間待機 (時間: 60-90分)
             :
           ├ <b>予防保守プロセス</b> (preventive_maintenance_process)<!--
           ├   インストールされた交換部品を記録 -->
           ├   <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
-          └   作業時間待機 (時間: ランダム)
+          └   作業時間待機 (時間: 30分)
 
         <b>印刷ジョブ</b> (class PrintJob)
           └ <b><a href="#顧客の未知パラメータに基づく印刷ジョブを生成">顧客の未知パラメータに基づく印刷ジョブを生成</a></b> (generate_customer_print_job)
