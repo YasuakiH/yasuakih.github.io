@@ -55,8 +55,8 @@
       ├   <b>予防保守プロセス</b> - 部品の初回インストール (preventive_maintenance_process)
       ├ 印刷機の保守計画を作成 (10日ごとに予防保守を実施する) (class MaintenanceWork)
       ├   予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process)<!--
-      ├ シミュレーション開始時点で存在する印刷ジョブ生成 (class PrintJob)(printing_printjob_process)-->
-      └ シミュレーション期間中に受注する<b>印刷ジョブ生成</b> (仮定: 所要時間30分) (class PrintJob)(printing_printjob_process)
+      ├ シミュレーション開始時点で存在する<b>印刷ジョブ作成</b> (class PrintJob)(printing_printjob_process)-->
+      └ シミュレーション期間中に受注する<b>印刷ジョブ作成</b> (仮定: 所要時間30分) (class PrintJob)(printing_printjob_process)
 
         印刷機ユニット (class PrintingMachine)
           └ 環境にリソース追加 (印刷機ユニット、保守エンジニア) (init)
@@ -75,8 +75,8 @@
           ├   <b>交換部品のライフ進行と故障</b> (class ReplacementPart)
           └   作業時間待機 (時間: ランダム)
 
-        印刷ジョブ (class PrintJob)
-          └ 印刷ジョブを生成 (generate_customer_print_job)
+        <b>印刷ジョブ</b> (class PrintJob)
+          └ <b><a href="#顧客の未知パラメータに基づく印刷ジョブを生成">顧客の未知パラメータに基づく印刷ジョブを生成</a></b> (generate_customer_print_job)
 
         印刷ジョブの出力プロセス (printing_printjob_process)
           ├ 印刷機ユニットを確保
