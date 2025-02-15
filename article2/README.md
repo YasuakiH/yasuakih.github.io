@@ -67,6 +67,15 @@
              ├ 印刷時間待機 (時間: 印刷ジョブ長/印刷速度)
              └ 部品ライフ進行(摩耗) (wear)
 
+        保守作業 (class MaintenanceWork)<!--      ├ 環境にリソース追加(保守エンジニア) (init)-->
+          └ <b>予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process)
+            ├ 次回予防保守まで待機 (期間: 10日間)
+            ├ 現在部品ライフが計画部品ライフを超えていたら、部品を交換
+            │  ├ エンジニアを確保
+            │  ├ 印刷機ユニットを確保
+            │  └ <b>予防保守実行プロセス</b> (preventive_maintenance_process)
+            └ 次回の<b>予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process) [注意: 再帰している]
+
         <b>印刷ジョブ</b> (class PrintJob)
           └ <b><a href="#顧客の未知パラメータに基づく印刷ジョブを生成">顧客の未知パラメータに基づく印刷ジョブを生成</a></b> (generate_customer_print_job)
 
@@ -84,15 +93,6 @@
               │  └ <b>部品固有ライフを生成(ワイブル分布からサンプリング)</b> (get_internal_part_life)
               ├ <b>部品ライフ進行(摩耗)</b> (累積印刷ページに「ページ長」を加算) (wear)
               └ 部品固有ライフ [ページ] ≦ 累積印刷ページ [ページ] となったら故障する (failure)
-
-        保守作業 (class MaintenanceWork)<!--      ├ 環境にリソース追加(保守エンジニア) (init)-->
-          └ <b>予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process)
-            ├ 次回予防保守まで待機 (期間: 10日間)
-            ├ 現在部品ライフが計画部品ライフを超えていたら、部品を交換
-            │  ├ エンジニアを確保
-            │  ├ 印刷機ユニットを確保
-            │  └ <b>予防保守実行プロセス</b> (preventive_maintenance_process)
-            └ 次回の<b>予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process) [注意: 再帰している]
 </code></pre>
 
 ## 実験結果
