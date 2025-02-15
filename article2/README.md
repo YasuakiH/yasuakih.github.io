@@ -92,7 +92,7 @@
             │  ├ エンジニアを確保
             │  ├ 印刷機ユニットを確保
             │  └ <b>予防保守実行プロセス</b> (preventive_maintenance_process)
-            └ <b>次回の予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process) [注意: 再帰している]
+            └ 次回の<b>予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process) [注意: 再帰している]
 </code></pre>
 
 ## 実験結果
