@@ -53,12 +53,12 @@
       ├ 印刷機の保守計画を作成 (実施間隔: 10日) <a href="#印刷機の予防保守のスケジュールと実施プロセス">印刷機の予防保守のスケジュールと実施プロセス</a> (preventive_maintenance_setup_process)
       └ シミュレーション期間中 (時間: 1年間) に受注する<b><a href="#印刷ジョブ作成">印刷ジョブ作成</a></b> (実施間隔: 30分) (class PrintJob)(printing_printjob_process)
 
-        印刷機ユニット (class PrintingMachine)
+        印刷機ユニット
           ├ <b>予防保守実行プロセス</b> (preventive_maintenance_process)
-          │  ├ <b>交換部品の生成</b> (class ReplacementPart)
+          │  ├ <b>交換部品の生成</b>
           │  └ 作業時間待機 (時間: 30分)
           ├ <b>障害修理実行プロセス</b> (corrective_maintenance_process)
-          │  ├ <b>交換部品の生成</b> (class ReplacementPart)
+          │  ├ <b>交換部品の生成</b>
           │  └ 作業時間待機 (時間: 60-90分)
           └ <b>印刷実行プロセス(含む部品ライフ進行(摩耗))</b> (printout_process)
              ├ 印刷時間待機 (時間: 印刷ジョブ長/印刷速度)
@@ -84,7 +84,7 @@
           ├ <b>印刷実行プロセス(含む部品ライフ進行(摩耗))</b> (printout_process)
           └ print_job 毎の結果を記録 (印刷所要時間, 終了時刻と成否)
 
-            <b>交換部品の生成</b> (class ReplacementPart)
+            <b>交換部品の生成</b>
               ├ 交換部品の生成 (init)
               │  ├ 計画部品ライフを取得
               │  └ <b>部品固有ライフを生成(ワイブル分布からサンプリング)</b> (get_internal_part_life)
