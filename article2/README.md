@@ -89,7 +89,7 @@
           └ <b>予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process)
             ├ 次回予防保守まで待機 (期間: 10日間)
             ├ 現在部品ライフが計画部品ライフを超えていたら、部品を交換
-            │  ├ 部品を交換するエンジニアを確保
+            │  ├ エンジニアを確保
             │  ├ 印刷機ユニットを確保
             │  └ <b>予防保守実行プロセス</b> (preventive_maintenance_process)
             └ <b>次回の予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process) [注意: 再帰している]
