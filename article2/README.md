@@ -61,8 +61,8 @@
             ├   印刷時間待機 (時間: 印刷ジョブ長/印刷速度)
             └   部品ライフ進行(摩耗) (run_printing_job)
 
-          └ <b>障害修理プロセス</b> (corrective_maintenance_process)<!--
-            ├   インストールされた交換部品を記録 -->  ├   <b>交換部品の生成、ライフ進行と故障</b> (class ReplacementPart)
+          └ <b>障害修理プロセス</b> (corrective_maintenance_process)<!--          ├   インストールされた交換部品を記録 -->
+            ├   <b>交換部品の生成、ライフ進行と故障</b> (class ReplacementPart)
             └   作業時間待機 (時間: 60-90分)
 
           └ <b>予防保守プロセス</b> (preventive_maintenance_process)<!--          ├   インストールされた交換部品を記録 -->
