@@ -57,15 +57,15 @@
       └ シミュレーション期間中に受注する<b>印刷ジョブ作成</b> (実施間隔: 30分) (class PrintJob)(printing_printjob_process)
 
         印刷機ユニット (class PrintingMachine)<!--          └ 環境にリソース追加 (印刷機ユニット、保守エンジニア) (init)            :-->
-          ├ <b>印刷実行プロセス(含む部品ライフ進行(摩耗))</b> (printout_process)
-          │  ├ 印刷時間待機 (時間: 印刷ジョブ長/印刷速度)
-          │  └ 部品ライフ進行(摩耗) (wear)
+          ├ <b>予防保守実行プロセス</b> (preventive_maintenance_process)<!--          ├   インストールされた交換部品を記録 -->
+          │  ├ <b>交換部品の生成、ライフ進行と故障</b> (class ReplacementPart)
+          │  └ 作業時間待機 (時間: 30分)
           ├ <b>障害修理実行プロセス</b> (corrective_maintenance_process)<!--          ├   インストールされた交換部品を記録 -->
           │  ├ <b>交換部品の生成、ライフ進行と故障</b> (class ReplacementPart)
           │  └ 作業時間待機 (時間: 60-90分)
-          └ <b>予防保守実行プロセス</b> (preventive_maintenance_process)<!--          ├   インストールされた交換部品を記録 -->
-              ├ <b>交換部品の生成、ライフ進行と故障</b> (class ReplacementPart)
-              └ 作業時間待機 (時間: 30分)
+          └ <b>印刷実行プロセス(含む部品ライフ進行(摩耗))</b> (printout_process)
+              ├ 印刷時間待機 (時間: 印刷ジョブ長/印刷速度)
+              └ 部品ライフ進行(摩耗) (wear)
 
         <b>印刷ジョブ</b> (class PrintJob)
           └ <b><a href="#顧客の未知パラメータに基づく印刷ジョブを生成">顧客の未知パラメータに基づく印刷ジョブを生成</a></b> (generate_customer_print_job)
