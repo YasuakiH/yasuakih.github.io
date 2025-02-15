@@ -51,7 +51,7 @@
     <b>印刷シミュレーションプロセス</b> (printingmachine_simulator_process)
       ├ 印刷機ユニットを準備し、部品の初回インストールをするため<b><a href="#予防保守実行プロセス">予防保守実行プロセス</a></b>を実施 (preventive_maintenance_process)
       ├ 印刷機の保守計画を作成 (実施間隔: 10日) <a href="#印刷機の予防保守のスケジュールと実施プロセス">印刷機の予防保守のスケジュールと実施プロセス</a> (preventive_maintenance_setup_process)
-      └ シミュレーション期間中(1年間)に、定期的に受注する<b>印刷ジョブ作成</b> (実施間隔: 30分) (class PrintJob)(printing_printjob_process)
+      └ シミュレーション期間中(1年間)、定期的(30分間隔)に受注する<b>印刷ジョブ作成</b> (class PrintJob)(printing_printjob_process)
 
         印刷機ユニット
           ├ <b>予防保守実行プロセス</b> (preventive_maintenance_process)
