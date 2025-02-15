@@ -57,7 +57,7 @@
           ├ <b><a href="#予防保守実行プロセス">予防保守実行プロセス</a></b> (preventive_maintenance_process)
           │  ├ <b>交換部品の生成</b>
           │  └ 交換作業 (待機時間: 30分)
-          ├ <b>障害修理実行プロセス</b> (corrective_maintenance_process)
+          ├ <b><a href="#障害修理実行プロセス">障害修理実行プロセス</a></b> (corrective_maintenance_process)
           │  ├ <b>交換部品の生成</b>
           │  └ 修理作業 (待機時間: 60-90分)
           └ <b>印刷実行プロセス(含む部品ライフ進行(摩耗))</b> (printout_process)
@@ -81,7 +81,7 @@
           ├ 故障確率の算出と故障判断
           │  ├ 故障時、修理するエンジニアを確保
           │  └ <b>障害修理実行プロセス</b>
-          ├ <b>印刷実行プロセス(含む部品ライフ進行(摩耗))</b> (printout_process)
+          ├ <b><a href="#印刷実行プロセス">印刷実行プロセス(含む部品ライフ進行(摩耗))</a></b> (printout_process)
           └ print_job 毎の結果を記録 (印刷所要時間, 終了時刻と成否)
 
             <b><a href="#交換部品の生成">交換部品の生成</a></b>
