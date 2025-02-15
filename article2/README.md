@@ -52,7 +52,7 @@
       ├ 印刷機ユニット作成 (class PrintingMachine)<!-- ├ 印刷機ユニットを確保-->
       ├  └ <b>予防保守プロセス</b> - 部品の初回インストール (preventive_maintenance_process)
       ├ 印刷機の保守計画を作成 (実施間隔: 10日) (class MaintenanceWork)
-      ├  └ 予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process)<!--
+      ├  └ <b>予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process)<!--
       ├ シミュレーション開始時点で存在する<b>印刷ジョブ作成</b> (class PrintJob)(printing_printjob_process)-->
       └ シミュレーション期間中に受注する<b>印刷ジョブ作成</b> (実施間隔: 30分) (class PrintJob)(printing_printjob_process)
 
@@ -88,7 +88,7 @@
               └ 部品固有ライフ [ページ] ≦ 累積印刷ページ [ページ] となったら故障する (failure)
 
         保守作業 (class MaintenanceWork)<!--      ├ 環境にリソース追加(保守エンジニア) (init)-->
-          └ 予防保守のスケジュールと実施プロセス (preventive_maintenance_setup_process)
+          └ <b>予防保守のスケジュールと実施プロセス</b> (preventive_maintenance_setup_process)
             ├ 次回予防保守まで待機 (期間: 10日間)
             ├ 現在部品ライフが計画部品ライフを超えているかいないか判断
             ├ 計画部品ライフを超えたら部品を交換
