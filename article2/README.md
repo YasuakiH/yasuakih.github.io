@@ -16,14 +16,13 @@
 
 <div align="center">
   <figure>
-    <img src="https://commons.wikimedia.org/wiki/File:Contrainte_resistance_2d_proche.svg">Cdang</img>
+    <img src="img/Contrainte_resistance_2d_proche.551x580.png"/>
 	<br/>
-    <figcaption>図. 応力-強度モデル<br/><a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>
+    <figcaption>図. 応力-強度モデル<br/>license granted under<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>
     </figcaption>
   </figure>
 </div>
 
-    <img src="img/Contrainte_resistance_2d_proche.svg"/>
 by [Cdang](https://commons.wikimedia.org/wiki/File:Contrainte_resistance_2d_proche.svg)<br/>
 [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.ja)
 
