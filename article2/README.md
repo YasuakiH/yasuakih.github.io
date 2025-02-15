@@ -19,8 +19,9 @@
     <img src="img/Contrainte_resistance_2d_proche.svg"/>
 	<br/>
     <figcaption>図. 応力-強度モデル<br/>
-	by [Cdang](https://commons.wikimedia.org/wiki/File:Contrainte_resistance_2d_proche.svg) ([CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.ja))
-</figcaption>
+	by [Cdang](https://commons.wikimedia.org/wiki/File:Contrainte_resistance_2d_proche.svg)<br/>
+	[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.ja)
+    </figcaption>
   </figure>
 </div>
 
