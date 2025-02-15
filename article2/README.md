@@ -71,7 +71,7 @@
             │  ├ エンジニアを確保
             │  ├ 印刷機ユニットを確保
             │  └ <b>予防保守実行プロセス</b> (preventive_maintenance_process)
-            └ 印刷機の予防保守のスケジュールと実施プロセス (次回分) (preventive_maintenance_setup_process) [注意: 再帰]
+            └ 印刷機の予防保守のスケジュールと実施プロセス (次回分) (preventive_maintenance_setup_process) [再帰]
 
         <b>印刷ジョブ</b> (class PrintJob)
           └ <b><a href="#顧客の未知パラメータに基づく印刷ジョブを作成">顧客の未知パラメータに基づく印刷ジョブを作成</a></b> (generate_customer_print_job)
