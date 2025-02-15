@@ -51,7 +51,7 @@
     <b>印刷シミュレーションプロセス</b> (printingmachine_simulator_process)
       ├ 印刷機ユニットを確保し、部品の初回インストールをする (<b>予防保守実行プロセス</b>)
       ├ 印刷機の保守計画を作成 (間隔: 10日) (印刷機の予防保守のスケジュールと実施プロセス)
-      └ シミュレーション期間中、定期的(30分間隔)に<b>印刷ジョブ作成</b> (class PrintJob)(printing_printjob_process)
+      └ シミュレーション期間中、定期的(30分間隔)に<b>印刷ジョブ作成</b> (printing_printjob_process)
 
         印刷機ユニット
           ├ <b><a href="#予防保守実行プロセス">予防保守実行プロセス</a></b> (preventive_maintenance_process)
@@ -72,8 +72,9 @@
             │  └ <b>予防保守実行プロセス</b>
             └ 印刷機の予防保守のスケジュールと実施プロセス (次回分。再帰)
 
-        <b>印刷ジョブ</b> (class PrintJob)
-          └ <b><a href="#顧客の未知パラメータに基づく印刷ジョブを作成">顧客の未知パラメータに基づく印刷ジョブを作成</a></b> (generate_customer_print_job)
+        <b>印刷ジョブ</b>
+          └ <b>印刷ジョブ作成</b> (init)
+            └ <b><a href="#顧客の未知パラメータに基づく印刷ジョブを作成">顧客の未知パラメータに基づく印刷ジョブを作成</a></b> (generate_customer_print_job)
 
         印刷ジョブの出力プロセス (printing_printjob_process)
           ├ 印刷機ユニットを確保
