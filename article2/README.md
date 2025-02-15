@@ -18,13 +18,10 @@
   <figure>
     <img src="img/Contrainte_resistance_2d_proche.551x580.png"/>
 	<br/>
-    <figcaption>図. 応力-強度モデル<br/>license granted under<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>
+    <figcaption>図. 応力-強度モデル<br/>license granted by <a href="https://commons.wikimedia.org/wiki/User:Cdang">Cdang</a> under <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>
     </figcaption>
   </figure>
 </div>
-
-by [Cdang](https://commons.wikimedia.org/wiki/File:Contrainte_resistance_2d_proche.svg)<br/>
-[CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.ja)
 
 ### 印刷機の保守モデル
 
