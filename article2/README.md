@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "定期交換部品のライフ推定による交換時期の最適化 | Pythonによる業務シミュレーション"
+title: "定期交換部品のライフ推定による交換時期の最適化｜Pythonによる業務シミュレーション"
 permalink: /article2/
 ---
 <!-- Written in 2025 by yasuakih -->
