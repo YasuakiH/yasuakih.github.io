@@ -21,7 +21,7 @@ permalink: /
   <figure>
     <img src="article1/img/未知パラメータと推定-モンテカルロ法による未知パラメータ推定.png"/>
 	<br/>
-    <figcaption>図1. モンテカルロ法による未知パラメータ推定の流れ。</figcaption>
+    <figcaption>図. モンテカルロ法による未知パラメータ推定の流れ。</figcaption>
   </figure>
   </div>
 
