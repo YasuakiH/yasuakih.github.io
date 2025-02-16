@@ -24,5 +24,13 @@ permalink: /
   | :--: |
   | *印刷機の保守モデル* |
 
+<div align="center">
+  <figure>
+    <img src="article1/img/未知パラメータと推定-モンテカルロ法による未知パラメータ推定.png"/>
+	<br/>
+    <figcaption>図1. モンテカルロ法による未知パラメータ推定の流れ。</figcaption>
+  </figure>
+</div>
+
 ----
 このページに掲載した作品 (テキスト、プログラムコードなど) はパブリック・ドメインに提供しています。詳細は [CC0 1.0 全世界 コモンズ証](https://creativecommons.org/publicdomain/zero/1.0/deed.ja) をご覧ください。
