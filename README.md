@@ -1,3 +1,8 @@
+---
+layout: page
+title: "Pythonによる業務シミュレーション"
+permalink: /
+---
 <!-- Written in 2025 by yasuakih -->
 # Pythonによる業務シミュレーション
 
