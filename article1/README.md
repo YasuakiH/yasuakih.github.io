@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "モンテカルロ法によるデジタル印刷機の顧客未知パラメータ推定 - Pythonによる業務シミュレーション"
+title: "モンテカルロ法によるデジタル印刷機の顧客未知パラメータ推定 | Pythonによる業務シミュレーション"
 permalink: /article1/
 ---
 <!-- Written in 2025 by yasuakih -->
