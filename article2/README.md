@@ -133,7 +133,7 @@ python TBD
 
 <div align="center">
   <figure>
-    <img src="img/sim_component_failure-成績.png"/>
+    <img src="img/sim_component_failure-成績NEW.png"/>
 	<br/>
     <figcaption>図. 定期交換部品の計画的な交換時期が、印刷機の停止時間と交換部品数に及ぼす影響</figcaption>
   </figure>
