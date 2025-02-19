@@ -64,30 +64,45 @@ def arg_parse():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--debug'         , action='store_true', default=False)
-    parser.add_argument('--designed_life' , type=int, default=1000000, help='部品ライフ設計値 (デフォルト: 1000000)。(例: --designed_life 1000000)')
-    parser.add_argument('--wearout_rate'  , type=float, default=1.0, help='消耗率 (デフォルト: 1.0)。(例: --wearout_rate 1.0)')
-    parser.add_argument('--check_interval', type=str, default='60*24*10', help='保守計画における保守間隔 (単位 [分]) (デフォルト: 60*24*10 (10日間の意味))。(例: --check_interval 60*24*10)')
-    parser.add_argument('--maxt'          , type=str, default='60*24*30*12', help='シミュレーション期間 (単位 [分]) (デフォルト: 60*24*30*12 (1年間の意味))。(例: --maxt 60*24*30*12)')
-    parser.add_argument('--maxx'          , type=int, default=100, help='交換部品数の最大値。この指定に達した時点でシミューレションを終了する (デフォルト: 100)。(例: --maxx 100)')
+    parser.add_argument('--wearout_rate'  , type=float, default=1.0, help='予防保守で交換する管理目標。部品ライフ設計値を1.0とした場合の消耗率を指定する。 (デフォルト: 1.0)。(例: --wearout_rate 1.0)')
+    parser.add_argument('--designed_life' , type=int  , default=1000000, help='部品ライフ設計値。算術平均やB(10)ライフなどで指定される (デフォルト: 1000000)。(例: --designed_life 1000000)')
+    parser.add_argument('--beta'          , type=float, default=1.0, help='βは、部品ライフをワイブル分布で表した際の形状パラメータ。β＜1で初期故障型、β=1で偶発故障型、1<βで摩耗型故障を示す (デフォルト: 1.0)。(例: --beta 1.0)')
+    parser.add_argument('--eta'           , type=int  , default=None, help='ηは、部品ライフをワイブル分布で表した際の尺度パラメータ。 (デフォルト: 部品ライフ設計値)。(例: --eta 100000)')
+    parser.add_argument('--check_interval', type=str  , default='60*24*10', help='保守計画における保守間隔 (単位 [分]) (デフォルト: 60*24*10 (10日間の意味))。(例: --check_interval 60*24*10)')
+    parser.add_argument('--maxt'          , type=str  , default='60*24*30*12', help='シミュレーション期間 (単位 [分]) (デフォルト: 60*24*30*12 (1年間の意味))。(例: --maxt 60*24*30*12)')
+    parser.add_argument('--maxx'          , type=int  , default=200, help='交換部品数の最大値。この指定に達した時点でシミュレーションを終了する (デフォルト: 200)。(例: --maxx 200)')
+    parser.add_argument('--iter'          , type=int  , default=1, help='シミュレーション回数 (デフォルト: 1)。(例: --iter 10)')
 
     args = parser.parse_args()
     args.maxt = eval(args.maxt)
     args.check_interval = eval(args.check_interval)
 
-    assert 1   <= args.designed_life      , f'部品ライフ設計値                     --designed_life   は 1 以上の int 値を指定する'
-    assert 0.0 < args.wearout_rate <= 3.0 , f'消耗率                               --wearout_rate    は 0.0 < wearout_rate <= 3.0 の float 値を指定する'
+    if args.eta is None:
+        args.eta = args.designed_life
+
+    assert 0.0 < args.wearout_rate <= 3.0 , f'消耗率 --wearout_rate は 0.0 < wearout_rate <= 3.0 の float 値を指定する'
+    assert 1   <= args.designed_life      , f'部品ライフ設計値 --designed_life は 1 以上の int 値を指定する'
+    assert 0.0 <  args.beta               , f'部品ライフのワイブル形状パラメータ --beta は 0.0 < beta の float 値を指定する'
+    assert 1   <= args.eta                , f'部品ライフのワイブル尺度パラメータ --eta は 1 <= eta 以上の int 値を指定する'
     assert 1   <= args.check_interval     , f'保守計画における保守間隔 (単位 [分]) --check_interval  は 1 以上の値となる数値、あるいは計算式を指定する。(例: --check_interval 60*24*10)'
-    assert 1   <= args.maxt               , f'シミュレーション期間     (単位 [分]) --maxt            は 1 以上の値となる数値、あるいは計算式を指定する。(例: --maxt 60*24*30*12)'
-    assert 1   <= args.maxx               , f'交換部品数の最大値       --maxx            は 1 以上の値となる数値を指定する。(例: --maxx 100)'
+    assert 1   <= args.maxt               , f'シミュレーション期間 (単位 [分]) --maxt は 1 以上の値となる数値、あるいは計算式を指定する。(例: --maxt 60*24*30*12)'
+    assert 1   <= args.maxx               , f'交換部品数の最大値 --maxx は 1 以上の値となる数値を指定する。(例: --maxx 200)'
+    assert 1   <= args.iter               , f'シミュレーション回数 --iter は 1 以上の数値を指定する。(例: --iter 10)'
+
+    # print(f'args={args}')
+    # sys.exit(1)
 
     # args は固定したい。シミュレーションにパラメータを引き継ぐため dict 様の params を作成する
     params = Dict()  # Dict() パッケージはドット記法が可能
     params.debug          = args.debug
-    params.designed_life  = args.designed_life
     params.wearout_rate   = args.wearout_rate
+    params.designed_life  = args.designed_life
+    params.beta           = args.beta
+    params.eta            = args.eta
     params.check_interval = args.check_interval
     params.maxt           = args.maxt
     params.maxx           = args.maxx
+    params.iter           = args.iter
 
     return args
 # end-of def arg_parse
@@ -202,7 +217,7 @@ class ReplacementPart():
 
         # (3) ワイブル分布 (ライフ実績から推定する場合)
         # wd = Weibull_Distribution(alpha=1000000, beta=2.0)
-        wd = Weibull_Distribution(alpha=params.designed_life, beta=1.5)
+        wd = Weibull_Distribution(alpha=params.eta, beta=params.beta)
         # wd.plot()
         parts_life = wd.random_samples(20)    # ライフ実績 (ここではワイブル分布からサンプリングした(20件))
         if self.env:
@@ -211,7 +226,9 @@ class ReplacementPart():
         # fit.distribution.plot()
         # X_lower,X_point,X_upper = fit.distribution.CDF(CI_type='time',CI_y=0.7)
         # plt.show()
-        return int(fit.distribution.random_samples(1)[0])   # 部品固有ライフを生成(ワイブル分布からサンプリング)
+        internal_part_life = int(fit.distribution.random_samples(1)[0])   # 部品固有ライフを生成(ワイブル分布からサンプリング)
+        print_t(self.env, f'      internal_part_life = {internal_part_life}')
+        return internal_part_life
 
     def __init__(self, env):
         '''交換部品の生成'''
@@ -376,6 +393,7 @@ class PrintingMachine(object):
         # 交換部品が一定数に達したので (シミュレーション期間が残っていても) シミュレーションを終了する
         self.terminate_simulation()
         print_t(self.env, f'    予防保守: END')
+        # sys.exit(1)
 
     def corrective_maintenance_process(self):
         '''障害修理実行プロセス'''
@@ -404,6 +422,7 @@ class PrintingMachine(object):
         # 交換部品が一定数に達したので (シミュレーション期間が残っていても) シミュレーションを終了する
         self.terminate_simulation()
         print_t(self.env, f'    障害修理: END')
+        # sys.exit(1)
 
     def printout_process(self, print_job):
         '''印刷実行プロセス(含む部品ライフ進行(摩耗))'''
@@ -540,14 +559,12 @@ def main():
         random.seed(42)
         num_printing_units, num_engineers = [1, 1]
 
-        print(f'    シミュレーション開始')
         env = simpy.Environment()  # 環境作成
         env.process( printingmachine_simulator_process(env, num_printing_units, num_engineers) )  # 印刷シミュレーションプロセス (平行動作)
         simulation_period = params.maxt    # シミュレーションを期間 params.maxt に渡って行う [単位: 分] デフォルトは1年間
 
         end_event = env.event() # シミュレーションを終了させるイベント
         env.run(until=end_event) # シミュレーション実行
-        # print(f'    シミュレーション終了')
 
         return (
             wait_times,             # print_job 毎の印刷所要時間
@@ -570,7 +587,7 @@ def main():
         for item in replacement_parts_log:
             downtime_dict[ item['理由'] ]['停止時間'] += item['停止時間']
             downtime_dict[ item['理由'] ]['交換部品数'] += 1
-        print(f'    停止時間              : {downtime_dict}')  # downtime_dict = {'予防保守': {'停止時間': 30, '交換部品数': 1}, '障害修理': {'停止時間': 85, '交換部品数': 1}}
+        # print(f'    停止時間              : {downtime_dict}')  # downtime_dict = {'予防保守': {'停止時間': 30, '交換部品数': 1}, '障害修理': {'停止時間': 85, '交換部品数': 1}}
         return downtime_dict
 
     def show_histogram(results):
@@ -635,8 +652,8 @@ def main():
     result_all = []
 
     # wearout_rates = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6]
-    wearout_rates = [i/100 for i in range(40, 161, 5)]  # [0.4, 0.45, 0.5, ...  1.5,  1.55,  1.6]  (25 items)
-    [i/100 for i in range(40, 161, 5)]
+    # wearout_rates = [i/100 for i in range(40, 161, 5)]  # [0.4, 0.45, 0.5, ...  1.5,  1.55,  1.6]  (25 items)
+    wearout_rates = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3]
     for wearout_rate in wearout_rates:
         print(f'wearout_rate={wearout_rate}')
         params.wearout_rate = wearout_rate
@@ -647,9 +664,16 @@ def main():
             '予防保守': {'停止時間': [], '交換部品数': []},
             '障害修理': {'停止時間': [], '交換部品数': []},
         }
-        for i in range(10):   # 何回繰り返すか?
+        for i in range(params.iter):   # 何回繰り返すか?
             print(f'  wearout_rate={wearout_rate} i={i}')
+
+            print(f'    シミュレーション開始')
             results = do_simurations()
+
+            downtime_dict = count_results(results)
+
+            print(f'    シミュレーション終了: {downtime_dict}')
+
             # show_histogram(results)  # 遅い (多数のグラフを表示するため)
             replacement_parts_log = results[2]
 
