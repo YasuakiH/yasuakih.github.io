@@ -133,6 +133,17 @@ permalink: /article2/
 python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*120 --beta 1.8 --maxx 200 --iter 10
 ```
 
+### 応力-強度チャート
+
+<div align="center">
+  <figure>
+    <img src="img/応力-強度チャート-交換目標1.0"/>
+	<br/>
+    <figcaption>応力-強度チャート-交換目標1.0</figcaption>
+  </figure>
+</div>
+
+
 ### 停止時間
 
 ### 交換部品数
