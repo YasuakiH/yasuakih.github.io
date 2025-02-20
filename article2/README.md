@@ -137,7 +137,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*120 --be
 
 <div align="center">
   <figure>
-    <img src="img/応力-強度チャート-交換目標1.0"/>
+    <img src="img/応力-強度チャート-交換目標1.0.png"/>
 	<br/>
     <figcaption>応力-強度チャート-交換目標1.0</figcaption>
   </figure>
