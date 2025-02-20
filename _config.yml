@@ -1,3 +1,6 @@
+title: Pythonによる業務シミュレーション
+description: [A short description of your site's purpose]
+
 plugins:
   - jekyll-readme-index
   - jekyll-sitemap
