@@ -64,7 +64,7 @@ def arg_parse():
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--debug'         , action='store_true', default=False)
-    parser.add_argument('--wearout_rate'  , type=float, default=1.0, help='予防保守で交換する管理目標。部品ライフ設計値を1.0とした場合の消耗率を指定する。 (デフォルト: 1.0)。(例: --wearout_rate 1.0)')
+    parser.add_argument('--wearout_rate'  , type=float, default=1.0, help='予防保守における管理目標。部品ライフ設計値を1.0とした場合の消耗率を指定する。 (デフォルト: 1.0)。(例: --wearout_rate 1.0)')
     parser.add_argument('--designed_life' , type=int  , default=1000000, help='部品ライフ設計値。算術平均やB(10)ライフなどで指定される (デフォルト: 1000000)。(例: --designed_life 1000000)')
     parser.add_argument('--beta'          , type=float, default=1.0, help='βは、部品ライフをワイブル分布で表した際の形状パラメータ。β＜1で初期故障型、β=1で偶発故障型、1<βで摩耗型故障を示す (デフォルト: 1.0)。(例: --beta 1.0)')
     parser.add_argument('--eta'           , type=int  , default=None, help='ηは、部品ライフをワイブル分布で表した際の尺度パラメータ。 (デフォルト: 部品ライフ設計値)。(例: --eta 100000)')
@@ -80,12 +80,12 @@ def arg_parse():
     if args.eta is None:
         args.eta = args.designed_life
 
-    assert 0.0 < args.wearout_rate <= 3.0 , f'消耗率 --wearout_rate は 0.0 < wearout_rate <= 3.0 の float 値を指定する'
-    assert 1   <= args.designed_life      , f'部品ライフ設計値 --designed_life は 1 以上の int 値を指定する'
-    assert 0.0 <  args.beta               , f'部品ライフのワイブル形状パラメータ --beta は 0.0 < beta の float 値を指定する'
-    assert 1   <= args.eta                , f'部品ライフのワイブル尺度パラメータ --eta は 1 <= eta 以上の int 値を指定する'
-    assert 1   <= args.check_interval     , f'保守計画における保守間隔 (単位 [分]) --check_interval  は 1 以上の値となる数値、あるいは計算式を指定する。(例: --check_interval 60*24*10)'
-    assert 1   <= args.maxt               , f'シミュレーション期間 (単位 [分]) --maxt は 1 以上の値となる数値、あるいは計算式を指定する。(例: --maxt 60*24*30*12)'
+    assert 0.0 < args.wearout_rate <= 3.0 , f'管理目標 --wearout_rate は 0.0 < wearout_rate <= 3.0 の float 値を指定する'
+    assert 1   <= args.designed_life      , f'設計値 --designed_life は 1 以上の int 値を指定する'
+    assert 0.0 <  args.beta               , f'形状パラメータ --beta は 0.0 < beta の float 値を指定する'
+    assert 1   <= args.eta                , f'度パラメータ --eta は 1 <= eta 以上の int 値を指定する'
+    assert 1   <= args.check_interval     , f'保守間隔 --check_interval  は 1 以上の値となる数値、あるいは計算式を指定する。(例: --check_interval 60*24*10)'
+    assert 1   <= args.maxt               , f'シミュレーション期間 --maxt は 1 以上の値となる数値、あるいは計算式を指定する。(例: --maxt 60*24*30*12)'
     assert 1   <= args.maxx               , f'交換部品数の最大値 --maxx は 1 以上の値となる数値を指定する。(例: --maxx 200)'
     assert 1   <= args.iter               , f'シミュレーション回数 --iter は 1 以上の数値を指定する。(例: --iter 10)'
 
@@ -651,11 +651,12 @@ def main():
     global result_all
     result_all = []
 
+    # wearout_rates = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3]
     # wearout_rates = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6]
-    # wearout_rates = [i/100 for i in range(40, 161, 5)]  # [0.4, 0.45, 0.5, ...  1.5,  1.55,  1.6]  (25 items)
-    wearout_rates = [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3]
+    wearout_rates = [i/100 for i in range(40, 161, 5)]   # [0.4, 0.45, 0.5, ...  1.5,  1.55,  1.6]  (25 items)
     for wearout_rate in wearout_rates:
         print(f'wearout_rate={wearout_rate}')
+
         params.wearout_rate = wearout_rate
 
         # 同じ条件でシミュレーションを繰り返し、each_downtime に記録する
@@ -696,30 +697,32 @@ def main():
     bar_colors = {'予防保守': 'lightblue', '障害修理': 'pink'}
 
     # --------------------------------
-    # (1) 交換部品数
+    # (1) 交換部品数を算出
     # --------------------------------
-    exchange1_list = []
-    exchange2_list = []
-    for (wearout_rate, reason), rest in result_all_df.groupby(by=['消耗率','理由']):
-        # print((wearout_rate, reason, rest))
-        if reason == '予防保守':
-            exchange1_list.append( len(rest) )
-        elif reason == '障害修理':
-            exchange2_list.append( len(rest) )
-        else:
-            assert False
+    exchange1_list = []  # 予防保守
+    exchange2_list = []  # 障害修理
+
+    for each_wearout_rate in wearout_rates:
+        each_result_all_df = result_all_df.loc[ result_all_df['消耗率'] == each_wearout_rate ]
+        print(f'each_wearout_rate={each_wearout_rate}	each_result_all_df=\n{each_result_all_df}')
+
+        preventive_maintenance_count = len(each_result_all_df.loc[ each_result_all_df['理由'] == '予防保守' ])
+        corrective_maintenance_count = len(each_result_all_df.loc[ each_result_all_df['理由'] == '障害修理' ])
+        exchange1_list.append(preventive_maintenance_count)
+        exchange2_list.append(corrective_maintenance_count)
 
     wearout_rates = result_all_df['消耗率'].unique().tolist()
+    print(f'wearout_rates = {wearout_rates}')
     exchange_parts = {
         '予防保守': exchange1_list,
         '障害修理': exchange2_list,
     }
+    print(f'exchange_parts = {exchange_parts}')
 
-    # width = 0.03  # the width of the bars: can also be len(x) sequence
     width = round( (max(wearout_rates)-min(wearout_rates))/len(wearout_rates) * 0.8, 2)
     bottom = np.zeros(len(wearout_rates))
     for reason, exchange_part in exchange_parts.items():
-        print((reason, exchange_part))
+        print(f'(reason, exchange_part)={(reason, exchange_part)}')
         p = axes[0].bar(wearout_rates, exchange_part, width, label=reason, bottom=bottom, color=bar_colors[reason])
         bottom += exchange_part
         axes[0].bar_label(p, label_type='center')
@@ -729,30 +732,32 @@ def main():
     axes[0].legend(title="理由", loc='upper right', reverse=True)
 
     # --------------------------------
-    # (2) 停止時間
+    # (2) 停止時間を算出
     # --------------------------------
-    downtime1_list = []
-    downtime2_list = []
-    for (wearout_rate, reason), rest in result_all_df.groupby(by=['消耗率','理由']):
-        # print((wearout_rate, reason, rest))
-        if reason == '予防保守':
-            downtime1_list.append( rest.aggregate({'停止時間':['sum']}).values[0][0] )
-        elif reason == '障害修理':
-            downtime2_list.append( rest.aggregate({'停止時間':['sum']}).values[0][0] )
-        else:
-            assert False
+    downtime1_list = []  # 予防保守
+    downtime2_list = []  # 障害修理
+
+    for each_wearout_rate in wearout_rates:
+        each_result_all_df = result_all_df.loc[ result_all_df['消耗率'] == each_wearout_rate ]
+        print(f'each_wearout_rate={each_wearout_rate}	each_result_all_df=\n{each_result_all_df}')
+
+        preventive_maintenance_downtime = each_result_all_df.loc[ each_result_all_df['理由'] == '予防保守', '停止時間'].sum()
+        corrective_maintenance_downtime = each_result_all_df.loc[ each_result_all_df['理由'] == '障害修理', '停止時間'].sum()
+        downtime1_list.append(preventive_maintenance_downtime)
+        downtime2_list.append(corrective_maintenance_downtime)
 
     wearout_rates = result_all_df['消耗率'].unique().tolist()
+    print(f'wearout_rates = {wearout_rates}')
     stop_times = {
         '予防保守': downtime1_list,
         '障害修理': downtime2_list,
     }
+    print(f'exchange_parts = {exchange_parts}')
 
-    # width = 0.03  # the width of the bars: can also be len(x) sequence
     width = round( (max(wearout_rates)-min(wearout_rates))/len(wearout_rates) * 0.8, 2)
     bottom = np.zeros(len(wearout_rates))
     for reason, stop_time in stop_times.items():
-        print((reason, stop_time))
+        print(f'(reason, stop_time)={(reason, stop_time)}')
         p = axes[1].bar(wearout_rates, stop_time, width, label=reason, bottom=bottom, color=bar_colors[reason])
         bottom += stop_time
         axes[1].bar_label(p, label_type='center')
@@ -766,10 +771,16 @@ def main():
 
     # シミュレーション実行条件
     # ------------------------
-    print(f'部品ライフ設計値 [ページ] args.designed_life = {args.designed_life}')  # 部品ライフ設計値 [ページ] args.designed_life = 1000000
-    print(f'消耗率 [-]                args.wearout_rate  = {args.wearout_rate}')   # 消耗率 [-]                args.wearout_rate  = 1.5
-    print(f'シミュレーション期間 [分] args.maxt          = {args.maxt}')           # シミュレーション期間 [分] args.maxt          = 86400
-
+    print(f'args={args}')
+    print(f'予防保守における管理目標  args.wearout_rate   = {args.wearout_rate}')   #
+    print(f'部品ライフ設計値 [ページ] args.designed_life  = {args.designed_life}')  #
+    print(f'形状パラメータ            args.beta           = {args.beta}')           #
+    print(f'尺度パラメータ            args.eta            = {args.eta}')            #
+    print(f'保守間隔                  args.check_interval = {args.check_interval}') #
+    print(f'シミュレーション期間 [分] args.maxt           = {args.maxt}')           #
+    print(f'交換部品数の最大値        args.maxx           = {args.maxx}')           #
+    print(f'シミュレーション回数      args.iter           = {args.iter}')           #
+    sys.exit()
 
 # end-of def main
 
