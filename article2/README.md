@@ -130,7 +130,7 @@ permalink: /article2/
 次のコマンドラインを用いてシミュレーションを実施した。
 
 ``` shell
-python sim_component_failure.py --designed_life 1000000 --wearout_rate 1.5 --maxt 60*24*30*12 --maxx 100
+python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*120 --beta 1.8 --maxx 200 --iter 10
 ```
 
 ### 停止時間
@@ -139,7 +139,7 @@ python sim_component_failure.py --designed_life 1000000 --wearout_rate 1.5 --max
 
 <div align="center">
   <figure>
-    <img src="img/sim_component_failure-成績.png"/>
+    <img src="img/sim_component_failure-成績-期間120月-β1.8.png"/>
 	<br/>
     <figcaption>図. 定期交換部品の計画的な交換時期が、印刷機の停止時間と交換部品数に及ぼす影響</figcaption>
   </figure>
