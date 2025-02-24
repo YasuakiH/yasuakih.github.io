@@ -119,7 +119,7 @@ permalink: /article2/
             交換部品 (class ReplacementPart)
               ├ <b><a href="#交換部品の生成">交換部品の生成</a></b> (init)
               │  ├ 計画部品ライフを取得 (所定の値)
-              │  └ <b>部品固有ライフを生成(ワイブル分布からサンプリング)</b> (get_internal_part_life)
+              │  └ <b>部品ライフ分布を生成(ワイブル分布)</b> (get_internal_part_life)
               ├ <b>部品ライフ進行(摩耗)</b> (wear)
               │  └ 累積印刷ページに「ページ長」を加算し、部品ライフ進行させる
               └ <b><a href="#故障確率の算出">故障確率の算出</a></b> (failure)
