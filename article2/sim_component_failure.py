@@ -647,7 +647,7 @@ def show_stress_strength_chart(params, wearout_rates, result_all_df):
         plt.xlabel('')
         plt.ylabel('強度の確率密度')
         plt.legend( [children[0], pm_target_line, designed_life_line], [label, '予防保守の管理目標 ({:.0f}k)'.format(round(params.designed_life * each_wearout_rate/1000,0)), '設計値 ({:.0f}k)'.format(params.designed_life/1000) ]  )
-        plt.xlim(0, params.designed_life * 2)
+        plt.xlim(0, params.designed_life * 2.1)
 
         # 部品交換 (赤) - simulated_failures
         # --------------------------------
@@ -674,7 +674,7 @@ def show_stress_strength_chart(params, wearout_rates, result_all_df):
         plt.xlabel('')
         plt.ylabel(f'故障確率')
         plt.legend()
-        plt.xlim(0, params.designed_life * 2)
+        plt.xlim(0, params.designed_life * 2.1)
 
         # 応力 (緑) - parts_stress
         # --------------------------------
@@ -685,7 +685,7 @@ def show_stress_strength_chart(params, wearout_rates, result_all_df):
         plt.xlabel('')
         plt.ylabel('応力の確率密度')
         plt.legend(loc='center right')
-        plt.xlim(0, params.designed_life * 2)
+        plt.xlim(0, params.designed_life * 2.1)
         max_parts_stress = max([x for x in parts_stress if not math.isnan(x)]) * 1.1  # 1.1 は上側の余白
         plt.ylim(0, max_parts_stress)
 
@@ -703,7 +703,7 @@ def show_stress_strength_chart(params, wearout_rates, result_all_df):
         plt.title('')
         plt.ylabel(f'部品数')
         plt.legend(title='シミュレーション交換理由', loc='best', labels=['障害修理', '予防保守 (打切り)'])
-        plt.xlim(0, params.designed_life * 2)
+        plt.xlim(0, params.designed_life * 2.1)
 
         # グラフィック出力
         # --------------------------------
@@ -886,13 +886,6 @@ def main():
         return downtime_dict
 
     # 管理目標リスト (部品ライフ設計値にかかる係数)
-    # global wearout_rates
-    # wearout_rates = [1.0,]
-    # wearout_rates = [0.7, 1.0, 1.3]
-    # wearout_rates = [0.5, 0.7, 1.0, 1.5, 2.0]
-    # wearout_rates = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, ]
-    # wearout_rates = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6]
-    # wearout_rates = [i/100 for i in range(40, 161, 5)]   [0.4, 0.45, 0.5, ...  1.5,  1.55,  1.6]  (25 items)
     wearout_rates = args.wearout_rate
 
     global result_all_df
@@ -933,7 +926,7 @@ def main():
         return result_all_df
 
     result_all_df = simulate_each_management_target(wearout_rates)
-    print(f'result_all_df=\n{result_all_df}')
+    # print(f'result_all_df=\n{result_all_df}')
 
     # 応力-強度グラフ作成
     show_stress_strength_chart(params, wearout_rates, result_all_df)
