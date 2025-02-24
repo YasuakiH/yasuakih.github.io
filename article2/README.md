@@ -137,12 +137,19 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*120 --be
 
 <div align="center">
   <figure>
-    <img src="img/応力-強度チャート-交換目標1.0.png"/>
+    <img src="img/応力-強度モデル (管理目標係数0.80)(iter=20).png"/>
 	<br/>
-    <figcaption>応力-強度チャート-交換目標1.0</figcaption>
+    <figcaption>応力-強度モデル (管理目標係数0.80)</figcaption>
   </figure>
 </div>
 
+<div align="center">
+  <figure>
+    <img src="img/応力-強度モデル (管理目標係数1.00)(iter=20).png"/>
+	<br/>
+    <figcaption>応力-強度モデル (管理目標係数1..0)</figcaption>
+  </figure>
+</div>
 
 ### 停止時間
 
@@ -150,7 +157,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*120 --be
 
 <div align="center">
   <figure>
-    <img src="img/sim_component_failure-成績-期間120月-β1.8.png"/>
+    <img src="img/交換部品数と停止時間のトレンド.png"/>
 	<br/>
     <figcaption>図. 定期交換部品の計画的な交換時期が、(上)交換部品数 (コスト)と、(下)印刷機の停止時間 (ダウンタイム) に及ぼす影響</figcaption>
   </figure>
