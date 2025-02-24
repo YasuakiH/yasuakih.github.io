@@ -147,7 +147,15 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*120 --be
   <figure>
     <img src="img/応力-強度モデル (管理目標係数1.00)(iter=20).png"/>
 	<br/>
-    <figcaption>応力-強度モデル (管理目標係数1..0)</figcaption>
+    <figcaption>応力-強度モデル (管理目標係数1.00)</figcaption>
+  </figure>
+</div>
+
+<div align="center">
+  <figure>
+    <img src="img/応力-強度モデル (管理目標係数1.20)(iter=20).png"/>
+	<br/>
+    <figcaption>応力-強度モデル (管理目標係数1.20)</figcaption>
   </figure>
 </div>
 
