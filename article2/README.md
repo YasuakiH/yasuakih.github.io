@@ -15,16 +15,16 @@ permalink: /article2/
 - <font color="gray">3 機械の信頼度成長</font>
 
 ## 部品の故障モデル
-本スタディでは、顧客による<a href="../article1/">印刷機の使われ方</a>が部品ライフに影響を及ぼすと考え、確率的に故障が発生する応力-強度モデルを用いて、機械の使われ方から部品ライフを推定した。
 
 ### 応力-強度モデル
- [応力-強度モデル](https://en.wikipedia.org/wiki/Stress%E2%80%93strength_analysis) は、材料や部品の強度とそれらにかかる応力の干渉を解析するのに用いられる。 <!--一台一台の印刷機ごとの部品ライフを予測することで、停止時間 (ダウンタイム) と部品交換数 (コスト) を子細に検討できる。-->
+本スタディでは、顧客による<a href="../article1/">印刷機の使われ方</a>が部品ライフに影響を及ぼすと考え、確率的に故障が発生する応力-強度モデルを用いて、機械の使われ方から部品ライフを推定した。
 
 <div align="center">
   <figure>
     <a title="Cdang, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Contrainte_resistance_2d_proche.svg/551px-Contrainte_resistance_2d_proche.svg.png"><img alt="Contrainte resistance 2d proche" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Contrainte_resistance_2d_proche.svg/551px-Contrainte_resistance_2d_proche.svg.png"></a>
 	<br/>
-    <figcaption>図. 応力-強度モデル<br/><a href="https://commons.wikimedia.org/wiki/User:Cdang">Cdang</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons
+    <figcaption>図. 応力-強度モデル。[応力-強度モデル](https://en.wikipedia.org/wiki/Stress%E2%80%93strength_analysis) は、材料や部品の強度とそれらにかかる応力の干渉を解析するのに用いられる。 <!--一台一台の印刷機ごとの部品ライフを予測することで、停止時間 (ダウンタイム) と部品交換数 (コスト) を子細に検討できる。-->
+<br/><a href="https://commons.wikimedia.org/wiki/User:Cdang">Cdang</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons
     </figcaption>
   </figure>
 </div>
