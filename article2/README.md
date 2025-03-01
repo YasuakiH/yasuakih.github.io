@@ -14,6 +14,16 @@ permalink: /article2/
 - 2 部品ライフ推定 【本記事の範囲】
 - <font color="gray">3 機械の信頼度成長</font>
 
+## 考え方
+
+知りたいこと： お客様固有の応力S
+①未知パラメータから部品負荷の推定
+②特定の印刷機における部品ライフ推定
+③応力-強度モデル図作成
+④管理目標値の最適値を探索
+⑤信頼性成長を予測
+
+
 <div align="center">
   <figure>
     <img src="img/故障モデル-全体像.png"/>
@@ -21,9 +31,10 @@ permalink: /article2/
     <figcaption>図. 故障モデル-全体像</figcaption>
   </figure>
 </div>
-## 考え方
 
-知りたいこと： お客様固有の応力S
+
+
+## モデル設計
 
 ---
 <div align="center">
