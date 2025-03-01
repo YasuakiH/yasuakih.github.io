@@ -25,14 +25,6 @@ permalink: /article2/
 
 知りたいこと： お客様固有の応力S
 
-<div align="center">
-  <figure>
-    <img src="img/故障モデル-③応力-強度モデル図作成.png"/>
-	<br/>
-    <figcaption>図. 故障モデル-③応力-強度モデル図作成</figcaption>
-  </figure>
-</div>
-
 ---
 <div align="center">
   <figure>
@@ -45,9 +37,18 @@ permalink: /article2/
 ---
 <div align="center">
   <figure>
-    <img src="img/故障モデル-生存率関数.png"/>
+    <img src="img/故障モデル-②特定の印刷機における部品ライフ推定.png"/>
 	<br/>
-    <figcaption>図. 故障モデル-生存率関数</figcaption>
+    <figcaption>図. 故障モデル-②特定の印刷機における部品ライフ推定</figcaption>
+  </figure>
+</div>
+
+---
+<div align="center">
+  <figure>
+    <img src="img/故障モデル-③応力-強度モデル図作成.png"/>
+	<br/>
+    <figcaption>図. 故障モデル-③応力-強度モデル図作成</figcaption>
   </figure>
 </div>
 
@@ -66,6 +67,15 @@ permalink: /article2/
     <img src="img/故障モデル-⑤信頼性成長を予測.png"/>
 	<br/>
     <figcaption>図. 故障モデル-⑤信頼性成長を予測</figcaption>
+  </figure>
+</div>
+
+---
+<div align="center">
+  <figure>
+    <img src="img/故障モデル-生存率関数.png"/>
+	<br/>
+    <figcaption>図. 故障モデル-生存率関数</figcaption>
   </figure>
 </div>
 
