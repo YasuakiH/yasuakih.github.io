@@ -23,6 +23,11 @@ permalink: /article2/
 - ④管理目標値の最適値を探索
 - ⑤信頼性成長を予測
 
+<dl>
+  <dt>①未知パラメータから部品負荷の推定</dt>
+  <dd>abcde</dd>
+</dl>
+
 
 <div align="center">
   <figure>
