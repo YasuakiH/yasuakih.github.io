@@ -27,18 +27,18 @@ permalink: /article2/
 
 <div align="center">
   <figure>
-    <img src="img/故障モデル-部品ライフと強度からの応力推定.png"/>
+    <img src="img/故障モデル-③応力-強度モデル図作成.png"/>
 	<br/>
-    <figcaption>図. 故障モデル-部品ライフと強度からの応力推定</figcaption>
+    <figcaption>図. 故障モデル-③応力-強度モデル図作成</figcaption>
   </figure>
 </div>
 
 ---
 <div align="center">
   <figure>
-    <img src="img/故障モデル-未知パラメータから部品負荷の導出.png"/>
+    <img src="img/故障モデル-①未知パラメータから部品負荷の推定.png"/>
 	<br/>
-    <figcaption>図. 故障モデル-未知パラメータから部品負荷の導出</figcaption>
+    <figcaption>図. 故障モデル-①未知パラメータから部品負荷の推定</figcaption>
   </figure>
 </div>
 
@@ -54,18 +54,18 @@ permalink: /article2/
 ---
 <div align="center">
   <figure>
-    <img src="img/故障モデル-交換された部品数と作業時間の対比.png"/>
+    <img src="img/故障モデル-④管理目標値の最適値を探索.png"/>
 	<br/>
-    <figcaption>図. 故障モデル-交換された部品数と作業時間の対比</figcaption>
+    <figcaption>図. 故障モデル-④管理目標値の最適値を探索</figcaption>
   </figure>
 </div>
 
 ---
 <div align="center">
   <figure>
-    <img src="img/故障モデル-交換コストの改善予測.png"/>
+    <img src="img/故障モデル-⑤信頼性成長を予測.png"/>
 	<br/>
-    <figcaption>図. 故障モデル-交換コストの改善予測</figcaption>
+    <figcaption>図. 故障モデル-⑤信頼性成長を予測</figcaption>
   </figure>
 </div>
 
