@@ -16,9 +16,9 @@ permalink: /article2/
 
 <div align="center">
   <figure>
-    <img src="img/シミュレーションモデル-全体像.png"/>
+    <img src="img/故障モデル-全体像.png"/>
 	<br/>
-    <figcaption>図. シミュレーションモデル-全体像</figcaption>
+    <figcaption>図. 故障モデル-全体像</figcaption>
   </figure>
 </div>
 ## 考え方
