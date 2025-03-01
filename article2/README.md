@@ -308,7 +308,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 <div align="center">
   <figure>
-    <img src="img/交換部品数と停止時間のトレンド.png"/>
+    <img src="img/結果-交換部品数と停止時間のトレンド.png"/>
 	<br/>
     <figcaption>図. 定期交換部品の計画的な交換時期が、(上)交換部品数 (コスト) に及ぼす影響と、(下)印刷機の停止時間 (ダウンタイム) に及ぼす影響</figcaption>
   </figure>
