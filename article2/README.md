@@ -18,25 +18,17 @@ permalink: /article2/
 
 <div align="center">
   <figure>
+    <img src="img/故障モデル-未知パラメータから部品負荷の導出.png"/>
+	<br/>
+    <figcaption>図. 故障モデル-未知パラメータから部品負荷の導出</figcaption>
+  </figure>
+</div>
+
+<div align="center">
+  <figure>
     <img src="img/故障モデル-応力強度モデル.png"/>
 	<br/>
     <figcaption>図. 故障モデル-応力強度モデル</figcaption>
-  </figure>
-</div>
-
-<div align="center">
-  <figure>
-    <img src="img/故障モデル-交換コストの改善予測.png"/>
-	<br/>
-    <figcaption>図. 故障モデル-交換コストの改善予測</figcaption>
-  </figure>
-</div>
-
-<div align="center">
-  <figure>
-    <img src="img/故障モデル-交換された部品数と作業時間の対比.png"/>
-	<br/>
-    <figcaption>図. 故障モデル-交換された部品数と作業時間の対比</figcaption>
   </figure>
 </div>
 
@@ -50,9 +42,17 @@ permalink: /article2/
 
 <div align="center">
   <figure>
-    <img src="img/故障モデル-未知パラメータから部品負荷の導出.png"/>
+    <img src="img/故障モデル-交換された部品数と作業時間の対比.png"/>
 	<br/>
-    <figcaption>図. 故障モデル-未知パラメータから部品負荷の導出</figcaption>
+    <figcaption>図. 故障モデル-交換された部品数と作業時間の対比</figcaption>
+  </figure>
+</div>
+
+<div align="center">
+  <figure>
+    <img src="img/故障モデル-交換コストの改善予測.png"/>
+	<br/>
+    <figcaption>図. 故障モデル-交換コストの改善予測</figcaption>
   </figure>
 </div>
 
