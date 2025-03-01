@@ -26,6 +26,8 @@ permalink: /article2/
 <dl>
   <dt>①未知パラメータから部品負荷の推定</dt>
   <dd>abcde</dd>
+  <dt><dfn>①未知パラメータから部品負荷の推定</dfn></dt>
+  <dd>abcde</dd>
 </dl>
 
 
