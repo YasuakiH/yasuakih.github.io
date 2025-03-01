@@ -18,9 +18,9 @@ permalink: /article2/
 
 <div align="center">
   <figure>
-    <img src="img/故障モデル-応力強度モデル.png"/>
+    <img src="img/故障モデル-部品ライフと強度からの応力推定.png"/>
 	<br/>
-    <figcaption>図. 故障モデル-応力強度モデル</figcaption>
+    <figcaption>図. 故障モデル-部品ライフと強度からの応力推定</figcaption>
   </figure>
 </div>
 
