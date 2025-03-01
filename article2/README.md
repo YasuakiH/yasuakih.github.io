@@ -14,7 +14,16 @@ permalink: /article2/
 - 2 部品ライフ推定 【本記事の範囲】
 - <font color="gray">3 機械の信頼度成長</font>
 
+<div align="center">
+  <figure>
+    <img src="img/シミュレーションモデル-全体像.png"/>
+	<br/>
+    <figcaption>図. シミュレーションモデル-全体像</figcaption>
+  </figure>
+</div>
 ## 考え方
+
+知りたいこと： お客様固有の応力S
 
 <div align="center">
   <figure>
