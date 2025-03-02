@@ -177,7 +177,8 @@ permalink: /article2/
   </figure>
 </div>
 
----
+#### ③応力-強度モデル図作成
+
 <div align="center">
   <figure>
     <img src="img/故障モデル-③応力-強度モデル図作成.png"/>
@@ -186,7 +187,9 @@ permalink: /article2/
   </figure>
 </div>
 
----
+
+#### ④管理目標値の最適値を探索
+
 <div align="center">
   <figure>
     <img src="img/故障モデル-④管理目標値の最適値を探索.png"/>
@@ -195,7 +198,8 @@ permalink: /article2/
   </figure>
 </div>
 
----
+#### ⑤信頼性成長を予測
+
 <div align="center">
   <figure>
     <img src="img/故障モデル-⑤信頼性成長を予測.png"/>
@@ -204,7 +208,7 @@ permalink: /article2/
   </figure>
 </div>
 
----
+#### 生存関数
 <div align="center">
   <figure>
     <img src="img/故障モデル-生存関数.png"/>
