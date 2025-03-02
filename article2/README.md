@@ -273,43 +273,6 @@ CS(ΔT|T1) = SF(T1) / SF(T1)
 
 
 
-## 部品の故障モデル
-
-### 応力-強度モデル
-
-<div align="center">
-  <figure>
-    <a title="Cdang, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Contrainte_resistance_2d_proche.svg/551px-Contrainte_resistance_2d_proche.svg.png"><img alt="Contrainte resistance 2d proche" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Contrainte_resistance_2d_proche.svg/551px-Contrainte_resistance_2d_proche.svg.png"></a>
-	<br/>
-    <figcaption>図. 応力-強度モデル。
-<br/><a href="https://commons.wikimedia.org/wiki/User:Cdang">Cdang</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons
-    </figcaption>
-  </figure>
-</div>
-
-### 部品の使われ方 - _応力_
-印刷機の使用に伴って部品にかかる負荷が「応力」となる。
-最初の記事で述べたように、<a href="../article1/">印刷機の使われ方は外部から観察できない</a>ため、「未知パラメータ」としてこれを代用した。未知パラメータに基づいて無作為に多数の印刷ジョブを発生させ、保守サービスから得られる統計との差が小さければ、その未知パラメータをもっともらしいと見なした。この時に生じた印刷ジョブが応力で、未知パラメータから生成することができる。
-
-### 部品の強度 - _強度_
-部品の強度は保守サービスを介して、サービスエンジニアによる作業報告や、印刷機から通信ネットワークを介して提供される稼働状況から得ることができる。これらの情報には交換時の部品ライフに加え、交換時の状況が詳細に含まれることもあるため、部品強度は比較的正確に把握することができる。部品の強度にはさまざまな理由で「ばらつき」がある。定期交換部品のように (修理されず) 交換される部品の場合、その強度の分布を表すために「ワイブル分布」が使われる。ワイブル分布は2つのパラメータで特徴付けられる確率分布である。パラメータはそれぞれ、形状パラメータ(αまたはm)、尺度パラメータ(βまたはη)と呼ぶ。
-
-### 故障確率
-応力と強度が干渉する結果、部品が故障する。2つの分布の重なりが故障の確率となる。
-
-本スタディでは、シミュレーション
-
-
-### 部品の障害修理と予防交換
-
-(応力) の分布と、部品の強度の分布の
-
-重なりが故障の確率とする。
-
-部品にかかる応力によって部品が故障するという
-確率的に故障する
-
-
 ## 実験結果
 次のコマンドラインを用いてシミュレーションを実施した。
 
@@ -371,6 +334,27 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 ``` shell
 TBD
 ```
+
+### 応力-強度モデル
+
+<div align="center">
+  <figure>
+    <a title="Cdang, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Contrainte_resistance_2d_proche.svg/551px-Contrainte_resistance_2d_proche.svg.png"><img alt="Contrainte resistance 2d proche" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Contrainte_resistance_2d_proche.svg/551px-Contrainte_resistance_2d_proche.svg.png"></a>
+	<br/>
+    <figcaption>図. 応力-強度モデル。
+<br/><a href="https://commons.wikimedia.org/wiki/User:Cdang">Cdang</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons
+    </figcaption>
+  </figure>
+</div>
+
+### 部品の使われ方 - _応力_
+印刷機の使用に伴って部品にかかる負荷が「応力」となる。
+最初の記事で述べたように、<a href="../article1/">印刷機の使われ方は外部から観察できない</a>ため、「未知パラメータ」としてこれを代用した。未知パラメータに基づいて無作為に多数の印刷ジョブを発生させ、保守サービスから得られる統計との差が小さければ、その未知パラメータをもっともらしいと見なした。この時に生じた印刷ジョブが応力で、未知パラメータから生成することができる。
+
+### 部品の強度 - _強度_
+部品の強度は保守サービスを介して、サービスエンジニアによる作業報告や、印刷機から通信ネットワークを介して提供される稼働状況から得ることができる。これらの情報には交換時の部品ライフに加え、交換時の状況が詳細に含まれることもあるため、部品強度は比較的正確に把握することができる。部品の強度にはさまざまな理由で「ばらつき」がある。定期交換部品のように (修理されず) 交換される部品の場合、その強度の分布を表すために「ワイブル分布」が使われる。ワイブル分布は2つのパラメータで特徴付けられる確率分布である。パラメータはそれぞれ、形状パラメータ(αまたはm)、尺度パラメータ(βまたはη)と呼ぶ。
+
+
 
 ----
 このページに掲載した作品 (テキスト、プログラムコードなど) はパブリック・ドメインに提供しています。詳細は [CC0 1.0 全世界 コモンズ証](https://creativecommons.org/publicdomain/zero/1.0/deed.ja) をご覧ください。
