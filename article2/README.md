@@ -142,9 +142,8 @@ permalink: /article2/
                  └ 部品固有ライフ ≦ 累積印刷ページ となったら故障
 </code></pre>
 
+### ①未知パラメータから部品負荷の推定
 
-## モデル設計
----
 <div align="center">
   <figure>
     <img src="img/故障モデル-①未知パラメータから部品負荷の推定.png"/>
@@ -153,7 +152,8 @@ permalink: /article2/
   </figure>
 </div>
 
----
+### ①未知パラメータから部品負荷の推定②特定の印刷機における部品ライフの推定
+
 <div align="center">
   <figure>
     <img src="img/故障モデル-②特定の印刷機における部品ライフの推定.png"/>
