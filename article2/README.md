@@ -122,7 +122,7 @@ permalink: /article2/
 
         印刷ジョブ (class PrintJob)
           └ <b>印刷ジョブ作成</b> (init)
-            └ <b><a href="#顧客の未知パラメータに基づく印刷ジョブを作成">顧客の未知パラメータに基づく印刷ジョブを作成</a></b> (generate_customer_print_job)
+            └ <b><a href="#①未知パラメータから部品負荷の推定">顧客の未知パラメータに基づく印刷ジョブを作成</a></b> (generate_customer_print_job)
 
         <b>印刷ジョブの出力プロセス</b> (printing_printjob_process)
           ├ 印刷機ユニットを確保
