@@ -58,7 +58,7 @@ permalink: /article2/
 
 ## 印刷機の保守モデル
 
-### 印刷機の保守モデル
+### 保守モデル
 
 <div align="center">
   <figure>
