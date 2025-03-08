@@ -118,14 +118,14 @@ permalink: /article2/
   ├ <b>印刷シミュレーションプロセス</b>
   └ 結果表示
    
-    <b><a href="https://github.com/YasuakiH/yasuakih.github.io/blob/main/article2/sim_component_failure.py#L535">印刷シミュレーションプロセス</a></b> (printingmachine_simulator_process)
+    <b><a href="#印刷シミュレーションプロセス">印刷シミュレーションプロセス</a></b> (printingmachine_simulator_process)
       ├ 印刷機ユニットを確保し、部品をインストール
       ├ 印刷機の保守計画を策定し、<b>印刷機の予防保守のスケジュールと実施プロセス</b>を実行
       └ シミュレーション期間中のジョブ受注                                               ← ループ
           └ 定期的(30分間隔)に<b>印刷ジョブ作成</b>し、<b>印刷ジョブの出力プロセス</b>を実行
 
         印刷機ユニット (class PrintingMachine)
-          ├ <b><a href="https://github.com/YasuakiH/yasuakih.github.io/blob/main/article2/sim_component_failure.py#L413">予防保守実行プロセス</a></b> (preventive_maintenance_process)
+          ├ <b><a href="#予防保守実行プロセス">予防保守実行プロセス</a></b> (preventive_maintenance_process)
           │  ├ <b>交換部品の生成</b>
           │  └ 交換作業 (待機時間: 30分)
           ├ <b><a href="#障害修理実行プロセス">障害修理実行プロセス</a></b> (corrective_maintenance_process)
@@ -166,6 +166,7 @@ permalink: /article2/
 </code></pre>
 
 #### 印刷シミュレーションプロセス<!-- printingmachine_simulator_process -->
+シミュレーションの環境を構築し、印刷機ユニットの初期化 (最初の部品をインストール)、保守計画の作成 (次回の予防保守の実施タイミングを指定)、初期の印刷ジョブの生成、シミュレーション期間中に受注する印刷ジョブの生成を行う(生成感覚は30分)。シミュレーションを停止する条件は、(1) シミュレーション日時が所定時刻に達するか、(2) 交換部品数が所定数に達するまでとした。
 #### 予防保守実行プロセス<!-- (PrintingMachine.preventive_maintenance_process) -->
 #### 障害修理実行プロセス<!-- (PrintingMachine.corrective_maintenance_process) -->
 #### 印刷実行プロセス(含む部品ライフ進行(摩耗))<!-- (PrintingMachine.printout_process) -->
