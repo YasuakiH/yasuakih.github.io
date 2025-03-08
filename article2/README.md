@@ -165,14 +165,14 @@ permalink: /article2/
                  └ 部品固有ライフ ≦ 累積印刷ページ となったら故障
 </code></pre>
 
-### 印刷シミュレーションプロセス<!-- printingmachine_simulator_process -->
-### 予防保守実行プロセス<!-- (PrintingMachine.preventive_maintenance_process) -->
-### 障害修理実行プロセス<!-- (PrintingMachine.corrective_maintenance_process) -->
-### 印刷実行プロセス(含む部品ライフ進行(摩耗))<!-- (PrintingMachine.printout_process) -->
-### 印刷機の予防保守のスケジュールと実施プロセス<!-- (preventive_maintenance_setup_process) -->
-### 顧客の未知パラメータに基づく印刷ジョブを作成<!-- (generate_customer_print_job) -->
-### 交換部品の生成<!-- (init) -->
-### 故障確率の算出<!-- (failure) -->
+#### 印刷シミュレーションプロセス<!-- printingmachine_simulator_process -->
+#### 予防保守実行プロセス<!-- (PrintingMachine.preventive_maintenance_process) -->
+#### 障害修理実行プロセス<!-- (PrintingMachine.corrective_maintenance_process) -->
+#### 印刷実行プロセス(含む部品ライフ進行(摩耗))<!-- (PrintingMachine.printout_process) -->
+#### 印刷機の予防保守のスケジュールと実施プロセス<!-- (preventive_maintenance_setup_process) -->
+#### 顧客の未知パラメータに基づく印刷ジョブを作成<!-- (generate_customer_print_job) -->
+#### 交換部品の生成<!-- (init) -->
+#### 故障確率の算出<!-- (failure) -->
 
 ## 実験結果
 ### 実験方法
