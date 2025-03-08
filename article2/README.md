@@ -24,7 +24,7 @@ permalink: /article2/
   <figure>
     <img src="img/故障モデル-応力強度モデルの概説.png"/>
 	<br/>
-    <figcaption>図. 故障モデル-応力強度モデルの概説</figcaption>
+    <figcaption>図. 故障モデル-応力強度モデル。(上) 応力S、強度Rの確率密度、(下) 故障F (= S × R) の確率密度。SとRの重畳が故障確率Fである。</figcaption>
   </figure>
 </div>
 
