@@ -103,7 +103,7 @@ permalink: /article2/
   </figure>
 </div>
 
-### シミュレーションフレームワーク
+### シミュレーション・フレームワーク
 シミュレーションモデルの環境内では、各種イベントが互いに同期を取りながら進行する。こうした複雑な処理を行うために、Python言語向けのシミュレーション・フレームワーク [Simpy](https://simpy.readthedocs.io/en/latest/) を使用した。
 
 ### 全体の構造
@@ -118,14 +118,14 @@ permalink: /article2/
   ├ <b>印刷シミュレーションプロセス</b>
   └ 結果表示
    
-    <b><a href="#印刷シミュレーションプロセス">印刷シミュレーションプロセス</a></b> (printingmachine_simulator_process)
+    <b><a href="https://github.com/YasuakiH/yasuakih.github.io/blob/e94ad38776570da5d3003a258a2985ab4faa4808/article2/sim_component_failure.py#L535">印刷シミュレーションプロセス</a></b> (printingmachine_simulator_process)
       ├ 印刷機ユニットを確保し、部品をインストール
       ├ 印刷機の保守計画を策定し、<b>印刷機の予防保守のスケジュールと実施プロセス</b>を実行
       └ シミュレーション期間中のジョブ受注                                               ← ループ
           └ 定期的(30分間隔)に<b>印刷ジョブ作成</b>し、<b>印刷ジョブの出力プロセス</b>を実行
 
         印刷機ユニット (class PrintingMachine)
-          ├ <b><a href="#予防保守実行プロセス">予防保守実行プロセス</a></b> (preventive_maintenance_process)
+          ├ <b><a href="https://github.com/YasuakiH/yasuakih.github.io/article2/sim_component_failure.py#L413">予防保守実行プロセス</a></b> (preventive_maintenance_process)
           │  ├ <b>交換部品の生成</b>
           │  └ 交換作業 (待機時間: 30分)
           ├ <b><a href="#障害修理実行プロセス">障害修理実行プロセス</a></b> (corrective_maintenance_process)
@@ -164,6 +164,15 @@ permalink: /article2/
               └ <b><a href="#故障確率の算出">故障確率の算出</a></b> (failure)
                  └ 部品固有ライフ ≦ 累積印刷ページ となったら故障
 </code></pre>
+
+### 印刷シミュレーションプロセス<!-- printingmachine_simulator_process -->
+### 予防保守実行プロセス<!-- (PrintingMachine.preventive_maintenance_process) -->
+### 障害修理実行プロセス<!-- (PrintingMachine.corrective_maintenance_process) -->
+### 印刷実行プロセス(含む部品ライフ進行(摩耗))<!-- (PrintingMachine.printout_process) -->
+### 印刷機の予防保守のスケジュールと実施プロセス<!-- (preventive_maintenance_setup_process) -->
+### 顧客の未知パラメータに基づく印刷ジョブを作成<!-- (generate_customer_print_job) -->
+### 交換部品の生成<!-- (init) -->
+### 故障確率の算出<!-- (failure) -->
 
 ## 実験結果
 ### 実験方法
