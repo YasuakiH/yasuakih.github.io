@@ -104,9 +104,9 @@ permalink: /article2/
 ### シミュレーション・フレームワーク
 シミュレーションモデルの環境内では、各種イベントが互いに同期を取りながら進行する。こうした複雑な処理を行うために、Python言語向けのシミュレーション・フレームワーク [Simpy](https://simpy.readthedocs.io/en/latest/) を使用した。
 
-<details>
-<summary>全体の構造</summary>
 ### 全体の構造
+<details>
+<summary>全体の構造を開く</summary>
 
 <div align="center">
 図2. 全体の構造
