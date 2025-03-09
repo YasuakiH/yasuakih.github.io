@@ -216,7 +216,9 @@ permalink: /article2/
 					
 <details>
 <summary>コマンドラインを表示</summary>
+<pre>
 python sim_component_failure.py --designed_life 1000000 --maxt 60\*24\*30\*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
+</pre>
 </details>
 
 ### 定期交換部品の交換時期がダウンタイムとコストに及ぼす影響
