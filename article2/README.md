@@ -214,13 +214,6 @@ permalink: /article2/
 | 予防保守の管理目標(係数) | 500k - 1500k まで 100k 刻みで行う | --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 |
 | シミュレーション回数 | 1つの条件につきシミュレーションを 100 回して平均化する | --iter 100 |
 
-<details>
-<summary>コマンドラインを表示</summary>
-<pre>
-python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
-</pre>
-</details>
-
 ### コマンドライン
 ``` shell
 python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
