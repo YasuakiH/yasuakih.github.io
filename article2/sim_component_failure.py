@@ -156,23 +156,51 @@ class PrintJob():
     MAX_SET_PER_JOB = 2000  # 印刷部数の最大 (最小は1)
 
     def generate_customer_print_job(self):
-        '''顧客の未知パラメータに基づく印刷ジョブを作成'''
-        # トータルエリアカバレッジ
-        area_coverage_list = [0.10, 0.10]  # [平均(mu), 分散(sigma)]
-        mu, sigma = area_coverage_list
-        area_coverate = my_gauss(mu, sigma, upper_limit=2000, number_of_digits=2)
+        '''顧客の未知パラメータに基づく印刷ジョブを作成
+        印刷ジョブの属性:
+        - 印刷用紙サイズ(重み付きランダム)
+        - トータルエリアカバレッジ(用紙サイズにより分布は異なる)
+        - 印刷ジョブ長(用紙サイズにより分布は異なる)
+        - 両面/片面(μ=0.5, σ=0.3)
+        '''
+        # 未知パラメータ
+        area_coverage_lvl = 'M'
+        page_length_lvl   = 'L'
 
-        # 印刷用紙サイズ
-        customer_printed_matters = {'葉書': 0.0, 'A4': 1.0, 'B4':0.0, 'A3':0.0, '長尺':0.0} # サイズ:割合
+        # 印刷用紙サイズ (サイズ:割合の組、割合は合計1.0とする)
+        #   値は次のシミュレーション結果に基づく: name=PM1 try=9  [TYP=Q4 AC=M PL=L]  [葉  0 A4  5 B4  3 A3 46 長 46] loop=8933  ink=100 枚数比=0.90 ce1=0.53 ce2=3.27 → OK (総OK:1)★
+        customer_printed_matters = {'葉書': 0.0, 'A4': 0.05, 'B4':0.03, 'A3':0.46, '長尺':0.46}
+        assert sum([customer_printed_matters[key] for key, value in customer_printed_matters.items()]) == 1.0, f'dict customer_printed_matters の value の合計を 1.0 とする。'
         paper_size = random.choices(
                 list(customer_printed_matters.keys()),
                 weights = list(customer_printed_matters.values())
         )[0]
 
-        # 印刷ジョブ長さ
-        page_length_list = [300, 300]  # [平均(mu), 分散(sigma)]
-        page_length_mu, page_length_sigma = page_length_list
+        # トータルエリアカバレッジ
+        # area_coverage_list = [0.10, 0.10]  # [平均(mu), 分散(sigma)]
+        area_coverage_list = {
+            '葉書': {'L': [0.10, 0.10], 'M': [0.20, 0.10], 'H': [0.20, 0.20]},
+            'A4'  : {'L': [0.03, 0.05], 'M': [0.10, 0.10], 'H': [0.20, 0.20]},
+            'B4'  : {'L': [0.03, 0.05], 'M': [0.04, 0.10], 'H': [0.05, 0.20]},
+            'A3'  : {'L': [0.03, 0.05], 'M': [0.04, 0.10], 'H': [0.05, 0.20]},
+            '長尺': {'L': [0.10, 0.10], 'M': [0.30, 0.10], 'H': [0.50, 0.20]},
+        }
+        mu, sigma = area_coverage_list[paper_size][area_coverage_lvl]
+        area_coverate = my_gauss(mu, sigma, upper_limit=2000, number_of_digits=2)
+        # print_t(self.env, f'  area_coverate={area_coverate}')
+
+        # 印刷ジョブ長
+        # page_length_list = [300, 300]  # [平均(mu), 分散(sigma)]
+        page_length_list = {
+            '葉書': {'L': [0,  50], 'M': [  0, 100], 'H': [  0, 200]},
+            'A4'  : {'L': [0, 300], 'M': [300, 300], 'H': [500, 600]},
+            'B4'  : {'L': [0, 300], 'M': [300, 300], 'H': [500, 600]},
+            'A3'  : {'L': [0, 300], 'M': [300, 300], 'H': [500, 600]},
+            '長尺': {'L': [0,   5], 'M': [  0,  10], 'H': [  0,  30]},
+        }
+        page_length_mu, page_length_sigma = page_length_list[paper_size][page_length_lvl]
         page_length = int(my_gauss(page_length_mu, page_length_sigma, self.MAX_PAGE_LENGTH, 0))
+        # print_t(self.env, f'  page_length={page_length}')
 
         # 両面/片面
         duplex_rate_list = [0.5, 0.3]  # [平均(mu), 分散(sigma)]
@@ -183,6 +211,7 @@ class PrintJob():
         else:
             duplex_or_simplex = 'simplex'
 
+        # print_t(self.env, f'  ' + str((area_coverate, paper_size, page_length, duplex_or_simplex)))
         return (area_coverate, paper_size, page_length, duplex_or_simplex)
 
     def __init__(self, env, id, area_coverage=0.1, paper_size='A4', page_length=1, duplex_or_simplex='simplex'):
@@ -206,22 +235,29 @@ class ReplacementPart():
     '''交換部品 - 交換部品の生成, 部品ライフ進行(摩耗), 故障確率の算出
 
     単位:
-      部品ライフを [ページ] で表現する。用紙サイズの異なりを補正するため、[ページ] は「A4長辺」を1とする。
+      部品ライフを [A4短辺ページ] で表現する。用紙サイズの異なりを補正するため、[A4短辺ページ] は「A4短辺」を1とした無次元の量である。
+
+    例:
+      用紙サイズ=A3、ジョブ長=3の場合、部品にかかる負荷 ΔT = 用紙長比2.30 × ジョブ長3 = 6.90 [A4短辺ページ] となる。
     '''
 
-    # 用紙長比
+    # 用紙長比 (各用紙の1枚あたりの長さ。A4短辺を1とする。)
     paper_length_ratio = {
-        '葉書' : 148/210,    # 葉書長辺 / A4短辺 (タテ置き)
-        'A4'   : 210/210,    #   A4短辺 / A4短辺 (ヨコ置き)
-        'B4'   : 364/210,    #   B4長辺 / A4短辺 (タテ置き)
-        'A3'   : 483/210,    #   A3長辺 / A4短辺 (タテ置き)
-        '長尺' : 1200/210,   # 長尺長辺 / A4短辺 (タテ置き)
+        '葉書' : 148/210,    # 0.704 | 葉書長辺/A4短辺 | タテ置き
+        'A4'   : 210/210,    # 1.00  |   A4短辺/A4短辺 | ヨコ置き
+        'B4'   : 364/210,    # 1.73  |   B4長辺/A4短辺 | タテ置き
+        'A3'   : 483/210,    # 2.30  |   A3長辺/A4短辺 | タテ置き
+        '長尺' : 1200/210,   # 5.71  | 長尺長辺/A4短辺 | タテ置き
     }
 
     parts_life = None  # 偽のライフ実績 (list)
  
     def set_part_life_distribution(self):
-        '''部品ライフ分布を生成(ワイブル分布)'''
+        '''部品ライフ分布を生成(ワイブル分布)
+        印刷機全体の母集団における部品ライフを規定する。部品強度 F を与える。
+        本来は保守サービスを介して収集した部品ライフに基づいて設定するところだが、架空の印刷機のものとしてワイブル分布を仮定した。
+        部品ライフは無次元してA4短辺を1とした。
+        '''
         # (1) 正規分布
         # return int(random.gauss(1000000, 100000))  # 正規分布は負の部品ライフを生成するため適当でない
         # 
@@ -252,12 +288,12 @@ class ReplacementPart():
         self.env             = env
         self.set_part_life_distribution()  # 部品ライフ分布を生成(ワイブル分布)
 
-        self.life_limit      = int(        # 交換時の管理目標 [ページ]
-            params.designed_life *         # 部品ライフ設計値 [ページ]
+        self.life_limit      = int(        # 交換時の管理目標 [A4短辺ページ]
+            params.designed_life *         # 部品ライフ設計値 [A4短辺ページ]
             params.wearout_rate            # 部品ライフ設計値を1.0とした場合の管理目標(係数)
         )
-        self.cum_page_length_before = None  # 印刷ジョブ出力前の 累積印刷ページ数 [ページ]
-        self.cum_page_length_after  = 0     # 印刷ジョブ出力後の 累積印刷ページ数 [ページ]
+        self.cum_page_length_before = None  # 印刷ジョブ出力前の 累積印刷ページ数 [A4短辺ページ]
+        self.cum_page_length_after  = 0     # 印刷ジョブ出力後の 累積印刷ページ数 [A4短辺ページ]
 
         self.survival_prob_before = None    # 印刷ジョブ出力前の生存確率
 
@@ -275,23 +311,26 @@ class ReplacementPart():
 
     def wear(self, print_job):
         '''部品ライフ進行(摩耗)
+        累積印刷ページに「ページ長」を加算し、部品ライフを進行させる。
         ライフ進行の推定で利用可能な「未知パラメータ」:
           - self.area_coverage        トータルエリアカバレッジ
           - self.paper_size           用紙サイズ
-          - self.page_length_before          印刷ページ長 before
-          - self.page_length_after          印刷ページ長 after
+          - self.page_length_before   印刷ページ長 before [A4短辺ページ]
+          - self.page_length_after    印刷ページ長 after  [A4短辺ページ]
           - self.duplex_or_simplex    両面片面
         '''
         # 印刷ジョブ出力前の累積印刷ページ数を保存 (def failure(self) で必要)
         self.cum_page_length_before = self.cum_page_length_after
 
-        # 経年の計算: 「印刷ジョブページ長」×「用紙長比」を累積印刷ページ数に加算
+        # 経年の計算: 「印刷ジョブページ長」×「用紙長比」を累積印刷ページ数に加算する。両面/片面の別は考慮しない (片面ずつ印刷すると仮定した) 
         self.cum_page_length_after += (print_job.page_length * self.paper_length_ratio[print_job.paper_size])
 
         print_t(self.env, f'      累積印刷ページ数(ジョブ出力前): cum_page_length_before={self.cum_page_length_before} → 同(ジョブ出力後)cum_page_length_after={self.cum_page_length_after}')
 
     def failure(self):
-        '''故障確率の算出'''
+        '''故障確率の算出と生存-故障判断。部品が生存(False)するか故障する(True)か判断して返す。
+        部品強度 R に対応する生存関数(SF)を元に、印刷ジョブ出力前まで生き残った部品がさらに印刷ジョブの出力後まで生き残る確率 (条件付き生存率CS) を算出した。故障か故障でないか確率的に決定するために一様乱数を使用した。
+        '''
         print_t(self.env, f'      self.cum_page_length_before = {self.cum_page_length_before}')
         print_t(self.env, f'      self.cum_page_length_after  = {self.cum_page_length_after} (delta={ "----" if self.cum_page_length_before is None else self.cum_page_length_after - self.cum_page_length_before })')
 
@@ -317,8 +356,7 @@ class ReplacementPart():
         uniform_random_number = random.random()                 # 一様乱数を生成
         failure = conditional_survival < uniform_random_number  # 故障か故障でないか確率的な決定
 
-        print_t(self.env, f'      累積印刷ページ数(ジョブ出力後)={self.cum_page_length_after} (交換時の管理目標 {self.life_limit} 比: {(self.cum_page_length_after/self.life_limit*100):.2f}%) 条件付き生存確率={conditional_survival:0.5f} 一様乱数={uniform_random_number:0.5f} failure={failure} → { "故障★" if failure else "生存" }')
-
+        print_t(self.env, f'      累積印刷ページ数(ジョブ出力後)={self.cum_page_length_after} (交換時の管理目標 {self.life_limit} に対する比率: {(self.cum_page_length_after/self.life_limit*100):.2f}%) 条件付き生存確率={conditional_survival:0.5f} 一様乱数={uniform_random_number:0.5f} failure={failure} → { "故障★" if failure else "生存" }')
 
         # (次回の印刷ジョブ出力に備えて) 「印刷ジョブ出力後」の生存確率を保存 (処理時間を削減するため)
         self.survival_prob_before = survival_prob_after
@@ -339,7 +377,9 @@ class MaintenanceWork():
         self.customer_engineer = simpy.Resource(env, capacity=num_engineers) # 環境にリソース追加(保守エンジニア)
 
     def preventive_maintenance_setup_process(self, check_interval):
-        '''印刷機の予防保守のスケジュールと実施プロセス'''
+        '''印刷機の予防保守のスケジュールと実施プロセス
+        予防保守の作業を記述する。予防保守の実施間隔 (check_interval) は、保守サービスの管理目標値として規定される (デフォルト: 10日間)。予防保守の作業内容は、部品ライフが計画部品ライフを超えていたら部品を交換し、次回の予防保守をスケジュールする。なお、交換の際はリソース (エンジニアと印刷機ユニット) の確保を要するとした。
+        '''
         def local_print_t(s):
             print_t(self.env, s)
             pass
@@ -395,7 +435,7 @@ class MaintenanceWork():
 class PrintingMachine(object):
     '''印刷機ユニット'''
 
-    PRINTING_SPEED  = 30   # 印刷速度 [ページ/分]
+    PRINTING_SPEED  = 30   # 印刷速度 [A4短辺ページ/分]
 
     def __init__(self, env, id, num_printing_units=1, num_engineers=1):
         self.env = env
@@ -411,8 +451,9 @@ class PrintingMachine(object):
             end_event.succeed()
 
     def preventive_maintenance_process(self):
-        '''予防保守実行プロセス'''
-
+        '''予防保守実行プロセス
+        エンジニアによる部品の交換を記述した。計画内の作業であるため印刷機を止める作業時間を短くした (30分)。
+        '''
         print_t(self.env, f'    予防保守: BEGIN')
         # インストールされた交換部品を記録
         try:
@@ -446,7 +487,9 @@ class PrintingMachine(object):
         # sys.exit(1)
 
     def corrective_maintenance_process(self):
-        '''障害修理実行プロセス'''
+        '''障害修理実行プロセス
+        予防保守と同様に、エンジニアによる部品の交換であるが、計画外の作業であるため印刷機を止める作業時間を長くした (60-90分)。
+        '''
         print_t(self.env, f'    障害修理: BEGIN')
         # インストールされた交換部品を記録
         try:
@@ -475,8 +518,9 @@ class PrintingMachine(object):
         # sys.exit(1)
 
     def printout_process(self, print_job):
-        '''印刷実行プロセス(含む部品ライフ進行(摩耗))'''
-
+        '''印刷実行プロセス(含む部品ライフ進行(摩耗))
+        印刷ジョブを出力を記述する。印刷の所要時間は、印刷ジョブ長/印刷速度 とした。その後、部品ライフを進行させた。
+        '''
         # 印刷ジョブの出力
         print_t(self.env, f'    印刷ジョブの出力: BEGIN {print_job}')
         yield self.env.timeout(
@@ -502,7 +546,7 @@ def printing_printjob_process(env, print_job, printer):
         yield request  # raise a event
         print_t(print_job.env, f'    印刷機ユニットを確保 request終了')
 
-        # 故障確率の算出と故障判断
+        # 故障確率の算出と生存-故障判断
         if printer.replacement_part.failure():
             succeeds = False
             print_t(print_job.env, f' ★故障')
@@ -533,7 +577,9 @@ def printing_printjob_process(env, print_job, printer):
 # end-of def printing_printjob_process
 
 def printingmachine_simulator_process(env, num_printing_units, num_engineers):
-    '''印刷シミュレーションプロセス'''
+    '''印刷シミュレーションプロセス
+    シミュレーション環境を構築し、さまざまな初期化をした後、シミュレーション中の印刷ジョブを生成する。シミュレーションは内部時計が上限を超過するか、交換部品数が所定数に達したら終了する。
+    '''
 
     # 印刷機ユニット作成
     print_t(env, f'印刷機ユニット作成: BEGIN')
@@ -597,7 +643,7 @@ def simulation_parameters_str(params):
     result = (
         # f'args={args}' + '\n'\
         # f'管理目標の係数: {params.wearout_rate}' + ' ' + 
-        f'部品ライフ設計値: {int(params.designed_life/1000)}k [ページ]' + ' ' + 
+        f'部品ライフ設計値: {int(params.designed_life/1000)}k [A4短辺ページ]' + ' ' + 
         f'(β={params.beta}' + ' ' + 
         f',η={int(params.eta/1000)}k)' + ' ' + 
         # f'{args.check_interval}' + ' ' + 
@@ -663,6 +709,7 @@ def show_stress_strength_chart(params, wearout_rates, result_all_df):
             show_probability_plot=False,
             print_results=False
         ).distribution
+        # parts_exchange_dist.plot()
 
         label = f'障害修理に基づく故障確率 (赤)\n[Weibull] (α=' + '{:.0f}'.format(parts_exchange_dist.alpha/1000) + 'k' + f' β={parts_exchange_dist.beta:.1f})'
         simulated_failures = parts_exchange_dist.PDF(xvals=xvals, show_plot=True, label=label, color='r')
@@ -939,7 +986,7 @@ def main():
         result = \
             f'args={args}' + '\n'\
             f'予防保守の管理目標(係数)  args.wearout_rate   = {args.wearout_rate}' + '\n'\
-            f'部品ライフ設計値          args.designed_life  = {args.designed_life} [ページ]' + '\n'\
+            f'部品ライフ設計値          args.designed_life  = {args.designed_life} [A4短辺ページ]' + '\n'\
             f'部品ライフ形状パラメータ  args.beta           = {args.beta}' + '\n'\
             f'部品ライフ尺度パラメータ  args.eta            = {args.eta}' + '\n'\
             f'保守間隔                  args.check_interval = {args.check_interval}' + '\n'\

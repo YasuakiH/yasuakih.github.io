@@ -95,9 +95,9 @@ permalink: /article2/
 
 <div align="center">
   <figure>
-    <img src="img/印刷機の保守モデル.png"/>
+    <img src="img/印刷機保守のシミュレーションモデル.png"/>
 	<br/>
-    <figcaption>図. 印刷機保守のシミュレーションモデル (<a href="img/印刷機の保守モデル.png" target="_blank">拡大</a>)</figcaption>
+    <figcaption>図. 印刷機保守のシミュレーションモデル (<a href="img/印刷機保守のシミュレーションモデル.png" target="_blank">拡大</a>)</figcaption>
   </figure>
 </div>
 
