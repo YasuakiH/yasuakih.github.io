@@ -213,17 +213,10 @@ permalink: /article2/
 | 母集団における部品ライフのワイブル分布形状パラメータ | 摩耗故障型として設定。後続のスタディではこの種類を扱う。 | --beta 1.8 |
 | 予防保守の管理目標(係数) | 500k - 1500k まで 100k 刻みで行う | --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 |
 | シミュレーション回数 | 1つの条件につきシミュレーションを 100 回して平均化する | --iter 100 |
-| --- | --- | --- |
-			
-					
-					
-					
-					
-					
 					
 <details>
 <summary>コマンドラインを表示</summary>
-python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
+python sim_component_failure.py --designed_life 1000000 --maxt 60\*24\*30\*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
 </details>
 
 ### 定期交換部品の交換時期がダウンタイムとコストに及ぼす影響
