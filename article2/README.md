@@ -197,13 +197,16 @@ permalink: /article2/
 </details>
 
 ## 実験結果
-### 実験方法
+### 目的
+この実験の目的は、定期交換部品を計画的に交換する管理目標が、印刷機の停止時間 (ダウンタイム) と交換される部品数 (コスト) にどのような影響を及ぼすかを確かめることである。
+
+### シミュレーション条件
 シミュレーションの条件を次に示す。
 
 | 意味 | 目的 | コマンドライン・オプション |
 | --- | --- | --- |
-| 部品ライフ設計値 | 部品ライフ設計値を 1000k [A4短辺ページ] と仮定した。数字に特別な意味はない。 | --designed_life 1000000 |
-| シミュレーション期間 | 360 日間を経過したらシミュレーションを終了する。経験的な数値で、10個程度の部品の故障が生じると期待される。 | --maxt 60*24*30*12 | 
+| 部品ライフ設計値 | 部品ライフ設計値を 1000k [A4短辺ページ] と仮定 | --designed_life 1000000 |
+| シミュレーション期間 | シミュレーション時計で 360 日間を経過したらシミュレーションを終了する。経験的な数値で、10個程度の部品の故障が生じると期待される。 | --maxt 60*24*30*12 | 
 | 母集団における部品ライフのワイブル分布形状パラメータ | 摩耗故障型として設定。後続のスタディではこの種類を扱う。 | --beta 1.8 |
 | 予防保守の管理目標(係数) | 500k - 1500k まで 100k 刻みで行う | --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 |
 | シミュレーション回数 | 1つの条件につきシミュレーションを 100 回して平均化する | --iter 100 |
@@ -213,8 +216,15 @@ permalink: /article2/
 python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
 </details>
 
+### 定期交換部品の交換時期がダウンタイムとコストに及ぼす影響
 
-### 応力-強度チャート
+応力-強度チャート
+
+
+保守サービスにおける最適な交換時期を推定する。
+
+
+
 <div align="center"><figure><img src="img/応力強度モデルチャート(iter=100)/応力-強度モデル (管理目標係数0.80)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数0.80)</figcaption></figure></div>
 
 <details>
@@ -256,9 +266,27 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 ### ソースコード
 * [sim_component_failure.py](sim_component_failure.py)
 
-### コマンドライン
+### コマンドラインオプション
 ``` shell
-TBD
+usage: sim_component_failure.py [-h] [--step] [--debug] [--wearout_rate WEAROUT_RATE [WEAROUT_RATE ...]] [--designed_life DESIGNED_LIFE] [--beta BETA] [--eta ETA]
+                                [--check_interval CHECK_INTERVAL] [--maxt MAXT] [--maxx MAXX] [--iter ITER] [--seed SEED]
+
+options:
+  -h, --help            show this help message and exit
+  --step
+  --debug
+  --wearout_rate WEAROUT_RATE [WEAROUT_RATE ...]
+                        予防保守の管理目標(係数)。部品ライフ設計値を1.0とした場合の管理目標(係数)を指定する。(デフォルト: 1.0)。(例: --wearout_rate 1.0, --wearout_rate 0.9 1.0 1.1)
+  --designed_life DESIGNED_LIFE
+                        部品ライフ設計値。算術平均やB(10)ライフなどで指定される (デフォルト: 1000000)。(例: --designed_life 1000000)
+  --beta BETA           βは、部品ライフをワイブル分布で表した際の形状パラメータ。β＜1で初期故障型、β=1で偶発故障型、1<βで摩耗型故障を示す (デフォルト: 1.0)。(例: --beta 1.0)
+  --eta ETA             ηは、部品ライフをワイブル分布で表した際の尺度パラメータ。 (デフォルト: 部品ライフ設計値)。(例: --eta 100000)
+  --check_interval CHECK_INTERVAL
+                        保守計画における保守間隔 (単位 [分]) (デフォルト: 60*24*10 (10日間の意味))。(例: --check_interval 60*24*10)
+  --maxt MAXT           シミュレーション期間 (単位 [分]) (デフォルト: 60*24*30*12 (1年間の意味))。(例: --maxt 60*24*30*12)
+  --maxx MAXX           交換部品数の最大値。この指定に達した時点でシミュレーションを終了する (デフォルト: 200)。(例: --maxx 200)
+  --iter ITER           シミュレーション回数 (デフォルト: 1)。(例: --iter 10)
+  --seed SEED           random.seed() 初期値。(デフォルト: None)。(例: --seed 42)
 ```
 
 ## 付録
