@@ -227,10 +227,14 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 ```
 
 ### 定期交換部品の交換時期がダウンタイムとコストに及ぼす影響
-
-応力-強度チャート
-
 保守サービスにおける最適な交換時期を推定する。
+
+### 停止時間
+
+### 交換部品数
+
+
+
 
 <div align="center">
   <figure>
@@ -244,7 +248,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 
 
-
+応力-強度チャート
 
 <div align="center"><figure><img src="img/応力強度モデルチャート(iter=100)/応力-強度モデル (管理目標係数0.80)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数0.80)</figcaption></figure></div>
 
@@ -263,9 +267,6 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 <div align="center"><figure><img src="img/応力強度モデルチャート(iter=100)/応力-強度モデル (管理目標係数1.50)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数1.50)</figcaption></figure></div>
 </details>
 
-### 停止時間
-
-### 交換部品数
 
 ## 課題
 ### 保守作業員コストの反映
