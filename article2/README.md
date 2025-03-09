@@ -129,7 +129,7 @@ permalink: /article2/
           ├ <b><a href="#障害修理実行プロセス">障害修理実行プロセス</a></b> (corrective_maintenance_process)
           │  ├ <b>交換部品の生成</b>
           │  └ 修理作業 (待機時間: 60-90分)
-          └ <b><a href="#印刷実行プロセス">印刷実行プロセス(含む部品ライフ進行(摩耗))</a></b> (printout_process)
+          └ <b><a href="#印刷実行プロセス(含む部品ライフ進行(摩耗))">印刷実行プロセス(含む部品ライフ進行(摩耗))</a></b> (printout_process)
              ├ 印刷実行 (待機時間: 印刷ジョブ長/印刷速度)
              └ <b>部品ライフ進行(摩耗)</b>
 
@@ -143,7 +143,7 @@ permalink: /article2/
 
         印刷ジョブ (class PrintJob)
           └ <b>印刷ジョブ作成</b> (init)
-            └ <b><a href="#未知パラメータから部品負荷の生成">顧客の未知パラメータに基づく印刷ジョブを作成</a></b> (generate_customer_print_job)
+            └ <b><a href="#顧客の未知パラメータに基づく印刷ジョブを作成">顧客の未知パラメータに基づく印刷ジョブを作成</a></b> (generate_customer_print_job)
 
         <b>印刷ジョブの出力プロセス</b> (printing_printjob_process)
           ├ 印刷機ユニットを確保
