@@ -214,6 +214,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 | --iter 100 | シミュレーション回数 | 1つの条件につきシミュレーションを 100 回して平均化する |
 
 ### 応力-強度チャート
+<div align="center"><figure><img src="img/応力強度モデルチャート(iter=100)/応力-強度モデル (管理目標係数0.80)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数0.80)</figcaption></figure></div>
 
 <details>
 <summary>すべてのチャートを表示</summary>
