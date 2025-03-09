@@ -104,6 +104,8 @@ permalink: /article2/
 ### シミュレーション・フレームワーク
 シミュレーションモデルの環境内では、各種イベントが互いに同期を取りながら進行する。こうした複雑な処理を行うために、Python言語向けのシミュレーション・フレームワーク [Simpy](https://simpy.readthedocs.io/en/latest/) を使用した。
 
+<details>
+<summary>全体の構造</summary>
 ### 全体の構造
 
 <div align="center">
@@ -192,6 +194,7 @@ permalink: /article2/
 
 #### 故障確率の算出と生存-故障判断<!-- (ReplacementPart.failure) -->
 部品強度 R に対応する生存関数(SF)を元に、印刷ジョブ出力前まで生き残った部品がさらに印刷ジョブの出力後まで生き残る確率 (条件付き生存率CS) を算出した。故障か故障でないか確率的に決定するために一様乱数を使用した。
+</details>
 
 ## 実験結果
 ### 実験方法
