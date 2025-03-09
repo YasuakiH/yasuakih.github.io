@@ -23,7 +23,7 @@ permalink: /article2/
 <div align="center">
   <figure>
     <img src="img/故障モデル-応力強度モデルの概説.png"/>
-	<br/>
+    <br/>
     <figcaption>図. 応力-強度モデルによる故障発生。(左) 応力Sと強度Rの分布が離れていれば故障は起こりにくい。(右) 2つの分布が重なるにつれて故障は起こりやすくなる。</figcaption>
   </figure>
 </div>
@@ -37,7 +37,7 @@ permalink: /article2/
 <div align="center">
   <figure>
     <img src="img/故障モデル-生存関数.png"/>
-	<br/>
+    <br/>
     <figcaption>図. 故障モデル-生存関数</figcaption>
   </figure>
 </div>
@@ -71,7 +71,7 @@ permalink: /article2/
 <div align="center">
   <figure>
     <img src="img/故障モデル-全体像.png"/>
-	<br/>
+    <br/>
     <figcaption>図. 部品ライフ推定システムのブロック図</figcaption>
   </figure>
 </div>
@@ -96,7 +96,7 @@ permalink: /article2/
 <div align="center">
   <figure>
     <img src="img/印刷機保守のシミュレーションモデル.png"/>
-	<br/>
+    <br/>
     <figcaption>図. 印刷機保守のシミュレーションモデル (<a href="img/印刷機保守のシミュレーションモデル.png" target="_blank">拡大</a>)</figcaption>
   </figure>
 </div>
@@ -199,13 +199,13 @@ permalink: /article2/
 ## 実験
 ### 目的
 定期交換部品を計画的に交換する管理目標が、印刷機の停止時間 (ダウンタイム) と交換される部品数 (コスト) にどのような影響を及ぼすかを確かめる。
-					
+
 ### 方法
 予防保守の管理目標を一定間隔で振って停止時間と交換部品数の変化を見る。
-					
+
 ### 結果
 シミュレーション条件は次の通りである。
-					
+
 | 意味 | 目的 | コマンドライン・オプション |
 | --- | --- | --- |
 | 部品ライフ設計値 | 部品ライフ設計値を 1000k [A4短辺ページ] と仮定 | --designed_life 1000000 |
@@ -213,7 +213,7 @@ permalink: /article2/
 | 母集団における部品ライフのワイブル分布形状パラメータ | 摩耗故障型として設定。後続のスタディではこの種類を扱う。 | --beta 1.8 |
 | 予防保守の管理目標(係数) | 500k - 1500k まで 100k 刻みで行う | --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 |
 | シミュレーション回数 | 1つの条件につきシミュレーションを 100 回して平均化する | --iter 100 |
-					
+
 <details>
 <summary>コマンドラインを表示</summary>
 <pre>
@@ -225,8 +225,19 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 応力-強度チャート
 
-
 保守サービスにおける最適な交換時期を推定する。
+
+<div align="center">
+  <figure>
+    <img src="img/応力強度モデルチャート(iter=100)/結果-交換部品数と停止時間のトレンド.png"/>
+    <br/>
+    <figcaption>図. 定期交換部品の計画的な交換時期が、(上)交換部品数 (コスト) に及ぼす影響と、(下)印刷機の停止時間 (ダウンタイム) に及ぼす影響</figcaption>
+  </figure>
+</div>
+
+
+
+
 
 
 
@@ -250,14 +261,6 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 ### 停止時間
 
 ### 交換部品数
-
-<div align="center">
-  <figure>
-    <img src="img/応力強度モデルチャート(iter=100)/結果-交換部品数と停止時間のトレンド.png"/>
-	<br/>
-    <figcaption>図. 定期交換部品の計画的な交換時期が、(上)交換部品数 (コスト) に及ぼす影響と、(下)印刷機の停止時間 (ダウンタイム) に及ぼす影響</figcaption>
-  </figure>
-</div>
 
 ## 課題
 ### 保守作業員コストの反映
@@ -313,7 +316,7 @@ options:
 <div align="center">
   <figure>
     <img src="img/故障モデル-①未知パラメータから部品負荷の推定.png"/>
-	<br/>
+    <br/>
     <figcaption>図. 故障モデル-①未知パラメータから部品負荷の推定</figcaption>
   </figure>
 </div>
@@ -330,7 +333,7 @@ options:
 <div align="center">
   <figure>
     <img src="img/故障モデル-②特定の印刷機における部品ライフの推定.png"/>
-	<br/>
+    <br/>
     <figcaption>図. 故障モデル-②特定の印刷機における部品ライフの推定</figcaption>
   </figure>
 </div>
@@ -341,7 +344,7 @@ options:
 <div align="center">
   <figure>
     <img src="img/故障モデル-③応力-強度モデル図作成.png"/>
-	<br/>
+    <br/>
     <figcaption>図. 故障モデル-③応力-強度モデル図作成</figcaption>
   </figure>
 </div>
@@ -352,7 +355,7 @@ options:
 <div align="center">
   <figure>
     <img src="img/故障モデル-④管理目標値の最適値を探索.png"/>
-	<br/>
+    <br/>
     <figcaption>図. 故障モデル-④管理目標値の最適値を探索</figcaption>
   </figure>
 </div>
@@ -363,7 +366,7 @@ options:
 <div align="center">
   <figure>
     <img src="img/故障モデル-⑤信頼性成長を予測.png"/>
-	<br/>
+    <br/>
     <figcaption>図. 故障モデル-⑤信頼性成長を予測</figcaption>
   </figure>
 </div>
@@ -373,7 +376,7 @@ options:
 <div align="center">
   <figure>
     <a title="Cdang, CC BY-SA 3.0 &lt;https://creativecommons.org/licenses/by-sa/3.0&gt;, via Wikimedia Commons" href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Contrainte_resistance_2d_proche.svg/551px-Contrainte_resistance_2d_proche.svg.png"><img alt="Contrainte resistance 2d proche" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Contrainte_resistance_2d_proche.svg/551px-Contrainte_resistance_2d_proche.svg.png"></a>
-	<br/>
+    <br/>
     <figcaption>図. 応力-強度モデル。
 <br/><a href="https://commons.wikimedia.org/wiki/User:Cdang">Cdang</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>, via Wikimedia Commons
     </figcaption>
