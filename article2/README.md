@@ -215,29 +215,20 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 ### 応力-強度チャート
 
-<div align="center">
-  <figure>
-    <img src="img/応力-強度モデル (管理目標係数0.80)(iter=100).png"/>
-	<br/>
-    <figcaption>応力-強度モデル (管理目標係数0.80)</figcaption>
-  </figure>
-</div>
-
-<div align="center">
-  <figure>
-    <img src="img/応力-強度モデル (管理目標係数1.00)(iter=100).png"/>
-	<br/>
-    <figcaption>応力-強度モデル (管理目標係数1.00)</figcaption>
-  </figure>
-</div>
-
-<div align="center">
-  <figure>
-    <img src="img/応力-強度モデル (管理目標係数1.20)(iter=100).png"/>
-	<br/>
-    <figcaption>応力-強度モデル (管理目標係数1.20)</figcaption>
-  </figure>
-</div>
+<details>
+<summary>すべてのチャートを表示</summary>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数0.50)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数0.50)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数0.60)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数0.60)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数0.70)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数0.70)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数0.80)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数0.80)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数0.90)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数0.90)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数1.00)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数1.00)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数1.10)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数1.10)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数1.20)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数1.20)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数1.30)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数1.30)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数1.40)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数1.40)</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力-強度モデル (管理目標係数1.50)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数1.50)</figcaption></figure></div>
+</details>
 
 ### 停止時間
 
