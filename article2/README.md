@@ -199,11 +199,7 @@ permalink: /article2/
 ## 実験結果
 ### 実験方法
 
-次のコマンドラインを用いてシミュレーションを実施した。
-
-``` shell
-python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
-```
+次の条件においてシミュレーションを実施した。
 
 | オプション | 意味 | 目的 |
 | --- | --- | --- |
@@ -212,6 +208,14 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 | --beta 1.8 | 母集団における部品ライフのワイブル分布形状パラメータ | 摩耗故障型の |
 | --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 | 予防保守の管理目標(係数) | 500k - 1500k まで100k刻みで行う |
 | --iter 100 | シミュレーション回数 | 1つの条件につきシミュレーションを 100 回して平均化する |
+
+<details>
+<summary>コマンドラインを表示</summary>
+``` shell
+python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
+```
+</details>
+
 
 ### 応力-強度チャート
 <div align="center"><figure><img src="img/応力強度モデルチャート(iter=100)/応力-強度モデル (管理目標係数0.80)(iter=100).png"/><br/><figcaption>応力-強度モデル (管理目標係数0.80)</figcaption></figure></div>
