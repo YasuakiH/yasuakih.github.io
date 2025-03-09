@@ -202,22 +202,22 @@ permalink: /article2/
 次のコマンドラインを用いてシミュレーションを実施した。
 
 ``` shell
-python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 20
+python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
 ```
 
 | オプション | 意味 | 目的 |
 | --- | --- | --- |
 | --designed_life 1000000 | 部品ライフ設計値 | 部品ライフ設計値を 1000k [A4短辺ページ] とする |
-| --maxt 60*24*30*12 | シミュレーション期間 | シミュレーター時計で 360 日間を経過したら終了する |
-| --beta 1.8 | 母集団における部品ライフのワイブル分布形状パラメータ | 摩耗故障型 |
+| --maxt 60*24*30*12 | シミュレーション期間 | 360 日間を経過したらシミュレーションを終了する |
+| --beta 1.8 | 母集団における部品ライフのワイブル分布形状パラメータ | 摩耗故障型の |
 | --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 | 予防保守の管理目標(係数) | 500k - 1500k まで100k刻みで行う |
-| --iter 20 | シミュレーション回数 | 1つの条件につき 20 回のシミュレーションをして平均化する |
+| --iter 100 | シミュレーション回数 | 1つの条件につきシミュレーションを 100 回して平均化する |
 
 ### 応力-強度チャート
 
 <div align="center">
   <figure>
-    <img src="img/応力-強度モデル (管理目標係数0.80)(iter=20).png"/>
+    <img src="img/応力-強度モデル (管理目標係数0.80)(iter=100).png"/>
 	<br/>
     <figcaption>応力-強度モデル (管理目標係数0.80)</figcaption>
   </figure>
@@ -225,7 +225,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 <div align="center">
   <figure>
-    <img src="img/応力-強度モデル (管理目標係数1.00)(iter=20).png"/>
+    <img src="img/応力-強度モデル (管理目標係数1.00)(iter=100).png"/>
 	<br/>
     <figcaption>応力-強度モデル (管理目標係数1.00)</figcaption>
   </figure>
@@ -233,7 +233,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 <div align="center">
   <figure>
-    <img src="img/応力-強度モデル (管理目標係数1.20)(iter=20).png"/>
+    <img src="img/応力-強度モデル (管理目標係数1.20)(iter=100).png"/>
 	<br/>
     <figcaption>応力-強度モデル (管理目標係数1.20)</figcaption>
   </figure>
