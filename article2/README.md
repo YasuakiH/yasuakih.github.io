@@ -221,21 +221,27 @@ permalink: /article2/
 python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --wearout_rate 0.5 0.6 0.7 0.8 0.9 1.0 1.1 1.2 1.3 1.4 1.5 --iter 100
 </details>
 
-
-### 停止時間
-
 ### 交換部品数
-
-
-
 
 <div align="center">
   <figure>
-    <img src="img/応力強度モデルチャート(iter=100)/結果-交換部品数と停止時間のトレンド.png"/>
+    <img src="img/結果-1交換部品数.png"/>
     <br/>
-    <figcaption>図. 定期交換部品の計画的な交換時期が、(上)交換部品数 (コスト) に及ぼす影響と、(下)印刷機の停止時間 (ダウンタイム) に及ぼす影響</figcaption>
+    <figcaption>図. 定期交換部品の計画的な交換時期が交換部品数 (コスト) に及ぼす影響</figcaption>
   </figure>
 </div>
+
+### 停止時間
+
+<div align="center">
+  <figure>
+    <img src="img/結果-2停止時間.png"/>
+    <br/>
+    <figcaption>図. 定期交換部品の計画的な交換時期が印刷機の停止時間 (ダウンタイム) に及ぼす影響</figcaption>
+  </figure>
+</div>
+
+
 
 
 
