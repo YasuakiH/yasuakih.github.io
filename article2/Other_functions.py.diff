@@ -1,0 +1,96 @@
+diff --git "a/reliability\\Other_functions.py.orig" "b/reliability\\Other_functions.py"
+index 33a5eff..7635eac 100644
+--- "a/reliability\\Other_functions.py.orig"
++++ "b/reliability\\Other_functions.py"
+@@ -45,7 +45,7 @@ import scipy.stats as ss
+ import time
+ 
+ 
+-def stress_strength(stress, strength, show_plot=True, print_results=True, warn=True):
++def stress_strength(stress, strength, show_plot=True, print_results=True, warn=True, **kwargs):
+     """
+     Given the probability distributions for stress and strength, this module
+     will find the probability of failure due to stress-strength interference.
+@@ -154,6 +154,34 @@ def stress_strength(stress, strength, show_plot=True, print_results=True, warn=T
+         xmin = min(strength.quantile(0.5), stress.quantile(0.5)) - 5 * diff
+         xmax = max(strength.quantile(0.5), stress.quantile(0.5)) + 5 * diff
+ 
++        if 'xlim' in kwargs:
++            xmin, xmax = kwargs.pop('xlim')
++
++        if 'overlaped_color' in kwargs:
++            overlaped_color = kwargs.pop('overlaped_color')
++        else:
++            overlaped_color = "salmon"
++
++        if 'stress_label' in kwargs:
++            stress_label = kwargs.pop('stress_label')
++        else:
++            stress_label = 'Stress'
++
++        if 'stress_color' in kwargs:
++            stress_color = kwargs.pop('stress_color')
++        else:
++            stress_color = 'tab:blue'
++
++        if 'strength_label' in kwargs:
++            strength_label = kwargs.pop('strength_label')
++        else:
++            strength_label = 'Strength'
++
++        if 'strength_color' in kwargs:
++            strength_color = kwargs.pop('strength_color')
++        else:
++            strength_color = 'tab:orange'
++
+         if xmin < 0 and type(strength) not in [
+             Normal_Distribution,
+             Gumbel_Distribution,
+@@ -174,15 +202,15 @@ def stress_strength(stress, strength, show_plot=True, print_results=True, warn=T
+         xvals = np.linspace(xmin, xmax, 10000)
+         stress_PDF = stress.PDF(xvals=xvals, show_plot=False)
+         strength_PDF = strength.PDF(xvals=xvals, show_plot=False)
+-        plt.plot(xvals, stress_PDF, label="Stress")
+-        plt.plot(xvals, strength_PDF, label="Strength")
++        plt.plot(xvals, stress_PDF, label=stress_label, color=stress_color)
++        plt.plot(xvals, strength_PDF, label=strength_label, color=strength_color)
+         mask = stress_PDF > strength_PDF
+ 
+         plt.fill_between(
+             xvals,
+             np.minimum(stress_PDF, strength_PDF),
+             0,
+-            color="salmon",
++            color=overlaped_color,
+             alpha=1,
+             linewidth=0,
+             linestyle="--",
+@@ -192,8 +220,8 @@ def stress_strength(stress, strength, show_plot=True, print_results=True, warn=T
+             stress_PDF,
+             strength_PDF,
+             where=mask,
+-            color="steelblue",
+-            alpha=0.3,
++            color=stress_color,
++            alpha=0.1,
+             linewidth=0,
+             linestyle="--",
+         )
+@@ -202,14 +230,14 @@ def stress_strength(stress, strength, show_plot=True, print_results=True, warn=T
+             stress_PDF,
+             strength_PDF,
+             where=~mask,
+-            color="darkorange",
+-            alpha=0.3,
++            color=strength_color,
++            alpha=0.1,
+             linewidth=0,
+             linestyle="--",
+         )
+ 
+         failure_text = str(
+-            "Probability of\nfailure = " + round_and_string(prob_of_failure, 4)
++            "Probability of failure = " + round_and_string(prob_of_failure, 4)
+         )
+ 
+         plt.legend(title=failure_text)
