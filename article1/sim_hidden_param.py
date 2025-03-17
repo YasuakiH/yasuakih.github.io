@@ -708,11 +708,11 @@ class Paper():
 
     # 用紙面積 [m2]
     PAGE_AREA_IN_M2 = {
-        '葉書'  : 0.0148,
-        'A4'    : 0.06237,
-        'B4'    : 0.093548,
-        'A3'    : 0.159,
-        '長尺'  : 0.4,
+        '葉書'  : 0.0148,     # 100 x 148 mm = 0.0148 m2
+        'A4'    : 0.06237,    # 210 x 297 mm = 0.06237 m2
+        'B4'    : 0.093548,   # 257 x 364 mm = 0.093548 m2
+        'A3'    : 0.159,      # 329 x 483 mm = 0.159 m2 (A3ノビ), 320 x 450 mm = 0.144 (SRA3)
+        '長尺'  : 0.4,        # 330 x 1200 mm = 0.396 m2
     }
 
     if os.path.exists(import_file):
@@ -1772,7 +1772,7 @@ def main():
         if os.path.exists(file):
             shutil.copyfile(file, distination_pathname(dt=True, filename=file))
 
-    init_logging(logfile=distination_pathname(dt=True, filename='_debug.log'))
+    init_logging(logfile=distination_pathname(dt=True, filename='debug.log'))
     logger.debug('start')
     logger.debug(args)  # コマンドライン引数を記録
 

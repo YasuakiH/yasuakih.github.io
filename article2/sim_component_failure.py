@@ -182,6 +182,9 @@ def my_gauss(mu, sigma, upper_limit, number_of_digits):
             break
     return v 
 
+def customer_hidden_parameters():
+    return '(AC=' + PrintJob.area_coverage_lvl + ',PL=' + PrintJob.page_length_lvl + ')'
+
 savedir_path = None
 def distination_pathname(data_pathname='_debug', dt=False, filename='john.doe'):
     '''生成ファイルの格納先のパス名を返す。
@@ -204,7 +207,7 @@ def distination_pathname(data_pathname='_debug', dt=False, filename='john.doe'):
             d_str = d.strftime('%Y%m%d_%H%M%S')
         else:
             d_str = ''
-        savedir_path = os.path.join(data_pathname, d_str)
+        savedir_path = os.path.join(data_pathname, d_str + customer_hidden_parameters())
 
         if not os.path.exists(savedir_path):
             os.makedirs(savedir_path)
@@ -245,6 +248,12 @@ class PrintJob():
     MAX_PAGE_LENGTH = 2000  # 印刷ジョブページ長の最大 (最小は1)
     MAX_SET_PER_JOB = 2000  # 印刷部数の最大 (最小は1)
 
+    # 未知パラメータ
+    area_coverage_lvl = 'M'
+    page_length_lvl   = 'L'
+    # page_length_lvl   = 'M'
+    # page_length_lvl   = 'H'
+
     def generate_customer_print_job(self):
         '''顧客の未知パラメータに基づく印刷ジョブを作成
         印刷ジョブの属性:
@@ -253,9 +262,6 @@ class PrintJob():
         - 印刷ジョブ長(用紙サイズにより分布は異なる)
         - 両面/片面(μ=0.5, σ=0.3)
         '''
-        # 未知パラメータ
-        area_coverage_lvl = 'M'
-        page_length_lvl   = 'L'
 
         # 印刷用紙サイズ (サイズ:割合の組、割合は合計1.0とする)
         #   値は次のシミュレーション結果に基づく: name=PM1 try=9  [TYP=Q4 AC=M PL=L]  [葉  0 A4  5 B4  3 A3 46 長 46] loop=8933  ink=100 枚数比=0.90 ce1=0.53 ce2=3.27 → OK (総OK:1)★
@@ -275,7 +281,7 @@ class PrintJob():
             'A3'  : {'L': [0.03, 0.05], 'M': [0.04, 0.10], 'H': [0.05, 0.20]},
             '長尺': {'L': [0.10, 0.10], 'M': [0.30, 0.10], 'H': [0.50, 0.20]},
         }
-        mu, sigma = area_coverage_list[paper_size][area_coverage_lvl]
+        mu, sigma = area_coverage_list[paper_size][self.area_coverage_lvl]
         area_coverate = my_gauss(mu, sigma, upper_limit=2000, number_of_digits=2)
         # print_t(self.env, f'  area_coverate={area_coverate}')
 
@@ -288,7 +294,7 @@ class PrintJob():
             'A3'  : {'L': [0, 300], 'M': [300, 300], 'H': [500, 600]},
             '長尺': {'L': [0,   5], 'M': [  0,  10], 'H': [  0,  30]},
         }
-        page_length_mu, page_length_sigma = page_length_list[paper_size][page_length_lvl]
+        page_length_mu, page_length_sigma = page_length_list[paper_size][self.page_length_lvl]
         page_length = int(my_gauss(page_length_mu, page_length_sigma, self.MAX_PAGE_LENGTH, 0))
         # print_t(self.env, f'  page_length={page_length}')
 
@@ -434,7 +440,7 @@ class ReplacementPart():
         print_t(self.env, f'      累積印刷ページ数(ジョブ出力前): cum_page_length_before={self.cum_page_length_before} → 同(ジョブ出力後)cum_page_length_after={self.cum_page_length_after}')
 
     def failure(self):
-        '''故障確率の算出と生存-故障判断。部品が生存(False)するか故障する(True)か判断して返す。
+        '''故障確率の算出と生存-故障判断。部品が生存するか(False)、故障するか(True)を判断して返す。
         部品強度 R に対応する生存関数(SF)を元に、印刷ジョブ出力前まで生き残った部品がさらに印刷ジョブの出力後まで生き残る確率 (条件付き生存率CS) を算出した。
         故障か故障でないか確率的に決定するために一様乱数を使用した。
         '''
@@ -804,15 +810,14 @@ def show_stress_strength_chart(params, wearout_rates, result_all_df):
         return
 
     # 応力-強度干渉グラフ作成
-    def plot_stress_strength_chart(each_wearout_rate):
+    def plot_stress_strength_chart(each_wearout_rate, subplot_id=None, ylims_max=None):
+        ylims_dict = {}  # グラフのylims(Y軸座標の下限/上限)を保存して返す。複数のチャートを同じY軸スケールで表示させるため。
+
         # 分析用データの作成
         parts_life_data = {
             'failures'      : result_all_df.loc[(result_all_df['管理目標(係数)']==each_wearout_rate) & (result_all_df['理由']=='障害修理'), '累積印刷ページ数'].tolist(), # 障害修理による交換部品ライフ
             'right_censored': result_all_df.loc[(result_all_df['管理目標(係数)']==each_wearout_rate) & (result_all_df['理由']=='予防保守'), '累積印刷ページ数'].tolist(), # 予防保守による交換部品ライフ
         }
-        # logger.debug(parts_life_data['failures'])
-        # logger.debug(parts_life_data['right_censored'])
-        # sys.exit()
         
         # 障害修理と予防保守による交換部品ライフの算術平均。グラフ上に参考として表示するために計算。
         part_life_list = (
@@ -827,173 +832,219 @@ def show_stress_strength_chart(params, wearout_rates, result_all_df):
 
         xvals = np.linspace(0, params.designed_life * 2, 200)
 
-        fig = init_figure()
+        if subplot_id == None:
+            fig = init_figure()
 
-        # 部品強度 (青) - parts_strength
-        # --------------------------------
-        plt.subplot(311)
-        parts_strength_alpha = params.eta
-        parts_strength_beta  = params.beta
+            # 部品強度 (青) - parts_strength
+            # --------------------------------
+            plt.subplot(311)
+            parts_strength_alpha = params.eta
+            parts_strength_beta  = params.beta
 
-        b10 = ss.weibull_min.ppf(0.10, parts_strength_beta, scale=parts_strength_alpha, loc=0.0)
-        b50 = ss.weibull_min.ppf(0.50, parts_strength_beta, scale=parts_strength_alpha, loc=0.0)
+            b10 = ss.weibull_min.ppf(0.10, parts_strength_beta, scale=parts_strength_alpha, loc=0.0)
+            b50 = ss.weibull_min.ppf(0.50, parts_strength_beta, scale=parts_strength_alpha, loc=0.0)
 
-        # '{:.0f}'.format() はfloat値をエンジニアリング表記(例:1E3)で表示されることを回避する
-        label = f'強度\n [ワイブル分布] (α=' + '{:.0f}k'.format(parts_strength_alpha/1000) + f' β={parts_strength_beta})'
+            # '{:.0f}'.format() はfloat値をエンジニアリング表記(例:1E3)で表示されることを回避する
+            label = f'強度\n [ワイブル分布] (α=' + '{:.0f}k'.format(parts_strength_alpha/1000) + f' β={parts_strength_beta:.1f})'
 
-        parts_strength_dist = Weibull_Distribution(alpha=parts_strength_alpha, beta=parts_strength_beta)
-        parts_strength = parts_strength_dist.PDF(xvals=xvals, label=label, color='b')
+            parts_strength_dist = Weibull_Distribution(alpha=parts_strength_alpha, beta=parts_strength_beta)
+            parts_strength = parts_strength_dist.PDF(xvals=xvals, label=label, color='b')
 
-        children = plt.gca().get_children()
-        designed_life_line = plt.axvline(params.designed_life                , c='gray', linestyle='-')   # 部品ライフ設計値を示す縦線を表示 (実線)
+            children = plt.gca().get_children()
+            designed_life_line = plt.axvline(params.designed_life                , c='gray', linestyle='-')   # 部品ライフ設計値を示す縦線を表示 (実線)
 
-        designed_life_b10_line = plt.axvline(b10             , c='gray', linestyle='dotted')   # B(10)ライフを示す縦線を表示 (実線)
-        designed_life_b50_line = plt.axvline(b50             , c='gray', linestyle='dotted')   # B(50)ライフを示す縦線を表示 (実線)
+            designed_life_b10_line = plt.axvline(b10             , c='gray', linestyle='dotted')   # B(10)ライフを示す縦線を表示 (実線)
+            designed_life_b50_line = plt.axvline(b50             , c='gray', linestyle='dotted')   # B(50)ライフを示す縦線を表示 (実線)
 
-        ylims = plt.ylim(auto=None)
-        plt.text(b10, ylims[1] * 0.1,' B(10)\n' + ' {:.0f}k'.format(b10/1000))
-        plt.text(b50, ylims[1] * 0.1,' B(50)\n' + ' {:.0f}k'.format(b50/1000))
-        plt.text(params.eta, ylims[1] * 0.1, ' B(63.3)\n' + ' {:.0f}k'.format(parts_strength_alpha/1000))
-        # plt.text(params.eta, ylims[1] * 0.8, ' 設計値 (α={:.0f}k [A4短辺ページ])'.format(params.designed_life/1000))
+            ylims = plt.ylim(auto=None)
+            ylims_dict['強度'] = ylims
+            plt.text(b10, ylims[1] * 0.1,' B(10)\n' + ' {:.0f}k'.format(b10/1000))
+            plt.text(b50, ylims[1] * 0.1,' B(50)\n' + ' {:.0f}k'.format(b50/1000))
+            plt.text(params.eta, ylims[1] * 0.1, ' B(63.3)\n' + ' {:.0f}k'.format(parts_strength_alpha/1000))
+            # plt.text(params.eta, ylims[1] * 0.8, ' 設計値 (α={:.0f}k [A4短辺ページ])'.format(params.designed_life/1000))
 
-        title_str =(
-            '予防保守の管理目標: 設計値 × 係数 = ' + '{:.0f}k'.format(params.designed_life/1000) +
-            f' × {each_wearout_rate} = ' +
-            '{:.0f}k'.format((params.designed_life * each_wearout_rate)/1000)
-        )
-        plt.title(f'応力-強度モデル ({title_str})')
-        plt.xlabel('')
-        plt.ylabel('強度の確率密度 (PDF)')
-        plt.xscale('log')
-        plt.legend(
-            [
-                children[0],
-                # designed_life_line
-            ],
-            [
-                label,
-                # '設計値 (α={:.0f}k [A4短辺ページ])'.format(params.designed_life/1000)
-            ])
-        plt.xlim(params.designed_life * 0.01, params.designed_life * 2.1)
+            title_str =(
+                '(予防保守の管理目標: 設計値 × 係数 = ' + '{:.0f}k'.format(params.designed_life/1000) +
+                f' × {each_wearout_rate} = ' +
+                '{:.0f}k'.format((params.designed_life * each_wearout_rate)/1000) +
+                f') {customer_hidden_parameters()}'
+            )
+            plt.title(f'応力-強度モデル {title_str}')
+            plt.xlabel('')
+            plt.ylabel('強度の確率密度 (PDF)')
+            plt.xscale('log')
+            plt.legend(
+                [
+                    children[0],
+                    # designed_life_line
+                ],
+                [
+                    label,
+                    # '設計値 (α={:.0f}k [A4短辺ページ])'.format(params.designed_life/1000)
+                ])
+            plt.xlim(params.designed_life * 0.01, params.designed_life * 2.1)
 
         # 応力 (赤) - failures_and_survivers
         # --------------------------------
         # 「応力-強度モデル」でいう応力側の分布を故障データから作成する。
-        plt.subplot(312)
 
-        # 応力の確率分布に対数正規分布を選択した。
-        # 理由: 交換理由 (障害修理、予防保守) を問わず、交換された部品のライフ分布を表すのに対数正規分布が適すると考えた。
-        #       フィッティング誤差ではワイブル > ガンマ > 対数正規であったが、ワイブル分布は故障のモデル化に使用していることから回帰する問題がある。
-        #       ここではX軸を対数軸とするので正規分布して理解しやすい対数正規分布を選択した。
-        parts_exchange_dist = Fit_Lognormal_2P(
-            failures = parts_life_data['failures'],             # 交換データ
-            right_censored = parts_life_data['right_censored'], # 生存データ
-            show_probability_plot = False,
-            print_results=False,
-        ).distribution
-        # parts_exchange_dist.plot()
+        if subplot_id == None:
+            plt.subplot(312)
+        else:
+            logger.debug(f'subplot_id={subplot_id}')
+            plt.subplot(subplot_id)
 
-        label = (
-            '応力 (予防保守→生存, 障害修理→故障)\n [対数正規分布] (' +
-              f'μ={parts_exchange_dist.mu:.1f} ' +
-              f'σ={parts_exchange_dist.sigma:.1f}' +
-            ')'
-        )
-        failures_and_survivers = parts_exchange_dist.PDF(xvals=xvals, show_plot=True, label=label, color='r')  # 応力カーブ (赤色, 実線)
+        if True:
+            # 応力の確率分布に対数正規分布を選択した。
+            # 理由: 交換理由 (障害修理、予防保守) を問わず、交換された部品のライフ分布を表すのに対数正規分布が適すると考えた。
+            #       フィッティング誤差ではワイブル > ガンマ > 対数正規であったが、ワイブル分布は故障のモデル化に使用していることから回帰する問題がある。
+            #       ここではX軸を対数軸とするので正規分布して理解しやすい対数正規分布を選択した。
+            parts_exchange_dist = Fit_Lognormal_2P(
+                failures = parts_life_data['failures'],             # 交換データ
+                right_censored = parts_life_data['right_censored'], # 生存データ
+                show_probability_plot = False,
+                print_results=False,
+            ).distribution
+            # parts_exchange_dist.plot()
 
-        ylims = plt.ylim(auto=None)
+            label = (
+                '応力 (予防保守→生存, 障害修理→故障)\n [対数正規分布] (' +
+                  f'μ={parts_exchange_dist.mu:.2f} ' +
+                  f'σ={parts_exchange_dist.sigma:.2f}' +
+                ')'
+            )
+            failures_and_survivers = parts_exchange_dist.PDF(xvals=xvals, show_plot=True, label=label, color='r')  # 応力カーブ (赤色, 実線)
 
-        lognormal_mu_line = plt.axvline(part_life_mean, c='green', linestyle='dotted')  # 応力の平均値 (交換部品ライフの算術平均) (緑色, 点線)
-        plt.text(part_life_mean, ylims[1] * 0.85, '交換された部品ライフの算術平均\n ({:.0f}k, N={})'.format(round(part_life_mean/1000,0), part_life_num))
+            ylims = plt.ylim(auto=None)
+            ylims_dict['応力'] = ylims
 
-        children = plt.gca().get_children()
-        pm_target_line    = plt.axvline(params.designed_life * each_wearout_rate, c='green', linestyle='-', linewidth=2)  # 管理目標 (緑色 実線)
-        plt.text(params.designed_life * each_wearout_rate, ylims[1] * 0.65, '予防保守の管理目標\n ({:.0f}k)'.format(round(params.designed_life * each_wearout_rate/1000,0)))
+            lognormal_mu_line = plt.axvline(part_life_mean, c='green', linestyle='dotted')  # 応力の平均値 (交換部品ライフの算術平均) (緑色, 点線)
+            plt.text(part_life_mean, ylims[1] * 0.85, ' 交換された部品ライフの算術平均\n  ({:.0f}k, N={})'.format(round(part_life_mean/1000,0), part_life_num))
 
-        plt.title(f'')
-        plt.xlabel('')
-        plt.ylabel(f'応力の確率密度 (PDF)')
-        plt.xscale('log')
-        plt.legend(
-            [
-                children[0],
-                # lognormal_mu_line,
-                # pm_target_line,
-            ],
-            [
-                label,
-                # '交換された部品ライフの算術平均 ({:.0f}k, N={})'.format(round(part_life_mean/1000,0), part_life_num),
-                # '予防保守の管理目標 ({:.0f}k)'.format(round(params.designed_life * each_wearout_rate/1000,0)),
-            ], loc='center left')
-        plt.xlim(params.designed_life * 0.01, params.designed_life * 2.1)
+            children = plt.gca().get_children()
+            pm_target_line    = plt.axvline(params.designed_life * each_wearout_rate, c='green', linestyle='-', linewidth=2)  # 管理目標 (緑色 実線)
+            plt.text(params.designed_life * each_wearout_rate, ylims[1] * 0.65, ' 予防保守の管理目標\n  ({:.0f}k)'.format(round(params.designed_life * each_wearout_rate/1000,0)))
+
+            plt.title(f'')
+            plt.xlabel('')
+            plt.ylabel(f'応力の確率密度 (PDF)')
+            plt.xscale('log')
+            plt.legend(
+                [   children[0],
+                    # lognormal_mu_line,
+                    # pm_target_line,
+                ],
+                [   label,
+                    # '交換された部品ライフの算術平均 ({:.0f}k, N={})'.format(round(part_life_mean/1000,0), part_life_num),
+                    # '予防保守の管理目標 ({:.0f}k)'.format(round(params.designed_life * each_wearout_rate/1000,0)),
+                ], loc='center left')
+            plt.xlim(params.designed_life * 0.01, params.designed_life * 2.1)
+
+            if subplot_id != None:
+                plt.ylim(0.0, ylims_max['応力'])
 
         # 部品交換ヒストグラム (ピンク/ライトブルー)
         # --------------------------------
-        plt.subplot(312).twinx()   # 右側の第2軸を利用する
+        if subplot_id == None:
+            plt.subplot(312).twinx()   # 右側の第2軸を利用する
+        else:
+            logger.debug(f'subplot_id={subplot_id}')
+            plt.subplot(subplot_id).twinx()   # 右側の第2軸を利用する
 
-        life_df = pd.DataFrame( [('予防保守 (打切り)', x) for x in parts_life_data['right_censored']] + [('障害修理', x) for x in parts_life_data['failures']], columns=['理由', '累積印刷ページ数'])
-        # logger.debug(f'life_df=\n{life_df}')
-        sns.histplot(
-            data=life_df,
-            x='累積印刷ページ数', multiple='stack', hue='理由',
-            palette=['lightblue', 'pink'],
-            linewidth=.5,
-        )
-        ylims = plt.ylim(auto=None)
-        plt.title('')
-        plt.ylabel(f'部品数')
-        plt.xscale('log')
-        plt.legend(title='シミュレーションでの交換理由', loc='upper left', labels=['障害修理', '予防保守'], reverse=True)
-        plt.xlim(params.designed_life * 0.01, params.designed_life * 2.1)
+        if True:
+            life_df = pd.DataFrame( [('予防保守 (打切り)', x) for x in parts_life_data['right_censored']] + [('障害修理', x) for x in parts_life_data['failures']], columns=['理由', '累積印刷ページ数'])
+            # logger.debug(f'life_df=\n{life_df}')
+            sns.histplot(
+                data=life_df,
+                x='累積印刷ページ数', multiple='stack', hue='理由',
+                palette=['lightblue', 'pink'],
+                linewidth=.5,
+            )
+            ylims = plt.ylim(auto=None)
+            ylims_dict['部品交換ヒストグラム'] = ylims
+            plt.title('')
+            plt.ylabel(f'部品数')
+            plt.xscale('log')
+            plt.legend(title='シミュレーションでの交換理由', loc='upper left', labels=['障害修理', '予防保守'], reverse=True)
+            plt.xlim(params.designed_life * 0.01, params.designed_life * 2.1)
 
-        plt.ylim(0, ylims[1] * 1.5)
+            plt.ylim(0, ylims[1] * 1.5)
 
         # 故障確率の算出
         # --------------------------------
-        plt.subplot(313)
+        if subplot_id == None:
+            plt.subplot(313)
 
-        probability_of_failure = my_stress_strength(
-            stress = parts_exchange_dist,
-            strength = parts_strength_dist,
-            warn = False,
-            # 以下のパラメータは stress_strength() の改修版でサポートするが、オリジナルでも動作するようラッパー関数 my_stress_strength() を介して呼び出した。詳細は同関数のコメントを参照。
-            xlim = (params.designed_life * 0.01, params.designed_life * 2.1),
-            stress_label = '応力',
-            stress_color = 'red',
-            strength_label = '強度',
-            strength_color = 'blue',
-        )
+            probability_of_failure = my_stress_strength(
+                stress = parts_exchange_dist,
+                strength = parts_strength_dist,
+                warn = False,
+                # 以下のパラメータは stress_strength() の改修版でサポートするが、オリジナルでも動作するようラッパー関数 my_stress_strength() を介して呼び出した。詳細は同関数のコメントを参照。
+                xlim = (params.designed_life * 0.01, params.designed_life * 2.1),
+                stress_label = '応力',
+                stress_color = 'red',
+                strength_label = '強度',
+                strength_color = 'blue',
+            )
 
-        logger.debug(f'each_wearout_rate = {each_wearout_rate} probability_of_failure = {probability_of_failure}')
-        plt.xscale('log')
-        plt.xlim(params.designed_life * 0.01, params.designed_life * 2.1)
+            logger.debug(f'each_wearout_rate = {each_wearout_rate} probability_of_failure = {probability_of_failure}')
+            plt.xscale('log')
+            plt.xlim(params.designed_life * 0.01, params.designed_life * 2.1)
 
-        # グラフィック出力
-        # --------------------------------
-        # plt.show()
-        filename = f'応力-強度干渉グラフ({each_wearout_rate:.2f}).png'
-        plt.savefig(distination_pathname(dt=True, filename=filename))
+            # グラフィック出力
+            # --------------------------------
+            # plt.show()
+            filename = f'応力-強度干渉グラフ{customer_hidden_parameters()}({each_wearout_rate:.2f}).png'
+            plt.savefig(distination_pathname(dt=True, filename=filename))
 
-        return probability_of_failure
+            return probability_of_failure, ylims_dict
 
     result = []
+    ylims_max = {'強度': 0.0, '応力': 0.0, '部品交換ヒストグラム': 0.0}
     for each_wearout_rate in wearout_rates:
-        probability_of_failure = plot_stress_strength_chart(each_wearout_rate)
+        # 
+        probability_of_failure, ylims_dict = plot_stress_strength_chart(each_wearout_rate)
         result.append([each_wearout_rate, probability_of_failure])
+        # 
+        if ylims_max['強度'] < ylims_dict['強度'][1]:
+            ylims_max['強度'] = ylims_dict['強度'][1]
+        if ylims_max['応力'] < ylims_dict['応力'][1]:
+            ylims_max['応力'] = ylims_dict['応力'][1]
+        if ylims_max['部品交換ヒストグラム'] < ylims_dict['部品交換ヒストグラム'][1]:
+            ylims_max['部品交換ヒストグラム'] = ylims_dict['部品交換ヒストグラム'][1]
+        plt.close()
+
     logger.debug(f'result={result}')
+    logger.debug(f'ylims_max={ylims_max}')
+
+    # 応力の推移グラフ作成
+    def plot_stress_chart():
+        fig = init_figure()
+        for i, each_wearout_rate in enumerate(wearout_rates):
+            subplot_id = len(wearout_rates) * 100 + 10 + i + 1
+            probability_of_failure = plot_stress_strength_chart(each_wearout_rate, subplot_id=subplot_id, ylims_max=ylims_max)
+
+        filename = f'応力の推移グラフ{customer_hidden_parameters()}.png'
+        # plt.show()
+        plt.savefig(distination_pathname(dt=True, filename=filename))
+        plt.close()
+
+    plot_stress_chart()
 
     # 故障確率推移グラフ作成
     def plot_failure_prob_trend_chart(result):
         fig = init_figure()
         plt.scatter([x for [x,y] in result], [y for [x,y] in result])
         plt.plot([x for [x,y] in result], [y for [x,y] in result])
-        plt.title('故障確率')
+        plt.title(f'故障確率 (部品が故障する頻度 [故障数/単位時間]) {customer_hidden_parameters()}')
         plt.ylim(0.0, 1.0)
         # plt.show()
-        filename = f'故障確率推移グラフ.png'
+        filename = f'故障確率推移グラフ{customer_hidden_parameters()}.png'
         plt.savefig(distination_pathname(dt=True, filename=filename))
+        plt.close()
 
     plot_failure_prob_trend_chart(result)
+
 # end-of def show_stress_strength_chart
 
 # 交換部品数と停止時間の棒グラフ作成
@@ -1060,7 +1111,7 @@ def show_summary_graphics(params, wearout_rates, result_all_df):
             p = axes[0].bar(wearout_rates, exchange_part, width, label=reason, bottom=bottom, color=bar_colors[reason], yerr=y_err, ecolor='gray')
             bottom += exchange_part
             axes[0].bar_label(p, label_type='center')
-        axes[0].set_title(f'交換部品数\n{simulation_parameters_str(params)}' + (" (エラーバーは標準誤差)" if 1 < params.iter else ""))
+        axes[0].set_title(f'交換部品数\n{simulation_parameters_str(params)}' + (" (エラーバーは標準誤差)" if 1 < params.iter else "") + f' {customer_hidden_parameters()}' )
         # axes[0].set_xlabel('管理目標(係数)')
         axes[0].set_ylabel('交換部品数')
         axes[0].legend(title="理由", loc='upper right', reverse=True)
@@ -1123,9 +1174,9 @@ def show_summary_graphics(params, wearout_rates, result_all_df):
     # (最後) グラフ出力
     # ================================
     # plt.show()
-    filename = f'交換部品数と停止時間.png'
+    filename = f'交換部品数と停止時間{customer_hidden_parameters()}.png'
     plt.savefig(distination_pathname(dt=True, filename=filename))
-
+    plt.close()
 # end-of def show_summary_graphics
 
 def main():
