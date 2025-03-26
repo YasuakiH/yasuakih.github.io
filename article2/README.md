@@ -224,10 +224,8 @@ permalink: /article2/
 | (同) 印刷ジョブ長 | --pl L | 印刷ジョブ長(1ジョブ中のページ数)を中等度とする |
 <details>
 <summary>コマンドラインを表示</summary>
-python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --eta 1000000 --wearout_rate 0.6 0.8 1.0 1.2 1.4 1.6 --ac L --pl L --iter 20
-
-python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --eta 1000000 --wearout_rate 0.6 0.8 1.0 1.2 1.4 1.6 --ac L --pl M --iter 20
-
+python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --eta 1000000 --wearout_rate 0.6 0.8 1.0 1.2 1.4 1.6 --ac L --pl L --iter 20<br/>
+python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --eta 1000000 --wearout_rate 0.6 0.8 1.0 1.2 1.4 1.6 --ac L --pl M --iter 20<br/>
 python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --eta 1000000 --wearout_rate 0.6 0.8 1.0 1.2 1.4 1.6 --ac L --pl H --iter 20
 </details>
 
