@@ -208,7 +208,7 @@ permalink: /article2/
 ### 方法
 定期交換部品を計画的に交換する「管理目標」の設定が、印刷機の停止時間 (ダウンタイム) と、交換される部品数 (コスト) に、どのような影響を及ぼすかをシミュレーションによって可視化する。管理目標を一定間隔で振って停止時間と交換部品数の変化をもとに最適値を検討する。
 
-### 結果
+### シミュレーション条件
 シミュレーション条件を表に示す。この部品の強度は 2パラメータ・ワイブル分布で表した。管理目標は部品強度の尺度パラメータ (1000k) の 0.6～1.6倍の範囲で 0.2 刻みで設定した。
 
 <p align='center'>表. シミュレーション条件</p>
@@ -229,6 +229,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --eta 1000000 --wearout_rate 0.6 0.8 1.0 1.2 1.4 1.6 --ac L --pl H --iter 20
 </details>
 
+### 結果
 #### 交換部品数
 管理目標を増加させると、トータルの部品交換数は低下する傾向であった (下図)。交換理由による内訳は、「予防保守」(水色) は減り続けた一方、「障害修理」(桃色) は増加を続けた。
 
@@ -275,7 +276,8 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 <div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/応力-強度干渉グラフ(AC=L,PL=M)(0.80).png"/><br/><figcaption>応力-強度干渉グラフ(AC=L,PL=M)(管理目標係数0.80)</figcaption></figure></div>
 
 <div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/応力の推移グラフ(AC=L,PL=M).png"/><br/><figcaption></figcaption>応力の推移グラフ(AC=L,PL=M)</figure></div>
-<div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/保守サービス管理目標の変更による改善効果([0.8, 0.9])(AC=L,PL=L).png"/><br/><figcaption>保守サービス管理目標の変更による改善効果([0.8, 0.9])(AC=L,PL=L).png</figcaption></figure></div>
+
+<div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/保守サービス管理目標の変更による改善効果(0.8, 0.9)(AC=L,PL=L).png"/><br/><figcaption>保守サービス管理目標の変更による改善効果(0.8, 0.9)(AC=L,PL=L).png</figcaption></figure></div>
 
 <details>
 <summary>すべてのチャートを表示</summary>
