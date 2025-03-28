@@ -222,6 +222,7 @@ permalink: /article2/
 | シミュレーション回数 | --iter 20 | 20 [回/条件] のシミュレーション結果を平均化する |
 | 顧客未知パラメータのトータルエリアカバレッジ | --ac L | トータルエリアカバレッジ(インク被覆率)を低(Low)とする |
 | (同) 印刷ジョブ長 | --pl L | 印刷ジョブ長(1ジョブ中のページ数)を低(Low)とする |
+
 <details>
 <summary>コマンドラインを表示</summary>
 python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --beta 1.8 --eta 1000000 --wearout_rate 0.6 0.8 1.0 1.2 1.4 1.6 --ac L --pl L --iter 20<br/>
