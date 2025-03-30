@@ -270,6 +270,8 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 <div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/応力-強度干渉グラフ(AC=L,PL=M)(0.80).png"/><br/><figcaption>応力-強度干渉グラフ(AC=L,PL=M)(管理目標係数0.80)</figcaption></figure></div>
 
+<p/>
+
 次の図では、打ち切りによる介入がライフ平均値 (緑破線) に影響を及ぼしていることと、8.50 k (8.5E5) を上限にそれ以上は上がらないことが示されている。管理目標値 (係数) が 1.4 (上から5段目) 付近がその上限で、それ以上にしてもライフ平均値は向上しないことがわかった。
 
 <div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/応力の推移グラフ(AC=L,PL=M).png"/><br/><figcaption></figcaption>応力の推移グラフ(AC=L,PL=M)</figure></div>
