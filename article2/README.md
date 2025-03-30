@@ -252,7 +252,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
   <figure>
     <img src="img/結果-2停止時間.png"/>
     <br/>
-    <figcaption>図. 定期交換部品の計画的な交換時期が印刷機の停止時間 (ダウンタイム) に及ぼす影響</figcaption>
+    <figcaption>図. 定期交換部品の計画的な交換時期が印刷機の停止時間 (ダウンタイム) に及ぼす影響<br/>エラーバーは標準誤差</figcaption>
   </figure>
 </div>
 </blockquote>
