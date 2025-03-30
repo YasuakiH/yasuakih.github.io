@@ -319,25 +319,29 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 ### コマンドラインオプション
 ``` shell
-usage: sim_component_failure.py [-h] [--step] [--debug] [--wearout_rate WEAROUT_RATE [WEAROUT_RATE ...]] [--designed_life DESIGNED_LIFE] [--beta BETA] [--eta ETA]
-                                [--check_interval CHECK_INTERVAL] [--maxt MAXT] [--maxx MAXX] [--iter ITER] [--seed SEED]
+usage: sim_component_failure.py [-h] [--step] [--debug] [--wearout_rates WEAROUT_RATES [WEAROUT_RATES ...]] [--designed_life DESIGNED_LIFE] [--beta BETA] [--eta ETA] [--check_interval CHECK_INTERVAL]
+                                [--maxt MAXT] [--maxx MAXX] [--iter ITER] [--seed SEED] [--area_coverage AREA_COVERAGE] [--page_length PAGE_LENGTH]
 
 options:
   -h, --help            show this help message and exit
   --step
   --debug
-  --wearout_rate WEAROUT_RATE [WEAROUT_RATE ...]
-                        予防保守の管理目標(係数)。部品ライフ設計値を1.0とした場合の管理目標(係数)を指定する。(デフォルト: 1.0)。(例: --wearout_rate 1.0, --wearout_rate 0.9 1.0 1.1)
+  --wearout_rates WEAROUT_RATES [WEAROUT_RATES ...]
+                        予防保守の管理目標(係数)。部品ライフ設計値を1.0とした場合の管理目標(係数)を指定する。(デフォルト: 1.0)。(例: --wearout_rates 1.0, --wearout_rates 0.9 1.0 1.1)
   --designed_life DESIGNED_LIFE
                         部品ライフ設計値。算術平均やB(10)ライフなどで指定される (デフォルト: 1000000)。(例: --designed_life 1000000)
   --beta BETA           βは、部品ライフをワイブル分布で表した際の形状パラメータ。β＜1で初期故障型、β=1で偶発故障型、1<βで摩耗型故障を示す (デフォルト: 1.0)。(例: --beta 1.0)
-  --eta ETA             ηは、部品ライフをワイブル分布で表した際の尺度パラメータ。 (デフォルト: 部品ライフ設計値)。(例: --eta 100000)
+  --eta ETA             ηは、部品ライフをワイブル分布で表した際の尺度パラメータ。 (デフォルト: 部品ライフ設計値)。(例: --eta 1000000)
   --check_interval CHECK_INTERVAL
-                        保守計画における保守間隔 (単位 [分]) (デフォルト: 60*24*10 (10日間の意味))。(例: --check_interval 60*24*10)
-  --maxt MAXT           シミュレーション期間 (単位 [分]) (デフォルト: 60*24*30*12 (1年間の意味))。(例: --maxt 60*24*30*12)
+                        保守計画における保守間隔 [単位:[分]] (デフォルト: 60*24*10 (10日間の意味))。(例: --check_interval 60*24*10)
+  --maxt MAXT           シミュレーション期間 [単位:[分]] (デフォルト: 60*24*30*12 (1年間の意味))。(例: --maxt 60*24*30*12)
   --maxx MAXX           交換部品数の最大値。この指定に達した時点でシミュレーションを終了する (デフォルト: 200)。(例: --maxx 200)
   --iter ITER           シミュレーション回数 (デフォルト: 1)。(例: --iter 10)
   --seed SEED           random.seed() 初期値。(デフォルト: None)。(例: --seed 42)
+  --area_coverage AREA_COVERAGE, --ac AREA_COVERAGE
+                        area_coverage [L, M, H] (デフォルト: M)。(例: --area_coverage M)
+  --page_length PAGE_LENGTH, --pl PAGE_LENGTH
+                        page_length [L, M, H] (デフォルト: M)。(例: --page_length M)
 ```
 
 <!--
