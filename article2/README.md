@@ -282,13 +282,9 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 故障確率 (部品が故障する頻度) は、管理目標を増加させるにつれて減少する傾向が示された。これは、低い管理目標が過剰な交換部品を行ったことに対応する。
 
+<blockquote>
 <div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/故障確率推移グラフ(AC=L,PL=M).png"/><br/><figcaption></figcaption>故障確率推移グラフ(AC=L,PL=M).png</figure></div>
-
-
-
-
-
-
+</blockquote>
 
 <div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/保守サービス管理目標の変更による改善効果(0.8, 0.9)(AC=L,PL=L).png"/><br/><figcaption>保守サービス管理目標の変更による改善効果(0.8, 0.9)(AC=L,PL=L).png</figcaption></figure></div>
 
