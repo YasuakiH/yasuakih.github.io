@@ -249,6 +249,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 ると、「予防保守」(水色) は減る一方で、「障害修理」(桃色) は増加し続ける傾向が見られた (下図)。本シミュレーションでの停止時間は、予防保守が30分に固定、障害修理が60-90分とペナルティを加えた。その結果、トータルの停止時間には大きな変化は見られなかった。
 
+<blockquote>
 <div align="center">
   <figure>
     <img src="img/結果-2停止時間.png"/>
@@ -256,6 +257,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
     <figcaption>図. 定期交換部品の計画的な交換時期が印刷機の停止時間 (ダウンタイム) に及ぼす影響</figcaption>
   </figure>
 </div>
+</blockquote>
 
 ### 考察
 
