@@ -272,11 +272,11 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 <p/>
 
-次の図では、打ち切りによる介入がライフ平均値 (緑破線) に影響を及ぼしていることと、平均ライフ 850k (8.5E5) が上限であることが示されている。管理目標値 (係数) が 1.4 (上から5段目) 付近がその上限であった。
+次の図では、打ち切りによる介入がライフ平均値 (緑破線) に影響を及ぼしていることと、平均ライフ 850k (8.5E5) が上限であることが示されている。管理目標 (係数) が 1.4 (上から5段目) 付近がその上限であった。
 
 <div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/応力の推移グラフ(AC=L,PL=M).png"/><br/><figcaption></figcaption>応力の推移グラフ(AC=L,PL=M)</figure></div>
 
-故障率に影響を及ぼすことをが示されている。
+故障確率 (部品が故障する頻度) は、管理目標を増加させるにつれて減少する傾向が示された。これは、低い管理目標が過剰な交換部品を行ったことに対応する。
 
 <div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/故障確率推移グラフ(AC=L,PL=M).png"/><br/><figcaption></figcaption>故障確率推移グラフ(AC=L,PL=M).png</figure></div>
 
