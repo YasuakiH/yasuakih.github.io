@@ -289,7 +289,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 最後に、サービス中に交換時期を延長した場合 (管理目標 (係数): 0.8 → 0.9)、部品交換数がどのように変わるかを推定した。2年後の予測で比較するとは、過去2年間のトレンドを外挿した場合は総数37個、交換時期を延長した場合は総数27個であった。差し引き10個は部品コストの削減効果を示唆するものである。
 
 <blockquote>
-<div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/保守サービス管理目標の変更による改善効果(0.8, 0.9)(AC=L,PL=L).png"/><br/><figcaption>保守サービス管理目標の変更による改善効果(0.8, 0.9)(AC=L,PL=L).png</figcaption></figure></div>
+<div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/保守サービス管理目標の変更による改善効果(0.8, 0.9)(AC=L,PL=L).png"/><br/><figcaption>保守サービス管理目標の変更による改善効果(0.8, 0.9)(AC=L,PL=L)</figcaption></figure></div>
 </blockquote>
 
 <details>
@@ -302,18 +302,11 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 <div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/応力-強度干渉グラフ(AC=L,PL=M)(1.60).png"/><br/><figcaption>応力-強度干渉グラフ(AC=L,PL=M)(管理目標係数1.60)</figcaption></figure></div>
 </details>
 
-#### 応力-強度モデル
-強度 R (青線) の近似に用いたワイブル曲線に基づいて故障発生をシミュレートしているため、部品交換により推定した故障確率 F (赤線) は、強度 R を再現するはずである。
-故障確率 F は
-本スタディでは、その管理目標の影響を除くことを意図して予防保守による「打ち切り」を含めなかった。
-これにより故障確率 F の分布を変化させ、それにより応力 S を制御する当初の狙いに対して、
-
-
 ## 課題
-### 保守作業員コストの反映
+現時点の課題は次の2点である。1番目は今後スタディする。2番目は計算方法として[信頼性成長モデル](https://reliability.readthedocs.io/en/latest/Reliability%20growth.html)での考え方が役に立つ可能性がある。
 
-### リアリティ向上
-複数部品の同時交換
+* 保守作業員コストの反映
+* 複数部品の同時交換
 
 ## 結論
 
