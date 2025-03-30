@@ -26,13 +26,15 @@ permalink: /
   </div>
 
 ### 2. [定期交換部品のライフ推定による交換時期の最適化](article2/)
-* <div align="center">
+<blockquote>
+ <div align="center">
   <figure>
     <img src="article2/img/印刷機保守のシミュレーションモデル.png"/>
 	<br/>
     <figcaption>図. 印刷機の保守モデル</figcaption>
   </figure>
   </div>
+</blockquote>
 
 ### 3. 【予定】予防保守の最適化による改善効果の推定
 
