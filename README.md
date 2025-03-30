@@ -25,7 +25,7 @@ permalink: /
   </figure>
   </div>
 
-### 2. 【制作中】[定期交換部品のライフ推定による交換時期の最適化](article2/)
+### 2. [定期交換部品のライフ推定による交換時期の最適化](article2/)
 * <div align="center">
   <figure>
     <img src="article2/img/印刷機保守のシミュレーションモデル.png"/>
