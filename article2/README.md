@@ -234,13 +234,15 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 #### 交換部品数
 交換時期を遅らせることでトータルの部品交換数は低下を示した。交換理由の別では、「予防保守」(水色) は減り続け、一方「障害修理」(桃色) は増え続けた。
 
+<blockquote>
 <div align="center">
   <figure>
     <img src="img/結果-1交換部品数.png"/>
     <br/>
-    <figcaption>図. 定期交換部品の計画的な交換時期が交換部品数 (コスト) に及ぼす影響<br/>エラーバーは標準誤差</figcaption>
+    <figcaption>図. 定期交換部品の計画的な交換時期が交換部品数 (コスト) に及ぼす影響</figcaption>
   </figure>
 </div>
+</blockquote>
 
 #### 停止時間
 交換時期を遅らせることによる停止時間 (予防保守と障害修理の合計) の変動は
@@ -251,7 +253,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
   <figure>
     <img src="img/結果-2停止時間.png"/>
     <br/>
-    <figcaption>図. 定期交換部品の計画的な交換時期が印刷機の停止時間 (ダウンタイム) に及ぼす影響<br/>エラーバーは標準誤差</figcaption>
+    <figcaption>図. 定期交換部品の計画的な交換時期が印刷機の停止時間 (ダウンタイム) に及ぼす影響</figcaption>
   </figure>
 </div>
 
