@@ -278,6 +278,7 @@ python sim_component_failure.py --designed_life 1000000 --maxt 60*24*30*12 --bet
 
 故障率に影響を及ぼすことをが示されている。
 
+<div align="center"><figure><img src="img/応力強度モデルチャート(AC=L,PL=M)(iter=20)/故障確率推移グラフ(AC=L,PL=M).png"/><br/><figcaption></figcaption>故障確率推移グラフ(AC=L,PL=M).png</figure></div>
 
 
 
