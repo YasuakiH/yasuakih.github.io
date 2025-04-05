@@ -18,7 +18,7 @@ permalink: /article2/
 保守サービスにおける課題の一つに、サービス提供に要するコストと、顧客が受け取るサービス品質との両立がある。顧客による<a href="../article1/">印刷機の使われ方</a>が部品ライフに影響を及ぼすと仮定し、架空の印刷ジョブを生成する。それらを印刷機へ投入し、部品の摩耗と故障、それに保守サービスによる部品の刷新をシミュレートすることで、部品の交換数 (コスト) と印刷機の停止時間 (ダウンタイム) を予測する。交換時期をさまざま変化させて予測結果を確認する。
 
 ### 故障モデル
-本スタディでは、確率的に故障が発生する[応力-強度モデル](https://en.wikipedia.org/wiki/Stress%E2%80%93strength_analysis)を採用して、印刷機の「使われ方」から部品ライフを推定する故障モデルを作成した。応力-強度モデルは、既知の応力 S と強度 R から、故障の確率 F を予測する。強度 R (resistance) は設計や製造で決まり、応力 S (stress) は使い方で決まる。どちらも発生確率を与える[確率分布](https://en.wikipedia.org/wiki/Probability_distribution)である。応力 S > 強度 R の場合に故障が起こり、[故障確率](https://en.wikipedia.org/wiki/Failure_rate) F (failure probability) が決まる。
+本スタディでは、確率的に故障が発生する[応力-強度モデル](https://en.wikipedia.org/wiki/Stress%E2%80%93strength_analysis)を採用して、印刷機の「使われ方」から部品ライフを推定する故障モデルを作成した。応力-強度モデルは、既知の応力 S と強度 R から、故障の確率 F を予測する。強度 R (resistance) は設計や製造で決まり、応力 S (stress) は使い方で決まる。どちらも発生確率を与える[確率分布](https://en.wikipedia.org/wiki/Probability_distribution)である。応力 S > 強度 R の場合に故障が起こり、故障確率 F (failure probability) が決まる。
 
 <div align="center">
   <figure>
