@@ -2,3 +2,5 @@ https://yasuakih.github.io/
 https://yasuakih.github.io/article1/
 https://yasuakih.github.io/article2/
 https://yasuakih.github.io/article3/
+https://yasuakih.github.io/robots.txt
+https://yasuakih.github.io/sitemap.txt
