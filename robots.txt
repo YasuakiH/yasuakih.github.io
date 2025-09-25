@@ -1,1 +1,1 @@
-Sitemap: https://yasuakih.github.io/sitemap.txt
+Sitemap: https://yasuakih.github.io/sitemap.xml
