@@ -25,7 +25,7 @@
 新型機稼働後12ヶ月時点でのシミュレーション例を示す。<br/>
 <div align="center">
   <figure>
-    <img src="img/fleet_reliability_simulator.jpg"/>
+    <img src="img/fleet_reliability_simulator.png"/>
     <br/>
     <figcaption>シミュレーション結果</figcaption>
   </figure>
