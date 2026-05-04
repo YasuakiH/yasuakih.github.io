@@ -41,7 +41,7 @@ permalink: /
 ### 3. 【予定】予防保守の最適化による改善効果の推定
 
 
-### 4. フリート早期同等性検証ダッシュボード
+### 4. [フリート早期同等性検証ダッシュボード](article4/)
 <blockquote>
  <div align="center">
   <figure>
