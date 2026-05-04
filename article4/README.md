@@ -115,8 +115,11 @@
    ```
 
 ### B. 添付ファイル
-* Pythonスクリプト: fleet_reliability_simulator.py
-* フリート早期同等性検証ダッシュボード構築プロンプト.txt
+* Pythonスクリプト
+  * [fleet_reliability_simulator.py](fleet_reliability_simulator.py)
+
+* 保守用プロンプト
+  * [フリート早期同等性検証ダッシュボード構築プロンプト.txt](フリート早期同等性検証ダッシュボード構築プロンプト.txt)
 
 ### C. 主要なパラメータ一覧
 シミュレーションの挙動は、コード冒頭のグローバル変数を変更することで制御可能。
