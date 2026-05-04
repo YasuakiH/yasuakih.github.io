@@ -27,7 +27,7 @@
   <figure>
     <img src="img/fleet_reliability_simulator.png"/>
     <br/>
-    <figcaption>シミュレーション結果</figcaption>
+    <figcaption>シミュレーション結果<a href="img/fleet_reliability_simulator.png" target="_balnk">別ウィンドウで開く</a></figcaption>
   </figure>
 </div>
 
