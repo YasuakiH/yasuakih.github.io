@@ -23,7 +23,13 @@
 
 ## シミュレーション結果
 新型機稼働後12ヶ月時点でのシミュレーション例を示す。<br/>
-![シミュレーション結果](./fleet_reliability_simulator.jpg)
+<div align="center">
+  <figure>
+    <img src="fleet_reliability_simulator.jpg"/>
+    <br/>
+    <figcaption>シミュレーション結果</figcaption>
+  </figure>
+</div>
 
 ## ダッシュボードの解説
 ダッシュボード上に配置された各チャートが示す意味と、そこから得られる知見は以下の通りである。
