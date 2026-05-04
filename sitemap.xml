@@ -9,17 +9,22 @@
 
 <url>
   <loc>https://yasuakih.github.io/</loc>
-  <lastmod>2025-10-18T02:03:45+00:00</lastmod>
+  <lastmod>2026-05-04T07:24:43+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://yasuakih.github.io/article1/</loc>
-  <lastmod>2025-10-18T02:03:45+00:00</lastmod>
+  <lastmod>2026-05-04T07:24:43+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://yasuakih.github.io/article2/</loc>
-  <lastmod>2025-10-18T02:03:45+00:00</lastmod>
+  <lastmod>2026-05-04T07:24:43+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://yasuakih.github.io/article4/</loc>
+  <lastmod>2026-05-04T07:24:43+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 
