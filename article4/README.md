@@ -1,4 +1,10 @@
-# フリート早期同等性検証ダッシュボード
+---
+layout: page
+title: "フリート早期同等性検証ダッシュボード｜Pythonによる業務シミュレーション"
+permalink: /article4/
+---
+<!-- Written in 2026 by yasuakih -->
+# 
 
 ## 目的
 本ノートは、新型機導入の初期段階において、部品ライフの同等性を早期に評価するためのシミュレーション手法と検討結果をまとめたものである。主に自身の備忘録としての役割を持つが、同様の課題を抱えるエンジニアの参考となれば幸いである。
@@ -27,7 +33,7 @@
   <figure>
     <img src="img/fleet_reliability_simulator.png"/>
     <br/>
-    <figcaption>シミュレーション結果<a href="img/fleet_reliability_simulator.png" target="_balnk">別ウィンドウで開く</a></figcaption>
+    <figcaption>シミュレーション結果<a href="img/fleet_reliability_simulator.png" target="_balnk"> [別ウィンドウで開く]</a></figcaption>
   </figure>
 </div>
 

@@ -1,5 +1,13 @@
 # fleet_reliability_simulator.py
 
+'''
+Fleet Early Equivalence Testing Dashboard:
+This simulation dashboard was developed to enable quality control personnel practicing quality engineering and reliability engineering to quickly assess whether the component lifespan of new machine models is equivalent to or exceeds that of older models during the initial deployment phase, when operational data is extremely limited.
+
+フリート早期同等性検証ダッシュボード:
+品質工学や信頼性工学を実践する品質管理担当者が「稼働データが極めて少ない導入初期段階において、新型機の部品寿命が旧型機と同等以上か」を早期に評価するために構築されたシミュレーション・ダッシュボードである。
+'''
+
 import math
 import numpy as np
 import pandas as pd
