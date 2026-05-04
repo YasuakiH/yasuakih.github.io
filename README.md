@@ -40,5 +40,18 @@ permalink: /
 
 ### 3. 【予定】予防保守の最適化による改善効果の推定
 
+
+### 4. フリート早期同等性検証ダッシュボード
+<blockquote>
+ <div align="center">
+  <figure>
+    <img src="article4/img/fleet_reliability_simulator.png"/>
+	<br/>
+    <figcaption>図. 新型機稼働後12ヶ月時点における早期同等性シミュレーション結果</figcaption>
+  </figure>
+  </div>
+</blockquote>
+
+
 ----
 このページに掲載した作品 (テキスト、プログラムコードなど) はパブリック・ドメインに提供しています。詳細は [CC0 1.0 全世界 コモンズ証](https://creativecommons.org/publicdomain/zero/1.0/deed.ja) をご覧ください。
