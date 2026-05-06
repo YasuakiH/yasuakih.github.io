@@ -177,6 +177,9 @@ jupyter lab
 - Python スクリプト
   [fleet_anomaly_detection.py](./fleet_anomaly_detection.py)
 
+- ExcelによるCUSUM法異常検知
+  [CUSUM_Excelデモ.xlsx](./CUSUM_Excelデモ.xlsx)
+
 - フリート異常検出ダッシュボード — LLM 編集引き継ぎプロンプト
   [CUSUM法による部品ライフの早期異常検知構築プロンプト.md](./CUSUM法による部品ライフの早期異常検知構築プロンプト.md)
 
