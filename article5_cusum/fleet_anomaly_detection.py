@@ -1,3 +1,40 @@
+"""
+fleet_anomaly_detection.py
+==========================
+機械フリートにおける定期交換部品への不良品混入を、CUSUM 法で早期検知する
+インタラクティブ・シミュレーションダッシュボード。
+
+【実行環境】
+    Jupyter Notebook / JupyterLab（ipywidgets によるスライダー操作）
+
+【物理モデルの概要】
+    良品部品   : ワイブル β=1.5（摩耗故障モード／故障率が時間とともに増加）
+    不良品部品 : ワイブル β=0.8（初期故障モード／故障率が時間とともに減少）
+    フリート   : T=1 から 1 台稼働、RAMP_UP_INTERVAL 日ごとに 1 台ずつ増加
+    交換トリガー: 寿命到達（故障交換）または定期点検での予防交換
+    不良品混入 : CONTAMINATION_DAY 以降の交換時に mix_rate_percent の確率で混入
+
+【ダッシュボード構成（GridSpec 3×3）】
+    ① フリート稼働・交換状況    稼働台数積み上げ棒 + 累積交換数（twinx）
+    ② 故障発生タイミング        経過日数 × 寿命サイクルの散布図
+    ③ ワイブル確率紙            T1・T2 のワイブルプロット比較
+    ④ KM プロット               T1・T2 の Kaplan-Meier 生存曲線比較
+    ⑤ CUSUM 異常検知            CUSUM 管理図 + 故障イベント縦線（twinx）
+    ⑥ 故障分布ヒストグラム      T1・T2 それぞれの寿命分布（良品・不良品積み上げ）
+    ⑦ ハザード関数              良品・不良品の h(t) を対数スケールで比較
+
+【スライダー操作パラメータ】
+    T1（基準日） : ③④⑥ の比較基準日。CUSUM ロジックは参照しない。
+    T2（判定日） : ③④⑤⑥ の評価日。CUSUM はこの日までのデータを集計する。
+    不良率 [%]  : 交換時に不良品が混入する確率（0〜50%、5% 刻み）
+
+【CUSUM ベースライン推定について】
+    不良品混入日（T1）は現場では未知のため、CUSUM のベースライン推定に T1 を
+    使用しない設計とする。現在は T2 から CUSUM_BASELINE_WINDOW_DAYS 日分遡った
+    スライディングウィンドウ方式を採用しているが、ウィンドウが T1 をまたぐと
+    ベースラインが汚染され検知遅れが生じる点に注意（コード内コメント参照）。
+"""
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -40,6 +77,22 @@ class ReliabilitySimulator:
     """
 
     def __init__(self, cfg, mix_rate_percent: float):
+        """
+        Parameters
+        ----------
+        cfg : Config
+            シミュレーション全パラメータを保持するクラス。
+        mix_rate_percent : float
+            不良品の混入率 [%]。内部では mix_rate_fraction（0〜1）に変換して使用する。
+
+        Attributes
+        ----------
+        df_events : pd.DataFrame
+            交換イベント記録。列: duration, event, is_defective, day
+        df_daily : pd.DataFrame
+            日次集計。列: good_operating, defective_operating,
+                          good_replacements, defective_replacements
+        """
         self.cfg = cfg
         self.mix_rate_fraction = mix_rate_percent / 100.0
         self._run_simulation()
@@ -69,6 +122,17 @@ class ReliabilitySimulator:
     # ------------------------------------------------------------------
 
     def _run_simulation(self):
+        """
+        日次ループでフリート全台の部品ライフを進め、交換イベントを記録する。
+
+        各日に対して以下を実行する。
+        1. フリート増強（RAMP_UP_INTERVAL の倍数日に 1 台追加）
+        2. 全機械の部品年齢を更新し、故障交換または予防交換を判定
+        3. 交換発生時はイベントを df_events に記録し、新部品（良品/不良品）を装着
+        4. 日次稼働台数・交換件数を df_daily に記録
+
+        結果は self.df_events / self.df_daily に格納される。
+        """
         cfg = self.cfg
         machine_id_counter = 0
         fleet: list[dict] = []
@@ -154,6 +218,13 @@ class ReliabilitySimulator:
 # ---------------------------------------------------------------------------
 
 class Config:
+    """
+    シミュレーション・描画に関する全パラメータを集中管理するクラス。
+
+    ワイブルスケールパラメータ（ALPHA_GOOD / ALPHA_BAD）は直接変更せず、
+    update() によって BETA・EXPECTED_REPLACEMENTS_PER_YEAR から自動逆算する。
+    パラメータを変更した際は必ず Config.update() を再呼び出すこと。
+    """
     # --- 部品・機械の物理パラメータ ---
     TARGET_B10             = 800_000   # 設計寿命(B10 寿命)[サイクル]
     CYCLES_PER_DAY         = 20_000    # 1 機械あたりの 1 日稼働サイクル数
@@ -217,10 +288,31 @@ def update_dashboard(baseline_day: int, evaluation_day: int, mix_rate_percent: i
 
     Parameters
     ----------
-    baseline_day     : T1: 不良品混入開始日
-                       ※ CUSUM のベースラインは Config.CUSUM_BASELINE_WINDOW_DAYS に固定で、T1へ依存しない。
-    evaluation_day   : T2: ワイブル・KM・ヒストグラムの評価日
-    mix_rate_percent : 不良品混入率 [%]
+    baseline_day : int
+        T1。③ワイブル・④KM・⑥ヒストグラムの比較基準日。
+        CUSUM（⑤）のベースライン推定には使用しない。
+    evaluation_day : int
+        T2。ワイブル・KM・ヒストグラムの評価日。CUSUM はこの日までのデータを集計する。
+    mix_rate_percent : int
+        不良品混入率 [%]。ReliabilitySimulator に渡す。
+
+    描画チャート
+    ------------
+    ① grid[0,0]  フリート稼働・交換状況（棒グラフ + 累積交換数、twinx）
+    ② grid[0,1]  故障発生タイミング（散布図）
+    ③ grid[1,0]  ワイブル確率紙（T1・T2 比較）
+    ④ grid[1,1]  KM プロット・生存曲線（T1・T2 比較）
+    ⑤ grid[2,:2] CUSUM 異常検知（管理図 + 故障イベント縦線、twinx）
+    ⑥ grid[0,2]  故障分布ヒストグラム（T1 時点）
+       grid[1,2]  故障分布ヒストグラム（T2 時点）
+    ⑦ grid[2,2]  ハザード関数 h(t)（対数スケール）
+
+    Notes
+    -----
+    ワイブルプロット（③）は reliability ライブラリの仕様上、呼び出し前に
+    plt.sca(ax_weibull) でカレント軸を明示する必要がある。
+    CUSUM チャート（⑤）は twinx で左軸（CUSUM 値）と右軸（故障イベント縦線）を
+    使い分け、凡例は左軸側に統合して表示している。
     """
 
     np.random.seed(42)  # スライダー操作にかかわらず、標本を一定にしたい
