@@ -172,11 +172,13 @@ jupyter lab
 
 ---
 
-## 付録 B：Python スクリプト
+## 付録 B：添付ファイル
 
-- スクリプトファイル：[fleet_anomaly_detection.py](./fleet_anomaly_detection.py)
+- Python スクリプト
+  [fleet_anomaly_detection.py](./fleet_anomaly_detection.py)
 
-> GitHub リポジトリに配置後、上記リンクを実際のパスに更新してください。
+- フリート異常検出ダッシュボード — LLM 編集引き継ぎプロンプト
+  [CUSUM法による部品ライフの早期異常検知構築プロンプト.md](./CUSUM法による部品ライフの早期異常検知構築プロンプト.md)
 
 ---
 
