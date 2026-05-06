@@ -56,7 +56,7 @@ permalink: /
 <blockquote>
  <div align="center">
   <figure>
-    <img src="article5_cusum/img/fleet_reliability_simulator.png"/>
+    <img src="article5_cusum/img/fleet_anomaly_detection.pngw"/>
 	<br/>
     <figcaption>図. フリート異常検出ダッシュボードの出力例</figcaption>
   </figure>
