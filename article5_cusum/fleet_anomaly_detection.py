@@ -76,12 +76,14 @@ class ReliabilitySimulator:
     不良品混入開始日 T1 (contamination_day) 以降の交換では、mix_rate_fraction の確率で不良品が混入する。
     """
 
-    def __init__(self, cfg, mix_rate_percent: float):
+    def __init__(self, cfg, baseline_day: int, mix_rate_percent: float):
         """
         Parameters
         ----------
         cfg : Config
             シミュレーション全パラメータを保持するクラス。
+        baseline_day : int
+            この日以降の交換から不良品が混入し始める
         mix_rate_percent : float
             不良品の混入率 [%]。内部では mix_rate_fraction（0〜1）に変換して使用する。
 
@@ -94,6 +96,7 @@ class ReliabilitySimulator:
                           good_replacements, defective_replacements
         """
         self.cfg = cfg
+        self.cfg.CONTAMINATION_DAY = baseline_day
         self.mix_rate_fraction = mix_rate_percent / 100.0
         self._run_simulation()
 
@@ -241,7 +244,7 @@ class Config:
     ALPHA_BAD  = 0.0
 
     # --- 不良品混入タイミング(デフォルト値) ---
-    CONTAMINATION_DAY = 181   # この日以降の交換から不良品が混入し始める
+    # CONTAMINATION_DAY = 181   # この日以降の交換から不良品が混入し始める
 
     # --- 年間想定交換件数(α 逆算に使用) ---
     EXPECTED_REPLACEMENTS_PER_YEAR = 50
@@ -289,8 +292,7 @@ def update_dashboard(baseline_day: int, evaluation_day: int, mix_rate_percent: i
     Parameters
     ----------
     baseline_day : int
-        T1。③ワイブル・④KM・⑥ヒストグラムの比較基準日。
-        CUSUM（⑤）のベースライン推定には使用しない。
+        T1。③ワイブル・④KM・⑥ヒストグラムの比較基準日。CUSUM（⑤）のベースライン推定には使用しない。
     evaluation_day : int
         T2。ワイブル・KM・ヒストグラムの評価日。CUSUM はこの日までのデータを集計する。
     mix_rate_percent : int
@@ -317,7 +319,7 @@ def update_dashboard(baseline_day: int, evaluation_day: int, mix_rate_percent: i
 
     np.random.seed(42)  # スライダー操作にかかわらず、標本を一定にしたい
 
-    simulator = ReliabilitySimulator(Config, mix_rate_percent)
+    simulator = ReliabilitySimulator(Config, baseline_day, mix_rate_percent)
     fig = plt.figure(figsize=(20, 10))
     grid = fig.add_gridspec(3, 3, height_ratios=[1, 1, 1.2])
 
