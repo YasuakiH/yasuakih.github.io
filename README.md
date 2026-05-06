@@ -52,6 +52,16 @@ permalink: /
   </div>
 </blockquote>
 
+### 5. [CUSUM法による部品ライフの早期異常検知](article5_cusum/)
+<blockquote>
+ <div align="center">
+  <figure>
+    <img src="article5_cusum/img/fleet_reliability_simulator.png"/>
+	<br/>
+    <figcaption>図. フリート異常検出ダッシュボードの出力例</figcaption>
+  </figure>
+  </div>
+</blockquote>
 
 ----
 このページに掲載した作品 (テキスト、プログラムコードなど) はパブリック・ドメインに提供しています。詳細は [CC0 1.0 全世界 コモンズ証](https://creativecommons.org/publicdomain/zero/1.0/deed.ja) をご覧ください。
