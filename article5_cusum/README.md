@@ -53,13 +53,17 @@ permalink: /article5_cusum/
 
 [CUSUM(Cumulative Sum Control Chart)法](https://en.wikipedia.org/wiki/CUSUM)は、プロセスの平均値からの微小な逸脱を累積することで、シューハートのX-R管理図よりも早くシフトを検出できる手法である。
 
+![CUSUM異常検知](img/CUSUM_Excel.png)
+
+図：CUSUM異常検知 (データは[Wikipeia CUSUM](https://en.wikipedia.org/wiki/CUSUM)から引用)
+
 C<sub>i</sub> = max(0, C<sub>i-1</sub> + (x<sub>i</sub> - μ<sub>0</sub>) - k)
 
 - μ<sub>0</sub>: ベースライン期間 (T=0～T=60) の故障率平均
 - k: 許容変化量 (= 2σ) 検出感度調整
 - H: 管理限界 (= 12σ) アラート閾値
 
-ベースラインを T=0～T=60のデータで推定し、以降の逸脱を累積することで、不良品混入のタイミングを検出する。
+シミュレーションでは、ベースラインを T=0～T=60のデータで推定し、以降の逸脱を累積することで、不良品混入のタイミングを検出する。
 
 ---
 
