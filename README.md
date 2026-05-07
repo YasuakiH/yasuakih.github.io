@@ -63,5 +63,19 @@ permalink: /
   </div>
 </blockquote>
 
+### 6. [複雑なワイブル](article6_complex_weibull/)
+<blockquote>
+ <div align="center">
+  <figure>
+    <img src="article6_complex_weibull/img/competing_risks.png"/>
+    <img src="article6_complex_weibull/img/mixture.png"/>
+	<br/>
+    <figcaption></figcaption>
+  </figure>
+  </div>
+</blockquote>
+
+
+
 ----
 このページに掲載した作品 (テキスト、プログラムコードなど) はパブリック・ドメインに提供しています。詳細は [CC0 1.0 全世界 コモンズ証](https://creativecommons.org/publicdomain/zero/1.0/deed.ja) をご覧ください。
