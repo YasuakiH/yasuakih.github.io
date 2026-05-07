@@ -32,9 +32,9 @@ EVAL_MONTHS_NEW = 12
 # EVAL_MONTHS_NEW = 72
 EVAL_MONTHS_OLD = 72
 
-CENSORING_FACTOR = 1.5   # 予防保守目標
+CENSORING_FACTOR = 4.0   # 予防保守目標 (B10設計ライフの何倍で打ち切るか)
 
-CYCLES_PER_DAY = 4000
+CYCLES_PER_DAY = 4000    # 日あたりの部品稼働サイクル数
 
 B10_TARGET_NEW = 100000  # 設計ライフ(新型)
 B10_TARGET_OLD = 80000   # 設計ライフ(旧型)
@@ -282,7 +282,7 @@ def main():
     fig = plt.figure(figsize=(18, 14))
     gs = GridSpec(3, 3, height_ratios=[1, 1, 1.2], hspace=0.4, wspace=0.3)
     fig.suptitle(
-        f'早期同等性評価ダッシュボード  (新型 {EVAL_MONTHS_NEW}ヶ月経過 打ち切り=B10x{CENSORING_FACTOR}={PM_TARGET_NEW/1000:.0f}k)',
+        f'早期同等性評価ダッシュボード  (新型 {EVAL_MONTHS_NEW}ヶ月経過 B10設計目標={B10_TARGET_NEW/1000:.0f}k 予防保守目標={PM_TARGET_NEW/1000:.0f}k)',
         fontsize=18, fontweight='bold')
 
     # データ生成
@@ -616,7 +616,7 @@ def main():
 
     print('⑦ B10寿命予測')
 
-    # 評価月時点でのデータ抽出とブートストラップ実行 (下側30%への局所フィット)
+    # 新型は評価月時点でのデータ(短ライフ側30%)を使用し、ブートストラップ法によりB10ライフを局所フィットで予測する
     df_new_current = df_new[df_new['Event_Month'] <= EVAL_MONTHS_NEW]
 
     global b10_samples_new
@@ -667,10 +667,10 @@ def main():
     for m in months:
         df_m = df_new[df_new['Event_Month'] <= m]
         # まず局所フィットを試みる
-        samples = bootstrap_b10_local(df_m, n_boot=300, target_f_limit=0.3)
+        samples = bootstrap_b10_local(df_m, n_boot=2000, target_f_limit=0.3)
 
         if len(samples) > 15:  # 局所フィットに十分なデータがある
-            print(f'm={m} 局所フィットに十分なデータがある: len(samples)={len(samples)}')
+            print(f'm={m} 局所フィットに十分なデータがある: len(df_m)={len(df_m)} len(samples)={len(samples)}')
 
             medians.append(np.median(samples))
             l, u = np.percentile(samples, [5, 95])
@@ -679,7 +679,7 @@ def main():
             is_local.append(True)
 
         else:  # データ不足時は全体フィットで補完
-            print(f'm={m} データ不足時は全体フィットで補完 len(samples)={len(samples)}')
+            print(f'm={m} データ不足時は全体フィットで補完 len(df_m)={len(df_m)} len(samples)={len(samples)}')
 
             beta_f, eta_f = fit_weibull_simple(df_m['Observed_Cycles'].values, (df_m['Status'] == 'Failed (事後保守)').values)
             if beta_f:
@@ -695,15 +695,17 @@ def main():
     medians = np.array(medians)
 
     # 新型 (全体フィットが行われた場合のみ表示する)
-    num_is_local = len([x for x in medians[~np.array(is_local)] if not math.isnan(x)])
-    if num_is_local >= 1:
-        ax8.plot(months[~np.array(is_local)], medians[~np.array(is_local)], 'o--', color='gray', alpha=0.5, label='新型 (全体フィット; 少N期)')
+    num_isnot_local = len([x for x in medians[~np.array(is_local)] if not math.isnan(x)])
+    if num_isnot_local >= 1:
+        ax8.plot(months[~np.array(is_local)], medians[~np.array(is_local)], 'o--', color='gray', alpha=0.5, label='新型 (全体フィット; 少N期の参考)')
 
-    ax8.plot(months[is_local], medians[is_local], 'o-', color='darkblue', linewidth=2, label='新型 (初期故障領域フィット)')
+    # 新型 (プロット)
+    ax8.plot(months[is_local], medians[is_local], 'o-', color='darkblue', linewidth=2, label=f'新型 (初期故障領域フィット;\n       バンドは90%信頼区間)')
+    # 新型 (B10推定値の信頼区間)
     ax8.fill_between(months, lowers, uppers, color='darkblue', alpha=0.15)
 
     # 新型 (真値)
-    ax8.axhline(B10_TARGET_NEW, color='darkblue', alpha=0.3, linestyle='--', label=f'新型 B10目標ライフ(真値) {int(B10_TARGET_NEW/1000)}k')
+    ax8.axhline(B10_TARGET_NEW, color='darkblue', alpha=0.3, linestyle='--', label=f'新型 B10目標ライフ {int(B10_TARGET_NEW/1000)}k')
     # 旧型 (実績)
     ax8.axhline(b10_old_baseline, color='orange', linestyle='--', label=f'旧型 B10実績ライフ {int(b10_old_baseline/1000)}k')
 
@@ -717,6 +719,8 @@ def main():
 
     ax8.set_xlim(0, EVAL_MONTHS_NEW + 1)
     ax8.set_ylim(0, max([y for y in uppers if not math.isnan(y)]))
+
+    ax8.yaxis.set_major_formatter(ticker.FuncFormatter(cycle_formatter))  # 軸ラベルを k 単位にフォーマット
 
     # ------------------------------------------
     # ⑨ 局所ワイブルプロット (折れ線フィッティング)
@@ -753,10 +757,10 @@ def main():
             slope1, intercept1 = res.slope, res.intercept
 
             # 回帰直線の描画
-            ax.plot(X_m, slope1 * X_m + intercept1, color=color, linewidth=3, label=f'{label} (初期故障領域 m値={slope1:.1f})')
+            ax.plot(X_m, slope1 * X_m + intercept1, color=color, linewidth=1, label=f'{label} (初期故障領域 β={slope1:.1f})')
 
             # 信頼区間(CI)バンドの描画
-            t_val = stats.t.ppf(0.975, n_points - 2) # 95% CI
+            t_val = stats.t.ppf(0.975, n_points - 2)  # 95% CI
             Sxx = np.sum((X_m - np.mean(X_m))**2)
 
             if Sxx > 0:
@@ -786,14 +790,14 @@ def main():
         elif n_points == 2:
             # 2点しかない場合はCI計算不能のため直線のみ
             slope1, intercept1 = np.polyfit(X[mask1], Y[mask1], 1)
-            ax.plot(X[mask1], slope1 * X[mask1] + intercept1, color=color, linewidth=3, label=f'{label} (初期故障領域 m値={slope1:.1f})')
+            ax.plot(X[mask1], slope1 * X[mask1] + intercept1, color=color, linewidth=3, label=f'{label} (初期故障領域 β={slope1:.1f})')
 
         # 30%以上 (偶発・摩耗モード)
         # --------------------------------
         mask2 = (f_valid > 0.3)
         if np.sum(mask2) >= 2:
             slope2, intercept2 = np.polyfit(X[mask2], Y[mask2], 1)
-            ax.plot(X[mask2], slope2 * X[mask2] + intercept2, color=color, linestyle='--', linewidth=1.5, alpha=0.7)
+            ax.plot(X[mask2], slope2 * X[mask2] + intercept2, color=color, linestyle='--', linewidth=1.0, alpha=0.7)
 
     plot_broken_weibull(ax9, df_old, 'orange', '旧型')
     plot_broken_weibull(ax9, df_new_current, 'darkblue', '新型')

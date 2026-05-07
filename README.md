@@ -45,7 +45,7 @@ permalink: /
 <blockquote>
  <div align="center">
   <figure>
-    <img src="article4_b10_bootstrap/img/fleet_reliability_simulator.png"/>
+    <img src="article4_b10_bootstrap/img/fleet_reliability_simulator(12, 4.0).png"/>
 	<br/>
     <figcaption>図. 新型機稼働後12ヶ月時点における早期同等性シミュレーション結果</figcaption>
   </figure>

@@ -11,7 +11,7 @@ permalink: /article6_complex_weibull/
 ![competing_risks.png](img/competing_risks.png)
 ![mixture.png](img/mixture.png)
 
-[competing_risks.py](./competing_risks.py)
+[competing_risks.py](./competing_risks.py)<br/>
 [mixture.py](./mixture.py)
 
 ----
