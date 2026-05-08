@@ -32,7 +32,9 @@ EVAL_MONTHS_NEW = 12
 # EVAL_MONTHS_NEW = 72
 EVAL_MONTHS_OLD = 72
 
-CENSORING_FACTOR = 4.0   # 予防保守目標 (B10設計ライフの何倍で打ち切るか)
+# 予防保守目標 (B10設計ライフの何倍で打ち切るか)
+CENSORING_FACTOR = 4.0
+# CENSORING_FACTOR = 8.0
 
 CYCLES_PER_DAY = 4000    # 日あたりの部品稼働サイクル数
 
