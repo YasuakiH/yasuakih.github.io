@@ -26,7 +26,7 @@ plt.rcParams['font.sans-serif'] = ['Meiryo', 'Hiragino Maru Gothic Pro', 'Yu Got
 
 # シミュレーション用パラメータ
 EVAL_MONTHS_NEW = 12
-EVAL_MONTHS_NEW = 24
+# EVAL_MONTHS_NEW = 24
 # EVAL_MONTHS_NEW = 36
 # EVAL_MONTHS_NEW = 48
 # EVAL_MONTHS_NEW = 60
@@ -312,7 +312,7 @@ def main():
         pivot1_cumsum = pivot1.cumsum()  # 累積和計算
 
         p1 = ax1.bar(pivot1_cumsum.index, pivot1_cumsum['Censored (予防保守)'], color='skyblue', label='予防保守 (Censored)')
-        p2 = ax1.bar(pivot1_cumsum.index, pivot1_cumsum['Failed (事後保守)'], bottom=pivot1_cumsum['Censored (予防保守)'], color='red', label='事後保守 (Failed)')
+        p2 = ax1.bar(pivot1_cumsum.index, pivot1_cumsum['Failed (事後保守)'], bottom=pivot1_cumsum['Censored (予防保守)'], color='red', label='事後保守 (Failed)', alpha=0.5)
 
         # 数値ラベル
         if False:  # 煩雑のため非表示
@@ -353,7 +353,7 @@ def main():
         pivot2_cumsum = pivot2.cumsum()  # 累積和計算
 
         p1 = ax2.bar(pivot2_cumsum.index, pivot2_cumsum['Censored (予防保守)'], color='skyblue', label='予防保守 (Censored)')
-        p2 = ax2.bar(pivot2_cumsum.index, pivot2_cumsum['Failed (事後保守)'], bottom=pivot2_cumsum['Censored (予防保守)'], color='red', label='事後保守 (Failed)')
+        p2 = ax2.bar(pivot2_cumsum.index, pivot2_cumsum['Failed (事後保守)'], bottom=pivot2_cumsum['Censored (予防保守)'], color='red', label='事後保守 (Failed)', alpha=0.5)
 
         # 数値ラベル
         fontsize = 6
@@ -382,102 +382,134 @@ def main():
         ax2.legend(handles[::-1], labels[::-1])
 
     # ③ バスタブ曲線
-    def draw_bathtub_chart(arg_df):
-        print("③バスタブ曲線:")
-        df = arg_df[arg_df['Status'] != 'Active (稼働中)']
-        df = arg_df[arg_df['Status'] != 'Censored (予防保守)']  # 残りは Failed
-
-        combined_data = np.array(df['Observed_Cycles'].values)
-        combined_data.sort()
-
-        # 2. 競合ワイブルモデル（バスタブ型）の関数定義
-        def weibull_hazard(t, shape, scale):
-            """ワイブル分布の故障率関数 (Hazard Function)"""
-            return (shape / scale) * (t / scale)**(shape - 1)
-
-        def bathtub_hazard(t, p1, s1, p2, s2, p3, s3):
-            """3つのワイブル分布の和（バスタブ型）"""
-            h1 = weibull_hazard(t, p1, s1)  # 初期
-            h2 = weibull_hazard(t, p2, s2)  # 偶発
-            h3 = weibull_hazard(t, p3, s3)  # 摩耗
-            return h1 + h2 + h3
-
-        def log_likelihood(params, data):
-            """最尤推定のための対数尤度関数（負の対数尤度を返す）"""
-            p1, s1, p2, s2, p3, s3 = params
-
-            # パラメータが正の範囲にあることを制約
-            if any(p <= 0 for p in params) or any(s <= 0 for s in params):
-                return 1e10
-
-            # 故障率関数 h(t)
-            h = bathtub_hazard(data, p1, s1, p2, s2, p3, s3)
-
-            # 累積故障率関数 H(t) (データが小さい順に並んでいると仮定)
-            # 簡易的に積分で計算、または数値積分が必要
-            # ここでは、データ数が少ない場合の近似的な方法をとるか、
-            # 定義に基づいた累積ハザード H(t) = sum( (t/scale)^shape ) を使用
-
-            # 今回は簡単のため、対数尤度を h(t) のみで近似する手法（小データ向け）
-            # 正確には survival function S(t) = exp(-H(t)) を使う
-
-            # 累積ハザード H(t) = H1(t) + H2(t) + H3(t)
-            H = (data/s1)**p1 + (data/s2)**p2 + (data/s3)**p3
-
-            # 負の対数尤度: - ( Σ log(h(ti)) - Σ H(ti) )
-            log_l = np.sum(np.log(h + 1e-10)) - np.sum(H)
-            return -log_l
-
-        # 3. バスタブパラメータ推定
-        # 初期値
-        #  * この指定によって初期・偶発・摩耗の形状に影響する。微妙であり、あまり変えないのが無難。
-        #  * α1α2α3は存在しない。このシミュレータではB10目標から逆算しているため
-        initial_guess = [
-            WEIBULL_MODES[0]['beta'], 1000,    # β1, α1   初期故障
-            WEIBULL_MODES[1]['beta'], 40000,   # β2, α2   偶発故障
-            WEIBULL_MODES[2]['beta'], 100000,  # β3, α3   摩耗故障
-        ]
-
-        # 旧型機において比較的上手くいったときの値
-        # initial_guess = [
-        #     0.7, 1000,    # β1, α1
-        #     1.0, 40000,   # β2, α2
-        #     2.5, 100000,  # β3, α3
-        # ]
-
-        result = minimize(log_likelihood, initial_guess, args=(combined_data,), method='Nelder-Mead')
-
-        # 4. 結果の出力
-        p1, s1, p2, s2, p3, s3 = result.x
-        print(f"  推定パラメータ:\n   - 初期: shape={p1:.2f}, scale={s1:.2f}\n   - 偶発: shape={p2:.2f}, scale={s2:.2f}\n   - 摩耗: shape={p3:.2f}, scale={s3:.2f}")
-
-        # 5. 可視化
-        # ハザード関数のプロット
+    # -------------------------------------------------------
+    # 【設計思想】
+    #   このシミュレータでは WEIBULL_MODES に真のパラメータ (β, prob) が既知として定義されており、
+    #   データ生成時に B10_TARGET_OLD を基準としたスケーリング (η を逆算) が行われている。
+    #   各成分の η (スケールパラメータ) を同じスケーリング係数で復元し、
+    #   各成分のハザード関数 h_i(t) を解析的に計算することで、
+    #   教科書的な「初期(右下がり)・偶発(水平)・摩耗(右上がり)」の三成分と
+    #   それらを確率混合した合成バスタブ曲線を正確に描く。
+    #
+    # 【スケーリング復元の根拠】
+    #   generate_fleet_data() では、プールサイズ15000の混合ワイブルサンプルから
+    #   raw_b10 (10パーセンタイル) を算出し、pool_lives = raw_lives * (b10_target / raw_b10)
+    #   でスケーリングしている。この係数 (b10_target / raw_b10) を各成分の η に乗じることで
+    #   実際に生成されたデータと一致する解析的ハザード関数が得られる。
+    # -------------------------------------------------------
+    def draw_bathtub_chart():
+        print("③バスタブ曲線 (真のパラメータから解析的に生成):")
         ax3 = fig.add_subplot(gs[0, 2])
 
-        x_vals = np.linspace(0.1, np.max(combined_data), 100)
+        # -------------------------------------------------------
+        # スケーリング係数の復元
+        #   generate_fleet_data() と同じシードで raw_lives を再生成し、
+        #   データ生成時と同一の scaling_factor を算出する。
+        # -------------------------------------------------------
+        np.random.seed(42)  # generate_fleet_data(is_new=False) と同じシード
+        POOL_SIZE = 15000
+        mode_indices = np.random.choice(
+            [0, 1, 2], size=POOL_SIZE,
+            p=[m['prob'] for m in WEIBULL_MODES]
+        )
+        raw_lives = np.zeros(POOL_SIZE)
+        for i, m in enumerate(WEIBULL_MODES):
+            mask = (mode_indices == i)
+            n_mode = np.sum(mask)
+            if n_mode > 0:
+                raw_lives[mask] = np.random.weibull(m['beta'], n_mode)
 
-        # バスタブ曲線プロット
-        h_fitted = bathtub_hazard(x_vals, *result.x)
-        ax3.plot(x_vals, h_fitted, label='バスタブ')
+        raw_b10 = np.percentile(raw_lives, 10)
+        scaling_factor = B10_TARGET_OLD / raw_b10
 
-        # 初期・偶発・摩耗プロット
-        d_infant_mortality = Weibull_Distribution(alpha=s1, beta=p1).HF(xvals=x_vals, label='初期', linestyle='--')
-        d_random_failures  = Weibull_Distribution(alpha=s2, beta=p2).HF(xvals=x_vals, label='偶発', linestyle='--')
-        d_ware_out         = Weibull_Distribution(alpha=s3, beta=p3).HF(xvals=x_vals, label='摩耗', linestyle='--')
+        # -------------------------------------------------------
+        # 各成分の η (スケールパラメータ) を解析的に復元する
+        #
+        # 【復元の根拠】
+        #   generate_fleet_data() では、標準ワイブル分布 (scale=1) からサンプリングした
+        #   raw_lives に対して、混合分布全体の B10 が B10_TARGET_OLD に一致するよう
+        #   pool_lives = raw_lives * scaling_factor でスケーリングしている。
+        #
+        #   各成分 i の標準ワイブル (β_i, η=1) の B10_i は:
+        #       B10_i_raw = (-ln(0.9))^(1/β_i)   [η=1 のワイブルの10パーセンタイル]
+        #   スケーリング後の各成分のη は:
+        #       η_i = 1 * scaling_factor = scaling_factor
+        #
+        #   ※ 各成分は同じスケーリング係数を受けるが、β_i が異なることで
+        #      ハザード関数の形状 (右下がり/水平/右上がり) が異なる。
+        #      教科書的なバスタブ形状が出ない原因は η の差ではなく、
+        #      確率混合比 (prob) による成分ハザードの相対的な大きさにある。
+        #
+        #   可視化のために各成分ハザードを「ピーク値で正規化」し、
+        #   形状の違いを直感的に見えやすくする。絶対値は合成曲線で表現する。
+        # -------------------------------------------------------
+        betas  = [m['beta'] for m in WEIBULL_MODES]   # [0.7, 1.0, 2.5]
+        probs  = [m['prob']  for m in WEIBULL_MODES]   # [0.3, 0.4, 0.3]
+        etas   = [scaling_factor for _ in WEIBULL_MODES]  # η_i = scaling_factor (全成分共通)
 
-        ax3.xaxis.set_major_formatter(ticker.FuncFormatter(cycle_formatter))  # 軸ラベルを k 単位にフォーマット
-        ax3.set_xlim(0, B10_TARGET_NEW * CENSORING_FACTOR * 1.2)
-        ax3.set_ylim(1e-6, 1e-3)
-        ax3.grid(True, which="both", ls="-", alpha=0.2)
-        ax3.set_title('③ 旧型のバスタブ曲線 - 故障発生メカニズム')
+        print(f"  scaling_factor={scaling_factor:.1f}, betas={betas}, etas={[f'{e:.0f}' for e in etas]}")
+
+        # -------------------------------------------------------
+        # ハザード関数の定義
+        #   単一ワイブルのハザード: h(t) = (β/η) * (t/η)^(β-1)
+        #   合成バスタブ:           h_sum(t) = Σ h_scaled_i(t)  (スケール調整後の和)
+        # -------------------------------------------------------
+        def weibull_hf(t, beta, eta):
+            """単一ワイブル成分のハザード関数"""
+            return (beta / eta) * (t / eta) ** (beta - 1)
+
+        # 描画範囲: 非常に短い寿命側〜予防保守目標の1.1倍 (t=0 は β<1 で発散するため除外)
+        x_min = scaling_factor * 0.0001
+        # x_max = PM_TARGET_OLD * 1.1
+        x_max = PM_TARGET_OLD * 1.5
+
+        x_vals = np.linspace(x_min, x_max, 2000)
+
+        # -------------------------------------------------------
+        # 各成分のスケーリング
+        #   各成分を「ピーク値=1」に正規化したあと、混合比 prob を掛けてピークの高さを揃える。
+        #   これにより各成分のピーク高さが prob に比例し、絶対値は理論値とは無関係な模式的高さになる。
+        #   合成バスタブはスケール後の各成分の和として描く。
+        # -------------------------------------------------------
+        h_raw = [weibull_hf(x_vals, b, e) for b, e in zip(betas, etas)]
+        h_scaled = []
+        for h_c, prob in zip(h_raw, probs):
+            peak = np.max(h_c)
+            h_scaled.append((h_c / peak) * prob if peak > 0 else h_c * 0)
+
+        h_bathtub = sum(h_scaled)  # 合成バスタブ = スケール後の成分の和
+
+        # -------------------------------------------------------
+        # 描画
+        # -------------------------------------------------------
+        mode_labels  = ['初期故障 (β<1)', '偶発故障 (β=1)', '摩耗故障 (β>1)']
+        mode_colors  = ['royalblue', 'green', 'tomato']
+        mode_lstyles = ['--', '-.', ':']
+
+        for h_s, label, color, ls, prob in zip(h_scaled, mode_labels, mode_colors, mode_lstyles, probs):
+            ax3.plot(x_vals, h_s, color=color, linestyle=ls, linewidth=2.0,
+                     label=f'{label} (混合比={prob:.0%})', zorder=3)
+
+        # 合成バスタブ曲線
+        ax3.plot(x_vals, h_bathtub, color='black', linewidth=2.5, label='バスタブ', zorder=4)
+
+        # B10ライン (参考)
+        ax3.axvline(B10_TARGET_OLD, color='orange', linestyle='--', linewidth=1.2, alpha=0.8,
+                    label=f'B10設計目標 {B10_TARGET_OLD//1000}k')
+
+        ax3.legend(loc='upper right', fontsize='x-small')
         ax3.set_xlabel('稼働時間 [サイクル]')
-        ax3.set_ylabel('ハザード率 h(t) [log]')
-        ax3.set_yscale('log')
+        ax3.set_ylabel('ハザード率 h(t)')
+        ax3.set_ylim(bottom=0)
+        ax3.set_yticks([])   # 模式図のため目盛り値は非表示
+        ax3.xaxis.set_major_formatter(ticker.FuncFormatter(cycle_formatter))
+        ax3.set_xlim(0, x_max)
+        ax3.xaxis.set_major_locator(ticker.MultipleLocator(100000))
 
-        ax3.legend(loc='right', fontsize='x-small')
+        ax3.grid(True, which='major', ls='-', alpha=0.2)
+        ax3.set_title('③ 旧型のバスタブ曲線の模式図 (混合ワイブル)')
 
-    draw_bathtub_chart(df_old)
+    draw_bathtub_chart()
 
     # -------------------------------------------------------------------
     # 【中段】 ④設計評価 / ⑤運用評価 / ⑥市場生存率
