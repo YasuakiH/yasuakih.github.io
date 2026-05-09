@@ -13,6 +13,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import matplotlib.patches as patches
 import scipy.stats as stats
 import warnings
 from matplotlib.gridspec import GridSpec
@@ -25,7 +26,7 @@ plt.rcParams['font.sans-serif'] = ['Meiryo', 'Hiragino Maru Gothic Pro', 'Yu Got
 
 # シミュレーション用パラメータ
 EVAL_MONTHS_NEW = 12
-# EVAL_MONTHS_NEW = 24
+EVAL_MONTHS_NEW = 24
 # EVAL_MONTHS_NEW = 36
 # EVAL_MONTHS_NEW = 48
 # EVAL_MONTHS_NEW = 60
@@ -501,8 +502,8 @@ def main():
     b10_new_val = np.percentile(df_new[df_new['Status'] == 'Failed (事後保守)']['Observed_Cycles'], 10)
     ax4.axvline(b10_old_val, color='orange', linestyle='--', alpha=1.0)
     ax4.axvline(b10_new_val, color='darkblue', linestyle='--', alpha=1.0)
-    ax4.text(b10_old_val, ax4.get_ylim()[1]*0.20, f'旧型\n10% {int(b10_old_val/1000)}k', color='darkblue', ha='left', fontsize=9)
-    ax4.text(b10_new_val, ax4.get_ylim()[1]*0.10, f'新型\n10% {int(b10_new_val/1000)}k', color='darkblue', ha='left', fontsize=9)
+    ax4.text(b10_old_val, ax4.get_ylim()[1]*0.20, f'旧型 10% {int(b10_old_val/1000)}k', color='darkblue', ha='left', fontsize=9)
+    ax4.text(b10_new_val, ax4.get_ylim()[1]*0.10, f'新型 10% {int(b10_new_val/1000)}k', color='darkblue', ha='left', fontsize=9)
 
     ax4.set_title('④ 部品ライフ実力値の比較 - 事後保守(故障)のみ')
     ax4.set_xlabel('稼働時間 [サイクル]')
@@ -538,13 +539,13 @@ def main():
     ax6 = fig.add_subplot(gs[1, 2])
     events_old = df_old['Status'] == 'Failed (事後保守)'
     t_old, s_old, l_old, u_old = compute_km(df_old['Observed_Cycles'], events_old)
-    ax6.step(t_old, s_old, where='post', color='orange', alpha=0.7, label='旧型 (実績)')
-    ax6.fill_between(t_old, l_old, u_old, step='post', color='orange', alpha=0.2)  # 信頼区間
+    ax6.step(t_old, s_old, where='post', color='orange', alpha=1.0, label='旧型 (実績)')
+    ax6.fill_between(t_old, l_old, u_old, step='post', color='orange', alpha=0.4)  # 信頼区間
 
     events_new = df_new['Status'] == 'Failed (事後保守)'
     t_new, s_new, l_new, u_new = compute_km(df_new['Observed_Cycles'], events_new)
-    ax6.step(t_new, s_new, where='post', color='darkblue', linewidth=2, label='新型 (実績)')
-    ax6.fill_between(t_new, l_new, u_new, step='post', color='darkblue', alpha=0.2)  # 信頼区間
+    ax6.step(t_new, s_new, where='post', color='darkblue', linewidth=1.5, label='新型 (実績)')
+    ax6.fill_between(t_new, l_new, u_new, step='post', color='darkblue', alpha=0.1)  # 信頼区間
 
     ax6.axhline(0.9, color='red', linestyle=':', alpha=0.6)  # 90%生存線
 
@@ -616,45 +617,169 @@ def main():
 
     ax7 = fig.add_subplot(gs[2, 0])
 
-    print('⑦ B10寿命予測')
+    print('⑦ 同等性検証 (B10ライフ差の信頼区間 vs 許容限界)')
 
-    # 新型は評価月時点でのデータ(短ライフ側30%)を使用し、ブートストラップ法によりB10ライフを局所フィットで予測する
+    # -------------------------------------------------------
+    # B10ブートストラップサンプルの算出
+    #   新型: 評価月時点のデータ (短ライフ側F<30%) 局所フィット
+    #   旧型: 全データを使った精緻な基準値
+    # -------------------------------------------------------
     df_new_current = df_new[df_new['Event_Month'] <= EVAL_MONTHS_NEW]
 
     global b10_samples_new
     b10_samples_new = bootstrap_b10_local(df_new_current, n_boot=2000, target_f_limit=0.3)
-    print(f' - b10_samples_new={b10_samples_new} ({len(b10_samples_new)})')
+    print(f' - b10_samples_new ({len(b10_samples_new)} samples)')
 
-    # 旧型は全データを使って精緻な基準値を算出
-    b10_samples_old = bootstrap_b10_local(df_old, n_boot=500, target_f_limit=0.3)
+    b10_samples_old = bootstrap_b10_local(df_old, n_boot=2000, target_f_limit=0.3)
     b10_old_baseline = np.median(b10_samples_old) if len(b10_samples_old) > 0 else B10_TARGET_OLD
+    print(f' - b10_samples_old ({len(b10_samples_old)} samples), median={b10_old_baseline:.0f}')
 
-    if len(b10_samples_new) > 10:
-        # KDE描画
-        kde = stats.gaussian_kde(b10_samples_new)
-        x_vals = np.linspace(min(b10_samples_new) * 0.7, max(b10_samples_new) * 1.3, 500)
-        ax7.plot(x_vals, kde(x_vals), color='darkblue', linewidth=2)
-        ax7.fill_between(x_vals, 0, kde(x_vals), color='darkblue', alpha=0.2)
+    # -------------------------------------------------------
+    # 同等性検証ロジック
+    #   差 = B10(新型) - B10(旧型) のブートストラップ分布を生成し
+    #   90%信頼区間 [CI_lower, CI_upper] を算出する。
+    #
+    #   許容限界 (equivalence margin):
+    #     下限 EQUIV_MARGIN_LOWER = 旧型B10 × margin_ratio_lower
+    #     上限 EQUIV_MARGIN_UPPER = 旧型B10 × margin_ratio_upper
+    #   同等性基準
+    #     CI_lower >= EQUIV_MARGIN_LOWER かつ CI_upper <= EQUIV_MARGIN_UPPER
+    #     の両方を満たせば「同等」と判定する (TOST: Two One-Sided Tests に準ずる考え方)
+    #
+    #   本実装では「新型は旧型以上であること」を主目的とするため、
+    #   下限のみ判定対象とし、上限は参考として表示する。
+    # -------------------------------------------------------
+    EQUIV_MARGIN_LOWER_RATIO = -0.10   # 旧型B10比で -10% を下限許容とする
+    EQUIV_MARGIN_UPPER_RATIO = +0.50   # 旧型B10比で +50% を上限参考とする (技術的上限)
 
-        # 同等以上確率の計算と表示
-        prob_better = np.mean(b10_samples_new >= b10_old_baseline) * 100
-        msg = f"初期故障領域(F<30%)において\n旧型に対する同等以上確率: {prob_better:.1f}%"
-        ax7.text(0.4, 0.5, msg, transform=ax7.transAxes, verticalalignment='top',
-                 bbox=dict(boxstyle='round', facecolor='white', alpha=0.8, edgecolor='gray'))
+    sufficient_new = len(b10_samples_new) > 10
+    sufficient_old = len(b10_samples_old) > 10
 
+    if sufficient_new and sufficient_old:
+        # ペアワイズ差の分布生成
+        # (新旧のサンプル数が異なる場合はランダム復元抽出で揃える)
+        n_pair = min(len(b10_samples_new), len(b10_samples_old))
+        idx_new = np.random.choice(len(b10_samples_new), n_pair, replace=False)
+        idx_old = np.random.choice(len(b10_samples_old), n_pair, replace=False)
+        diff_samples = b10_samples_new[idx_new] - b10_samples_old[idx_old]
+
+        diff_median = np.median(diff_samples)
+        ci_lower_diff, ci_upper_diff = np.percentile(diff_samples, [5, 95])  # 90% CI
+
+        equiv_margin_lower = b10_old_baseline * EQUIV_MARGIN_LOWER_RATIO
+        equiv_margin_upper = b10_old_baseline * EQUIV_MARGIN_UPPER_RATIO
+
+        # 同等性判定 (下限突破チェック)
+        lower_ok = ci_lower_diff >= equiv_margin_lower
+        upper_ok = ci_upper_diff <= equiv_margin_upper
+        equivalent = lower_ok  # 主判定: 信頼区間下限が許容下限を上回る
+
+        # -------------------------------------------------------
+        # 可視化: 差の分布 + CI + 許容限界
+        # -------------------------------------------------------
+        kde_diff = stats.gaussian_kde(diff_samples)
+        x_min = min(diff_samples.min(), equiv_margin_lower) * 1.5
+        x_max = max(diff_samples.max(), equiv_margin_upper) * 1.5
+        x_vals = np.linspace(x_min, x_max, 600)
+        y_vals = kde_diff(x_vals)
+
+        # KDE 塗りつぶし
+        ax7.fill_between(x_vals, 0, y_vals, color='steelblue', alpha=0.25, label='差の分布 (新型 - 旧型)')
+        ax7.plot(x_vals, y_vals, color='steelblue', linewidth=1.5)
+
+        # 90% CI 範囲の強調塗りつぶし
+        mask_ci = (x_vals >= ci_lower_diff) & (x_vals <= ci_upper_diff)
+        ax7.fill_between(x_vals[mask_ci], 0, y_vals[mask_ci], color='steelblue', alpha=0.4, label=f'90% 信頼区間')
+
+        # 90% CI 範囲の描画
+        y_max = max(y_vals[mask_ci])
+        ci_x_lower = min(x_vals[mask_ci])
+        ci_x_upper = max(x_vals[mask_ci])
+        # 90% CI 範囲: 下限境界線を引き出す
+        ax7.axvline(ci_x_lower, ymin=0, ymax=0.6, color='steelblue', linestyle='-', linewidth=1,)
+        ax7.text(ci_x_lower, y_max * 0.55, f'90%信頼限界 下限\n{int(ci_lower_diff/1000)}k', color='steelblue', ha='right', fontsize='small', weight='bold', bbox=dict(boxstyle='round,pad=0.0', facecolor='white', alpha=0.7, edgecolor='none'))
+        # 90% CI 範囲: 上限境界線を引き出す
+        ax7.axvline(ci_x_upper, ymin=0, ymax=0.6, color='steelblue', linestyle='-', linewidth=1,)
+        ax7.text(ci_x_upper, y_max * 0.55, f'90%信頼限界 上限\n{int(ci_upper_diff/1000)}k', color='steelblue', ha='left', fontsize='small', weight='bold', bbox=dict(boxstyle='round,pad=0.0', facecolor='white', alpha=0.7, edgecolor='none'))
+
+        # 90% CI 範囲を可視化するRectangle作成
+        ci_color = 'steelblue'
+        ci_rect = patches.Rectangle(
+            (ci_x_lower, 0),   # (左下x, 左下y)
+            (ci_x_upper - ci_x_lower),  # 幅
+            y_max * 0.05,               # 高さ
+            linewidth=0, facecolor=ci_color, alpha=1.0)
+        ax7.add_patch(ci_rect)        # 矩形をAxesに追加
+
+        # 許容範囲を可視化するRectangle作成
+        color_equiv_margin = 'green'
+        equiv_rect = patches.Rectangle(
+            (equiv_margin_lower, 0),   # (左下x, 左下y)
+            (equiv_margin_upper - equiv_margin_lower),  # 幅
+            y_max * 1.2,                                # 高さ
+            linewidth=0, edgecolor='r', facecolor=color_equiv_margin, alpha=0.3)
+        ax7.add_patch(equiv_rect)        # 矩形をAxesに追加
+        # 許容限界のラベル (下限: 同等性判定に使用)
+        ax7.text(equiv_margin_lower, y_max * 0.7, f'許容限界 下限 ({EQUIV_MARGIN_LOWER_RATIO*100:.0f}%)\n{int(equiv_margin_lower/1000)}k', color=color_equiv_margin, ha='right', fontsize='small', weight='bold', bbox=dict(boxstyle='round,pad=0.0', facecolor='white', alpha=0.7, edgecolor='none'))
+        # 許容限界のラベル (上限: 参考表示)
+        ax7.text(equiv_margin_upper, y_max * 0.7, f'許容限界 上限 (+{EQUIV_MARGIN_UPPER_RATIO*100:.0f}%)\n{int(equiv_margin_upper/1000)}k', color=color_equiv_margin, ha='left', fontsize='small', weight='bold', bbox=dict(boxstyle='round,pad=0.0', facecolor='white', alpha=0.7, edgecolor='none'))
+        del y_max
+
+        # ゼロライン (同等基準)
+        # ax7.axvline(0, color=color_equiv_margin, linestyle='-', linewidth=1.5, alpha=1.0, label=None)
+
+        # 判定結果テキストボックス
+        if equivalent:
+            verdict_color = 'green'
+            verdict_icon = 'OK 同等以上'
+            verdict_sub = f'CI下限 ({int(ci_lower_diff/1000)}k) ≥ 許容下限 ({int(equiv_margin_lower/1000)}k)'
+        else:
+            verdict_color = 'red'
+            verdict_icon = 'NG 同等以上と言い切れない'
+            verdict_sub = f'CI下限 ({int(ci_lower_diff/1000)}k) < 許容下限 ({int(equiv_margin_lower/1000)}k)'
+
+            # CI 下限矢印 (許容下限との関係を視覚化)
+            y_arrow = max(y_vals) * 0.20
+            ax7.annotate('', xy=(equiv_margin_lower, y_arrow), xytext=(ci_lower_diff, y_arrow),
+                         arrowprops=dict(arrowstyle='<->', color='red', lw=2.0))
+
+        prob_better = np.mean(b10_samples_new[idx_new] >= b10_samples_old[idx_old]) * 100
+
+        msg = (f"{verdict_icon}\n"
+               f"{verdict_sub}\n"
+               f"旧型以上の確率: {prob_better:.1f}%\n"
+               f"(旧型B10基準値: {int(b10_old_baseline/1000)}k, 許容マージン{EQUIV_MARGIN_LOWER_RATIO*100:.0f}%)")
+        ax7.text(0.5, 0.4, msg, transform=ax7.transAxes,
+                 verticalalignment='top', horizontalalignment='left', fontsize=8,
+                 bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.95,
+                           edgecolor=verdict_color, linewidth=2))
+
+    elif sufficient_new:
+        # 旧型サンプルが少ない場合: 新型分布のみ表示し旧型基準値を垂直線で示す
         b10_median = np.median(b10_samples_new)
-        ci_lower, ci_upper = np.percentile(b10_samples_new, [5, 95])
-
+        ci_lower_new, ci_upper_new = np.percentile(b10_samples_new, [5, 95])
+        kde_new = stats.gaussian_kde(b10_samples_new)
+        x_vals = np.linspace(min(b10_samples_new)*0.7, max(b10_samples_new)*1.3, 500)
+        ax7.plot(x_vals, kde_new(x_vals), color='darkblue', linewidth=2)
+        ax7.fill_between(x_vals, 0, kde_new(x_vals), color='darkblue', alpha=0.2)
         ax7.axvline(b10_median, color='darkblue', linestyle='--', label=f'新型 B10推計: {int(b10_median/1000)}k')
-        ax7.hlines(y=max(kde(x_vals))*0.05, xmin=ci_lower, xmax=ci_upper, color='black', linewidth=5, label='90% 信頼区間')
+        ax7.axvline(b10_old_baseline, color='orange', linestyle='--', linewidth=2, label=f'旧型 B10実績: {int(b10_old_baseline/1000)}k')
+        ax7.text(0.02, 0.97, '旧型ブートストラップサンプル不足\n新型分布のみ表示', transform=ax7.transAxes,
+                 verticalalignment='top', fontsize=8,
+                 bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+    else:
+        ax7.text(0.5, 0.5, 'データ不足\n(Failed < 3件)', transform=ax7.transAxes,
+                 ha='center', va='center', fontsize=12, color='gray')
 
-    ax7.axvline(b10_old_baseline, color='orange', linestyle='--', linewidth=2, label=f'旧型 B10実績: {int(b10_old_baseline/1000)}k')
+    ax7.set_xlim(
+        -(PM_TARGET_NEW - PM_TARGET_OLD),
+         (PM_TARGET_NEW - PM_TARGET_OLD) * 2
+    )
     ax7.set_yticks([])
-    ax7.set_xlabel('B10寿命 [サイクル]')
-    ax7.set_title('⑦ 新型のB10予測分布 (初期故障領域の局所フィット)')
-    ax7.legend(loc='upper right', fontsize='x-small')
-
-    ax7.set_xlim(0, B10_TARGET_NEW * CENSORING_FACTOR * 1.2)
+    ax7.set_xlabel('B10ライフ差 [サイクル]  (新型 - 旧型)')
+    ax7.set_title('⑦ 同等性検証: B10ライフ差の信頼区間 vs 許容限界')
+    # ax7.legend(loc='upper right', fontsize='small')  # 煩雑となるため非表示
+    ax7.grid(True, alpha=0.3)
     ax7.xaxis.set_major_formatter(ticker.FuncFormatter(cycle_formatter))  # 軸ラベルを k 単位にフォーマット
 
     # ------------------------------------------
