@@ -94,6 +94,8 @@ permalink: /article4_b10_bootstrap/
 
   判定結果と「旧型以上の確率」をチャート上に表示することで、経営的および工学的なGO/NO-GO判断を支援する。
 
+<br/>
+
 <div align="center">
   <figure>
     <img src="img/fig_7-8(12, 4.0).png"/>
@@ -101,6 +103,10 @@ permalink: /article4_b10_bootstrap/
     <figcaption>新型機の12ヶ月目: B10推定値の信頼区間 (青色帯) が許容限界 (緑色帯) を含んでおり、より多くのサンプルが必要。 <a href="img/fig_7-8(12, 4.0).png" target="_blank">[別ウィンドウで開く]</a></figcaption>
   </figure>
 </div>
+<br/>
+
+<br/>
+
 <div align="center">
   <figure>
     <img src="img/fig_7-8(24, 4.0).png"/>
@@ -108,6 +114,8 @@ permalink: /article4_b10_bootstrap/
     <figcaption>新型機の24ヶ月目: B10推定値の信頼区間は許容限界の下限を上回っており、旧型機と同等以上である。 <a href="img/fig_7-8(24, 4.0).png" target="_blank">[別ウィンドウで開く]</a></figcaption>
   </figure>
 </div>
+
+<br/>
 
 - **⑧ 意思決定サチュレーション**<br/>
   評価期間 (すなわちN数) が増えるにつれて、B10推定値の信頼区間がどのように収束してゆくかを示す。「いつ判断を下すべきか」の目安となるチャートで、本シミュレーターの中心的な問いへの直接の回答でもある。
