@@ -100,7 +100,7 @@ permalink: /article4_b10_bootstrap/
   <figure>
     <img src="img/fig_7-8(12, 4.0).png"/>
     <br/>
-    <figcaption>新型機の12ヶ月目: B10推定値の信頼区間 (青色帯) が許容限界 (緑色帯) を含んでおり、より多くのサンプルが必要。 <a href="img/fig_7-8(12, 4.0).png" target="_blank">[別ウィンドウで開く]</a></figcaption>
+    <figcaption>新型機の12ヶ月目: B10推定値の信頼区間 (青色帯) が許容限界 (緑色帯) を完全に含んでおり、より多くのサンプルが必要。赤矢印は、90%信頼限界の下限 (ワーストケース) が許容限界の下限を下回っていることを強調する。</figcaption>
   </figure>
 </div>
 <br/>
@@ -111,7 +111,7 @@ permalink: /article4_b10_bootstrap/
   <figure>
     <img src="img/fig_7-8(24, 4.0).png"/>
     <br/>
-    <figcaption>新型機の24ヶ月目: B10推定値の信頼区間は許容限界の下限を上回っており、旧型機と同等以上である。 <a href="img/fig_7-8(24, 4.0).png" target="_blank">[別ウィンドウで開く]</a></figcaption>
+    <figcaption>新型機の24ヶ月目: B10推定値の信頼区間は許容限界の下限を上回っいることから、旧型機と同等以上と判断できる。</figcaption>
   </figure>
 </div>
 
