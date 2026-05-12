@@ -33,6 +33,8 @@ fleet_anomaly_detection.py
     使用しない設計とする。現在は T2 から CUSUM_BASELINE_WINDOW_DAYS 日分遡った
     スライディングウィンドウ方式を採用しているが、ウィンドウが T1 をまたぐと
     ベースラインが汚染され検知遅れが生じる点に注意（コード内コメント参照）。
+
+# SPDX-License-Identifier: CC0-1.0
 """
 
 import numpy as np

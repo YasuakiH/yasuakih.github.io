@@ -33,6 +33,8 @@ r'''
 JupyterLab で次のコマンドを投入:
 
 %run mixture.py
+
+# SPDX-License-Identifier: CC0-1.0
 '''
 
 import numpy as np

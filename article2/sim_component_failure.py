@@ -28,6 +28,7 @@ python sim_component_failure.py --designed_life 1000000 --wearout_rates 1.5 --ma
 ■補足
 env.now の単位は [分] とした。これは規模感を与えるためのもので、厳密な意味の単位ではない。
 
+# SPDX-License-Identifier: CC0-1.0
 '''
 import sys
 import simpy

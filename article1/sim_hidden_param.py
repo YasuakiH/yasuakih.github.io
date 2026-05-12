@@ -16,6 +16,7 @@ options:
 トラブルシューティング
 TclError: invalid command name ".!navigationtoolbar2tk.!button2"
 
+# SPDX-License-Identifier: CC0-1.0k
 '''
 
 import sys

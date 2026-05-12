@@ -61,9 +61,7 @@ Fleet Early Equivalence Testing Dashboard
     Python-3.10 以降
     pip install numpy pandas matplotlib scipy
 
-■ライセンス
-
-    CC0 (Creative Commons Zero)
+# SPDX-License-Identifier: CC0-1.0
 """
 
 # ==============================================================================

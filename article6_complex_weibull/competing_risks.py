@@ -30,6 +30,8 @@ r'''
 JupyterLab で次のコマンドを投入:
 
 %run competing_risks.py
+
+# SPDX-License-Identifier: CC0-1.0
 '''
 
 import numpy as np
